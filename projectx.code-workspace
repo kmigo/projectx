@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "micro_core"
+		},
+		{
+			"path": "base_app"
+		},
+		{
+			"path": "micro_app_onboarding"
+		},
+		{
+			"path": "micro_commons_depends"
+		},
+		{
+			"path": "micro_commons_user"
+		}
+	],
+	"settings": {}
+}

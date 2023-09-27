@@ -1,7 +1,3 @@
-library micro_commons_user;
-
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/injections.dart';
+export 'src/blocs/authententication/bloc.dart';
+export 'src/repository/authentication_repository.dart' show StatusAuthentication;

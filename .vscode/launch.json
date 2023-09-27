@@ -1,0 +1,108 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "base_app",
+            "cwd": "base_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "base_app (profile mode)",
+            "cwd": "base_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "base_app (release mode)",
+            "cwd": "base_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "micro_app_onboarding",
+            "cwd": "micro_app_onboarding",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "micro_app_onboarding (profile mode)",
+            "cwd": "micro_app_onboarding",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "micro_app_onboarding (release mode)",
+            "cwd": "micro_app_onboarding",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "micro_commons_depends",
+            "cwd": "micro_commons_depends",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "micro_commons_depends (profile mode)",
+            "cwd": "micro_commons_depends",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "micro_commons_depends (release mode)",
+            "cwd": "micro_commons_depends",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "micro_commons_user",
+            "cwd": "micro_commons_user",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "micro_commons_user (profile mode)",
+            "cwd": "micro_commons_user",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "micro_commons_user (release mode)",
+            "cwd": "micro_commons_user",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "micro_core",
+            "cwd": "micro_core",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "micro_core (profile mode)",
+            "cwd": "micro_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "micro_core (release mode)",
+            "cwd": "micro_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

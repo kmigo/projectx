@@ -1,4 +1,9 @@
+// ignore_for_file: unused_element, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
+
+import 'package:micro_core/micro_core.dart';
 
 typedef WidgetBuildArgs = Widget Function(BuildContext context, dynamic args);
 
@@ -8,8 +13,47 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 abstract class MicroApp {
   String get microAppName;
   Map<String,WidgetBuildArgs> get routes;
+  void Function() get injectionRegister;
+}
 
-    void Function() get injectionRegister;
+
+class CoreBinding {
+
+B call<B extends Object>() {
+  final a =  GetIt.instance.get<B>();
+  return a;
+  }
+  static void registerSingleton<T extends Object>(T Function(CoreBinding) instance) {
+
+    final a= instance.call(CoreBinding());
+
+    GetIt.instance.registerSingleton<T>(a);
+  }
+
+  static void registerLazySingleton<T extends Object>(T Function(CoreBinding) instance) {
+    GetIt.instance.registerLazySingleton<T>(()=>instance.call(CoreBinding()));
+  }
+
+  static void registerFactory<T extends Object>(T Function(CoreBinding) instance) {
+    GetIt.instance.registerFactory<T>(()=>instance.call(CoreBinding()));
+  }
+
+  static T get<T extends Object>() {
+    return GetIt.instance.get<T>();
+  }
+}
+var _queryParams = <String,String>{};
+const _binds = [];
+
+var _args;
+
+class CorePageModal {
+  static dynamic get args {
+    return _args;
+  }
+  static Map<String,String>  get queryParams {
+    return _queryParams;
+  }
 }
 
 mixin BaseApp {
@@ -18,7 +62,13 @@ mixin BaseApp {
 
   Map<String,WidgetBuildArgs> get baseRoutes;
 
+
 void registerInjections(){
+  CoreBinding.registerSingleton<ClientHttp>((i) => HttpClientDio(
+    baseUrl:'http://localhost:65182/#/',
+
+  ));
+  initializeInjectionsUser();
   for (var microapp in microApps) {
     microapp.injectionRegister();
   }
@@ -37,9 +87,19 @@ void registerInjections(){
 
   Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
+    _args = args;
     final routeName = settings.name;
     if (routeName == null) {
       return null;
+    }
+    if(routeName.split('?').length > 1){
+      final data = routeName.split('?')[1].split('&');
+  var obj = <String,String>{};
+  for( var query in data){
+    final querparam = query.split('=');
+    obj[querparam[0]] = querparam[1];
+  }
+  _queryParams = obj;
     }
     final navigateTo = routes[routeName];
     if(navigateTo == null){
@@ -56,8 +116,8 @@ void registerInjections(){
 
 
 class CoreNavigator {
-  static void pushNamed(String routeName, {dynamic args}) {
-    navigatorKey.currentState!.pushNamed(routeName, arguments: args);
+  static Future<T?> pushNamed<T extends Object?>(String routeName, {dynamic args}) async{
+   return await  navigatorKey.currentState!.pushNamed(routeName, arguments: args);
   }
 
   static void pushReplacementNamed(String routeName, {dynamic args}) {
@@ -72,18 +132,22 @@ class CoreNavigator {
     navigatorKey.currentState!.popUntil(ModalRoute.withName(routeName));
   }
 
-  static void popAndPushNamed(String routeName, {dynamic args}) {
-    navigatorKey.currentState!.popAndPushNamed(routeName, arguments: args);
+  static Future<T?> popAndPushNamed<T extends Object?>(String routeName, {dynamic args}) async {
+    return await navigatorKey.currentState!.popAndPushNamed(routeName, arguments: args);
   }
 
-  static void pushNamedAndRemoveUntil(String routeName, {dynamic args}) {
-    navigatorKey.currentState!.pushNamedAndRemoveUntil(
-        routeName, ModalRoute.withName(routeName),
-        arguments: args);
+  static Future<T?> pushNamedAndRemoveUntil<T extends Object?>(
+  String newRouteName,
+  bool Function(Route<dynamic>) predicate, {
+  Object? arguments,
+}) async{
+    return await navigatorKey.currentState!.pushNamedAndRemoveUntil(
+        newRouteName, predicate,
+        arguments: arguments);
   }
 
-  static void push(Widget widget) {
-    navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
+  static Future<T?> push<T extends Object?>(Widget widget) async {
+    return await navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
       return widget;
     }));
   }

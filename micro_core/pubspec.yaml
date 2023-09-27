@@ -2,6 +2,7 @@ name: micro_core
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -10,6 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  micro_commons_depends:
+    path: ../micro_commons_depends
+  micro_commons_user:
+    path: ../micro_commons_user
+  micro_commons:
+    path: ../micro_commons
+  design_system:
+    path: ../design_system
 
 dev_dependencies:
   flutter_test:

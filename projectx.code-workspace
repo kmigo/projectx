@@ -14,7 +14,25 @@
 		},
 		{
 			"path": "micro_commons_user"
+		},
+		{
+			"path": "micro_commons"
+		},
+		{
+			"path": "design_system"
 		}
 	],
-	"settings": {}
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Run base_app",
+				"cwd": "${workspaceFolder:base_app}",
+				"request": "launch",
+				"type": "dart",
+				"program": "${workspaceFolder:base_app}/lib/main.dart"
+			}
+		]
+	}
 }

@@ -62,6 +62,56 @@ class CpfInputFormatter extends TextInputFormatter {
   }
   }
 
+
+
+class MaskedInputFormatter extends TextInputFormatter {
+  final String mask;
+
+  const MaskedInputFormatter({this.mask = '(##) ####-####'});
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final newText = _applyMask(mask, newValue.text);
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+
+  String _applyMask(String mask, String value) {
+    final numericText = value.replaceAll(RegExp(r'\D'), '');
+    var maskedText = '';
+    var maskCharIndex = 0;
+    var numericCharIndex = 0;
+
+    while (maskCharIndex < mask.length && numericCharIndex < numericText.length) {
+      final maskChar = mask[maskCharIndex];
+      final numericChar = numericText[numericCharIndex];
+
+      if (maskChar == '#') {
+        maskedText += numericChar;
+        maskCharIndex++;
+        numericCharIndex++;
+      } else {
+        maskedText += maskChar;
+        maskCharIndex++;
+      }
+    }
+
+    return maskedText;
+  }
+}
+
+
+
+
+
+
+
+
+
+
 class DateInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -82,6 +132,7 @@ class DateInputFormatter extends TextInputFormatter {
     );
   }
 }
+
 
 class CepInputFormatter extends TextInputFormatter {
   @override

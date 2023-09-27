@@ -94,10 +94,15 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
     _focusNode = widget.focusNode ?? FocusNode();
 
     if(widget.customKeyboardType != null || widget.controller != null){
+
        _controller = widget.controller ?? TextEditingController(text: widget.initialValue);
        _controller?.addListener(() { 
         if(widget.customKeyboardType != UolletiKeyboardType.numericWithoutObserver){
            bloc.addValueText(_controller?.text ?? '');
+        }
+
+        if(_controller?.text.isEmpty == true){
+          bloc.addValueText('');
         }
        
         widget.onChanged?.call(_controller!.text);

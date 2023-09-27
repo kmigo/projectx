@@ -1,8 +1,8 @@
 
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:dio/dio.dart' show MultipartFile;
 
+part of 'models.dart';
 class MultiTypeFile {
   final String filename;
   final MultipartFile file;

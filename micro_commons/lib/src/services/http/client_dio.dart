@@ -15,7 +15,8 @@ import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 
 import '../../domain/erros/failure.dart';
-import '../../models/multi_part_file.dart';
+import '../../models/models.dart';
+
 
 class HttpClientDio extends ClientHttp {
   late Dio _dio;

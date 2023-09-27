@@ -12,10 +12,12 @@ class ConfirmPhoneToCreatedAccount extends StatefulWidget {
 
 class _ConfirmPhoneToCreatedAccount extends State<ConfirmPhoneToCreatedAccount> {
 
-
+  final List<PhoneItemConfigModel> phones =[];
+  final phoneController = TextEditingController();
   @override
   void initState() {
     super.initState();
+    phones.addAll(PhoneItemsConfigModel.fromMap(EnvironmentVariables.getRemoteConfigMap(RemoteConfigVars.phones)).phones);
   }
 
   @override
@@ -67,14 +69,35 @@ class _ConfirmPhoneToCreatedAccount extends State<ConfirmPhoneToCreatedAccount> 
                 SizedBox(
                   height: ScreenSize.getHeight(context) * 0.01,
                 ),
+              
                 SizedBox(
                   width: ScreenSize.getWidth(context) * 0.88,
                   height: ScreenSize.getHeight(context) * 0.08,
-                  child:  Padding(
-                    padding:  const EdgeInsets.all(8.0),
-                    child: UolletiTextInput.cpf(
-                      customKeyboardType: UolletiKeyboardType.numeric,
-                    ),
+                  child:  FormField<PhoneItemConfigModel>(
+                    builder: (state) {
+                      return Row(
+                        children: [
+                            UolletiDropDownSimple<PhoneItemConfigModel>(
+                              value: state.value,
+                              items: phones, onChanged: (value){
+                                
+                                state.didChange(value);
+                                phoneController.clear();
+                              }, onChild: (value) => Center(child: UolletiText("${value.code} ${value.abbreviation}")),
+                isExpanded: false,
+                ),
+                          const SizedBox(width: 8,),
+                          Flexible(
+                            child: UolletiTextInput(
+                              controller: phoneController,
+                              hintText: state.value?.hint,
+                              inputFormatters: [MaskedInputFormatter(mask: state.value?.mask ?? '(##) #####-####')],
+                              customKeyboardType: UolletiKeyboardType.numericWithoutObserver,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
                   ),
                 )
               ],

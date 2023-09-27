@@ -22,6 +22,7 @@ class MyApp extends StatefulWidget  {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: 'files/env');
+  
 
     await Firebase.initializeApp(options: const FirebaseOptions(
     apiKey: 'AIzaSyC9vmQG0Qz3sSsIaoYNtsjSy7LS2GLMTWk',
@@ -33,7 +34,7 @@ class MyApp extends StatefulWidget  {
     storageBucket: 'uoleti-staging.appspot.com',
     measurementId: 'G-2ZK837RNR4',
   ));
-
+await EnvironmentVariables.init();
       FlutterError.onError = (errorDetails) {
 
     };
@@ -66,6 +67,7 @@ bloc = CoreBinding.get<AuthenticationBloc>();
     return MaterialApp(
       title: 'Flutter Demo',
       navigatorKey: navigatorKey,
+      navigatorObservers: [MyNavigatorObserver()],
       routes: routes.map((key, value) => MapEntry(key, (context) =>  value(context,null))),
       onGenerateRoute: generateRoute,
       initialRoute: AppRoutes.root,
@@ -86,8 +88,6 @@ bloc = CoreBinding.get<AuthenticationBloc>();
               case StatusAuthentication.signin:
                 break;
               case StatusAuthentication.unauthentication:
-                CoreNavigator.pushNamedAndRemoveUntil(
-                    AppRoutes.root, ModalRoute.withName(AppRoutes.root));
                 break;
               case StatusAuthentication.signOut:
               CoreNavigator.pushNamedAndRemoveUntil(
@@ -127,5 +127,33 @@ bloc = CoreBinding.get<AuthenticationBloc>();
 
   ];
   
+
+}
+
+class MyNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    super.didPop(route, previousRoute);
+    CoreBinding.get<UolletiKeyboardBloc>().hide();
+
+  }
+  @override
+void didPush(Route route, Route? previousRoute) {
+  super.didPush(route, previousRoute);
+  CoreBinding.get<UolletiKeyboardBloc>().hide();
+
+}
+@override
+void didRemove(Route route, Route? previousRoute) {
+  super.didRemove(route, previousRoute);
+  CoreBinding.get<UolletiKeyboardBloc>().hide();
+
+}
+
+@override
+void didReplace({Route? newRoute, Route? oldRoute}) {
+  super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+CoreBinding.get<UolletiKeyboardBloc>().hide();
+}
 
 }

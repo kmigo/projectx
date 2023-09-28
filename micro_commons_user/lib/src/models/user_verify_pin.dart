@@ -1,12 +1,6 @@
 
 
-
-
-import 'dart:convert';
-
-import 'package:micro_core/micro_core.dart';
-
-import '../domain/entities/user.dart';
+part of 'models.dart';
 
 class UserVerifyPin extends Equatable{
     final UserEntity user;

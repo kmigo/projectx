@@ -4,8 +4,10 @@ import 'dart:developer';
 
 import 'package:micro_core/micro_core.dart';
 
+import '../../micro_commons_user.dart';
 import '../domain/entities/favorite_user.dart';
-import '../models/favorite_user.dart';
+
+
 import 'favorite_datasource.dart';
 
 class FavoriteUserdatasourceImpl extends FavoriteUserDatasource {

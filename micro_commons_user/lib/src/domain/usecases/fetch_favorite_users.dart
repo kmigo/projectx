@@ -1,8 +1,4 @@
-
-import 'package:micro_core/micro_core.dart';
-
-import '../../repository/favorite_user_repository.dart';
-import '../entities/favorite_user.dart';
+part of 'usecases.dart';
 
 abstract class FetchFavoriteUsersUsecase {
   Future<Either<Failure, List<FavoriteUserEntity>>> call(String currentUser);

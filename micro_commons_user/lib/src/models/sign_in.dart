@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 
-import 'package:micro_core/micro_core.dart';
+part of 'models.dart';
 
 class SignInModel extends Equatable {
   final String cpf;

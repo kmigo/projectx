@@ -2,19 +2,15 @@
 
 import 'dart:async';
 
+
 import 'package:micro_core/micro_core.dart';
 import 'dart:developer' as dev;
+import '../../micro_commons_user.dart';
 import '../datasources/authentication_user.dart';
 import '../domain/entities/kyc.dart';
 import '../domain/entities/user.dart';
-import '../models/address_model.dart';
-import '../models/filter_user.dart';
-import '../models/form_data.dart';
-import '../models/sign_in.dart';
-import '../models/sms_code.dart';
-import '../models/update_phone.dart';
-import '../models/user_create.dart';
-import '../models/user_verify_pin.dart';
+
+
 import 'authentication_repository.dart';
 
 class AutheticationRepositoryImpl extends AuthenticationRepository {
@@ -33,7 +29,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> confirmPhone(String code) async {
+  Future<Either<Failure, void>> confirmPhone(SmsCodeModel code) async {
     try {
       final user = await _datasource.confirmPhoneNumber(code);
       return Right(user);
@@ -128,9 +124,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<Either<Failure, UserEntity>> signUp(
-      UserCreateModel userCreateModel) async {
+      SignUpModel signUpModel) async {
     try {
-      final result = await _datasource.signUp(userCreateModel);
+      final result = await _datasource.signUp(signUpModel);
       _user = result;
       _controller
           .add(AuthenticationStatus(result, StatusAuthentication.signup));
@@ -144,7 +140,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       final idref = FirebaseDatabase.instance.ref('errors').push();
       idref.set({
         'event': 'signUp-error-firebase',
-        'data': userCreateModel.toMap(),
+        'data': signUpModel.toMap(),
         'error': e.toString(),
         'message': message
       });
@@ -192,32 +188,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, void>> validatePhoneNumber(String numberPhone) async {
-    try {
-      final result = await _datasource.validatePhoneNumber(numberPhone);
-      return Right(result);
-    } on Failure catch (e) {
-      dev.log(e.toString(),
-          name: '$constantsLogFailure - validatePhoneNumber ',
-          time: DateTime.now());
-      return Left(e);
-    } on FirebaseAuthException catch (e) {
-      dev.log(e.toString(),
-          name: '$constantsLogErrorFirebaseAuth - validatePhoneNumber ',
-          time: DateTime.now(),
-          error: e);
-      _streamSubscription?.cancel();
-      _streamSubscriptionWallet?.cancel();
-      final message = _getFirebaseAuthErrorMessage(e.code);
-      return Left(Failure(message: message));
-    } catch (e) {
-      dev.log(e.toString(),
-          name: '$constantsLogException - validatePhoneNumber ',
-          time: DateTime.now());
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
-    }
-  }
+ 
 
   String _getFirebaseAuthErrorMessage(String errorCode) {
     dev.log(errorCode,
@@ -361,12 +332,12 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> verifyPhoneToUpdate(UpdatePhoneModel updatePhoneModel) async {
+  Future<Either<Failure, void>> verifyPhone(VerifyPhoneModel updatePhoneModel) async {
     try{
-      return Right(await _datasource.verifyPhoneToUpdate(updatePhoneModel));
+      return Right(await _datasource.verifyPhone(updatePhoneModel));
     } on FirebaseAuthException catch (e) {
       dev.log(e.toString(),
-          name: '$constantsLogErrorFirebaseAuth - verifyPhoneToUpdate ',
+          name: '$constantsLogErrorFirebaseAuth - verifyPhone ',
           time: DateTime.now(),
           error: e);
       final message = _getFirebaseAuthErrorMessage(e.code);
@@ -377,4 +348,6 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
        return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
       }
   }
+  
+ 
 }

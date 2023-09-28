@@ -20,9 +20,11 @@ class UolletiTextInput extends StatefulWidget {
   final bool Function(String?)? validateDone;
   final bool? obscureText;
   final bool? enabled;
+  final String? errorText;
   const UolletiTextInput(
       {super.key,
       this.maxLength,
+      this.errorText,
       this.customKeyboardType,
       this.validator,
       this.maxLines,
@@ -57,6 +59,7 @@ class UolletiTextInput extends StatefulWidget {
       this.textAlign,
       this.focus,
       this.focusNode,
+      this.errorText,
       this.onDone,
       this.onClear,
       this.onChanged}): inputFormatters = [  CpfInputFormatter()],hintText = MaskHintText.cpf;
@@ -67,6 +70,7 @@ class UolletiTextInput extends StatefulWidget {
       this.validator,
       this.maxLines,
       this.controller,
+      this.errorText,
       this.enabled,
       this.prefixIcon,
       this.validateDone,
@@ -96,7 +100,15 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
     if(widget.customKeyboardType != null || widget.controller != null){
 
        _controller = widget.controller ?? TextEditingController(text: widget.initialValue);
-       _controller?.addListener(() { 
+       _controller?.addListener(_observerKeyboarding);
+    }
+   
+
+    _focusNode?.addListener(_start
+    );
+  }
+  _observerKeyboarding(){
+
         if(widget.customKeyboardType != UolletiKeyboardType.numericWithoutObserver){
            bloc.addValueText(_controller?.text ?? '');
         }
@@ -106,11 +118,9 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
         }
        
         widget.onChanged?.call(_controller!.text);
-       });
-    }
-   
 
-    _focusNode?.addListener(() {
+  }
+  _start(){
       if (_focusNode?.hasFocus == true) {
         bloc.init(
             type: widget.customKeyboardType,
@@ -126,12 +136,12 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
             onClear: widget.onClear);
         bloc.show();
       } 
-    }
-    );
+    
   }
-
   @override
   void dispose() {
+    _focusNode?.removeListener(_start);
+    _controller?.removeListener(_observerKeyboarding);
     _controller?.dispose();
     _focusNode?.dispose();
     super.dispose();
@@ -182,6 +192,7 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
               InputDecoration(
                 hintText: widget.hintText,
                 prefixIcon: widget.prefixIcon,
+                errorText: widget.errorText,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(color: Colors.grey.shade300),

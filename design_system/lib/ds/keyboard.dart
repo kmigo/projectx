@@ -109,7 +109,7 @@ class _UolletiKeyboardNumericState extends State<UolletiKeyboardNumeric> {
                         },
                         height: heightButton,
                         width: widthButton,
-                        colorBackground: validateDone ?  colorsDS.iconsWarning : colorsDS.backgroundNegative,
+                        colorBackground: validateDone ?  colorsDS.iconsPositive : colorsDS.backgroundNegative,
                         child: Center(
                             child: Icon(
                           Icons.arrow_forward,

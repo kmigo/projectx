@@ -1,7 +1,4 @@
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/favorite_user.dart';
-import '../../repository/favorite_user_repository.dart';
+part of 'usecases.dart';
 
 abstract class UpdateFavoriteUserUsecase {
   Future<Either<Failure,void>> call(String currentUid, String favoriteUserUid,FavoriteUserModel favoriteUserModel);

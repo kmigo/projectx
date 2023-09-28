@@ -2,28 +2,23 @@
 
 import 'dart:developer';
 
-import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+
 
 import 'package:flutter/foundation.dart';
+
 import 'package:micro_core/micro_core.dart';
 
 import 'dart:developer' as dev;
 
+import '../../micro_commons_user.dart';
 import '../domain/entities/kyc.dart';
 import '../domain/entities/user.dart';
-import '../models/address_model.dart';
-import '../models/filter_user.dart';
-import '../models/form_data.dart';
-import '../models/sign_in.dart';
-import '../models/sms_code.dart';
-import '../models/update_phone.dart';
-import '../models/user_create.dart';
-import '../models/user_verify_pin.dart';
+
 import 'authentication_user.dart';
 
 
 class AuthenticationDatasourceImpl extends AuthenticationDatasource {
-  final _auth = FirebaseAuth.instance;
+  static final _auth = FirebaseAuth.instance;
   final _db = FirebaseDatabase.instance;
 
   UserCredential? _credential;
@@ -79,7 +74,7 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
   }
 
   @override
-  Future<UserEntity> signUp(UserCreateModel userCreateModel) async {
+  Future<UserEntity> signUp(SignUpModel signUpModel) async {
     final user = _auth.currentUser;
     if (user == null) {
       throw  Failure(message: 'Não existe usuario logado');
@@ -88,53 +83,28 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
           'x-api-key':EnvironmentVariables.getVariable(VarEnvs.xapikey)
     } ;
     final result = await _clientHttp.get(
-        '${HttpRoutes.transaction.userAlreadyExists}/${userCreateModel.cpf}',headers:headers );
+        '${HttpRoutes.transaction.userAlreadyExists}/${signUpModel.cpf}',headers:headers );
     if (result.data['result']) {
       throw  Failure(message: 'Usuário já existe');
     }
-    await _db.ref(constantsUser).child(user.uid).set(userCreateModel.toMap()
+    await _db.ref(constantsUser).child(user.uid).set(signUpModel.toMap()
       ..['consumer'] = EnvironmentVariables.getVariable(VarEnvs.consumer));
-    return UserDTO.fromMap(userCreateModel.toMap()..['id'] = user.uid);
+    return UserDTO.fromMap(signUpModel.toMap()..['id'] = user.uid);
   }
 
-  @override
-  Future<void> validatePhoneNumber(String phoneNumber) async {
-    final platform = FirebaseAuthPlatform.instanceFor(
-        app: _auth.app, pluginConstants: _auth.pluginConstants);
-    _confirmationResult = await _auth.signInWithPhoneNumber(
-        phoneNumber,
-        RecaptchaVerifier(
-            onError: (error) {
-              throw error;
-            },
-            onSuccess: () {
-            
-            },
-            onExpired: () {
-              throw  Failure(message: 'Expiração de captcha');
-            },
-            auth: platform));
-
-
-  }
 
   @override
-  Future<UserEntity> confirmPhoneNumber(String code) async {
-    _credential = await _confirmationResult?.confirm(
-      code,
-    );
-    dev.log('uid: ${_credential?.user?.uid}');
-    if (_credential?.user?.uid == null) {
-      throw  Failure(message: 'Codigo inválido!.');
+  Future<void> confirmPhoneNumber(SmsCodeModel sms) async {
+    try{
+          final cred =  PhoneAuthProvider.credential(verificationId: sms.verificattionId, smsCode: sms.smsCode);
+            await _auth.signInWithCredential(cred);
+
+    }on FirebaseAuthException{
+      rethrow;
+    } catch(e){
+      throw Failure(message: 'Erro ao confirmar o telefone');
     }
-    final uid = _credential!.user!.uid;
-    final doc = await _db.ref(constantsUser).child(uid).get();
-    if (!doc.exists) {
-      throw ErrorUserWithoutAccount(
-          message: 'Usuário ainda não tem conta criada.');
-    }
-    final user = UserDTO.fromMap(doc.value as Map<String, dynamic>);
-    return user;
+
   }
 
   @override
@@ -258,20 +228,11 @@ await _clientHttp.put("${HttpRoutes.user.root}/",json: address.toMap());
   }
 
   @override
-  Future<void> verifyPhoneToUpdate(UpdatePhoneModel updatePhoneModel) async{
-     FirebaseAuth.instance.verifyPhoneNumber(
+  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel) async{
+     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber:"${updatePhoneModel.phoneNumber}",
         timeout: const Duration(minutes: 2),
         verificationCompleted: (credential) async {
-          try{
-              await (FirebaseAuth.instance.currentUser)?.updatePhoneNumber(credential);
-          }on FirebaseAuthException{
-            rethrow;
-          }
-          catch(e){
-            throw Failure(message: 'Erro ao atualizar o telefone');
-          }
-        
           // either this occurs or the user needs to manually enter the SMS code
         },
         verificationFailed: (authFailure){
@@ -280,7 +241,7 @@ await _clientHttp.put("${HttpRoutes.user.root}/",json: address.toMap());
         },
         codeSent: (verificationId, [forceResendingToken]) async {
           
-            updatePhoneModel.verifycodeId(verificationId);
+           updatePhoneModel.verifycodeId(verificationId);
         },
         codeAutoRetrievalTimeout: (timeOut){});
     

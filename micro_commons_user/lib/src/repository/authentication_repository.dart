@@ -1,16 +1,12 @@
 
+
 import 'package:micro_core/micro_core.dart';
 
+import '../../micro_commons_user.dart';
 import '../domain/entities/kyc.dart';
 import '../domain/entities/user.dart';
-import '../models/address_model.dart';
-import '../models/filter_user.dart';
-import '../models/form_data.dart';
-import '../models/sign_in.dart';
-import '../models/sms_code.dart';
-import '../models/update_phone.dart';
-import '../models/user_create.dart';
-import '../models/user_verify_pin.dart';
+
+
 
 enum StatusAuthentication {
   unknow,
@@ -41,10 +37,9 @@ class AuthenticationStatus  extends Equatable {
 
 abstract class AuthenticationRepository {
 
-  Future<Either<Failure,UserEntity>> signUp(UserCreateModel userCreateModel);
+  Future<Either<Failure,UserEntity>> signUp( SignUpModel signUpModel);
   Future<Either<Failure,void>> signOut();
-  Future<Either<Failure,UserEntity>> confirmPhone(String code);
-  Future<Either<Failure,void>> validatePhoneNumber(String numberPhone);
+  Future<Either<Failure,void>> confirmPhone(SmsCodeModel code);
   Future<Either<Failure,UserVerifyPin>> validPincode(String code);
   Future<Either<Failure,UserEntity>> currentUser();
    Future<Either<Failure,void>> changePincode(String code);
@@ -57,6 +52,6 @@ abstract class AuthenticationRepository {
   Future<Either<Failure,UserWithKycEntity>> getUserWithKyc();
   Future<Either<Failure,void>> updateKyc(FormDataModel formData);
   Future<Either<Failure,void>> updateAddress(AddressModel addressModel,String uid);
-   Future<Either<Failure,void>> verifyPhoneToUpdate(UpdatePhoneModel updatePhoneModel);
+   Future<Either<Failure,void>> verifyPhone(VerifyPhoneModel updatePhoneModel);
 Future<Either<Failure,void>> updatePhone(SmsCodeModel sms);
 }

@@ -1,4 +1,5 @@
 
+part of 'models.dart';
 class FilterUser {
   final String? name;
   final String? phoneNumber;

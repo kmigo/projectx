@@ -1,8 +1,4 @@
-
-import 'package:micro_core/micro_core.dart';
-
-import '../../repository/authentication_repository.dart';
-import '../entities/user.dart';
+part of 'usecases.dart';
 
 abstract class UpdateUserUsecase {
   Future<Either<Failure,void>> call(UserEntity userEntity);

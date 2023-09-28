@@ -1,8 +1,9 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -57,6 +58,7 @@ class _MyAppState extends State<MyApp> with BaseApp {
   registerRoutes();
     CoreBinding.registerSingleton<UolletiKeyboardBloc>( (i) =>UolletiKeyboardBloc());
   registerInjections();
+  initializeInjectionsUser();
 bloc = CoreBinding.get<AuthenticationBloc>();
 
 

@@ -1,10 +1,4 @@
-
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/sign_in.dart';
-import '../../repository/authentication_repository.dart';
-import '../entities/user.dart';
-
+part of 'usecases.dart';
 abstract class SignInUsecase {
   Future<Either<Failure,UserEntity>> call(SignInModel signInModel);
 }

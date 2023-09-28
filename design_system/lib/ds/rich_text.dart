@@ -4,7 +4,7 @@ class UolletiRichText extends StatelessWidget {
   final double? size;
   final Color? color;
   const UolletiRichText(this.text, {super.key, this.size,this.color}) ;
-  const UolletiRichText.contentMedium(this.text, {super.key,this.color}) : size = 14;
+  const UolletiRichText.contentMedium(this.text, {super.key,this.color}) : size = 16;
 
   @override
   Widget build(BuildContext context) {

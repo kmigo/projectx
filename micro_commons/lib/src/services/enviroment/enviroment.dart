@@ -22,8 +22,8 @@ class EnvironmentVariables {
     _remoteConfig!.setDefaults({
   "phones":"""{
   "+55": {
-    "mask": "(##) ####-####",
-    "hint": "(00) 0000-0000",
+    "mask": "(##) #####-####",
+    "hint": "(00) 00000-0000",
     "country": "Brasil",
     "is_active": true,
     "abbreviation": "BRA",

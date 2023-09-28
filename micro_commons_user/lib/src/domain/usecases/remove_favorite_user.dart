@@ -1,6 +1,4 @@
-import 'package:micro_core/micro_core.dart';
-
-import '../../repository/favorite_user_repository.dart';
+part of 'usecases.dart';
 
 abstract class RemoveFavoriteUserUsecase{
   Future<Either<Failure,void>> call(String currentUid, String favoriteUserUid);

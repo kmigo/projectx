@@ -2,7 +2,7 @@
 
 
 
-import 'package:micro_core/micro_core.dart';
+part of 'models.dart';
 
 class UserCreateModel extends Equatable {
   final String cpf;

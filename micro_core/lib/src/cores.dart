@@ -1,7 +1,7 @@
 // ignore_for_file: unused_element, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:micro_commons_user/micro_commons_user.dart';
+
 
 import 'package:micro_core/micro_core.dart';
 
@@ -68,7 +68,7 @@ void registerInjections(){
     baseUrl:'http://localhost:65182/#/',
 
   ));
-  initializeInjectionsUser();
+
   for (var microapp in microApps) {
     microapp.injectionRegister();
   }
@@ -120,8 +120,8 @@ class CoreNavigator {
    return await  navigatorKey.currentState!.pushNamed(routeName, arguments: args);
   }
 
-  static void pushReplacementNamed(String routeName, {dynamic args}) {
-    navigatorKey.currentState!.pushReplacementNamed(routeName, arguments: args);
+  static  Future<T?> pushReplacementNamed<T extends Object?>(String routeName, {dynamic args}) async{
+    return await navigatorKey.currentState!.pushReplacementNamed(routeName, arguments: args);
   }
 
   static void pop() {

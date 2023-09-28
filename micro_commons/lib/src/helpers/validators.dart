@@ -127,3 +127,23 @@ class HelperInputValidator {
     return 'Cep inválido';
   }
 }
+
+class HelperValidatorMask {
+  static bool validateMaskToNumbers(String? text, String? mask) {
+    if (text == null) return false;
+    if (mask == null) return false;
+
+    final regex= _convertMaskToRegex(mask);
+
+    return RegExp(regex).hasMatch(text);
+  }
+
+  static String _convertMaskToRegex(String mask) {
+    return mask
+        .replaceAllMapped(RegExp(r'#'), (match) => r'\d')
+        .replaceAllMapped(RegExp(r'\('), (match) => r'\(')
+        .replaceAllMapped(RegExp(r'\)'), (match) => r'\)')
+        .replaceAllMapped(RegExp(r' '), (match) => r' ')
+        .replaceAllMapped(RegExp(r'-'), (match) => r'-');
+  }
+}

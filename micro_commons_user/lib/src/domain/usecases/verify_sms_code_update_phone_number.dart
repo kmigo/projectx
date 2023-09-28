@@ -1,7 +1,4 @@
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/sms_code.dart';
-import '../../repository/authentication_repository.dart';
+part of 'usecases.dart';
 
 abstract class VerifySmsCodeUpdatePhoneNumberUsecase {
   Future<Either<Failure,void>> call(SmsCodeModel smscode);

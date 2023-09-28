@@ -6,9 +6,10 @@ import 'dart:async';
 
 import 'package:micro_core/micro_core.dart';
 import 'dart:developer' as dev;
+import '../../../micro_commons_user.dart';
 import '../../domain/entities/user.dart';
-import '../../domain/usecases/current_user.dart';
-import '../../domain/usecases/sign_out.dart';
+
+
 import '../../repository/authentication_repository.dart';
 
 part 'state.dart';

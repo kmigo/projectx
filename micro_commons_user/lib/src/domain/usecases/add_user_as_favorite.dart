@@ -1,9 +1,4 @@
-
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/favorite_user.dart';
-import '../../repository/favorite_user_repository.dart';
-import '../entities/favorite_user.dart';
+part of 'usecases.dart';
 abstract class AddUserAsFavoriteUsecase {
   Future<Either<Failure, FavoriteUserEntity>> call(String currentUser,String userUid, FavoriteUserModel favoriteModel);
 }

@@ -1,12 +1,7 @@
-
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/user_create.dart';
-import '../../repository/authentication_repository.dart';
-import '../entities/user.dart';
+part of 'usecases.dart';
 
 abstract class SignUpUsecase {
-  Future<Either<Failure,UserEntity>> call(UserCreateModel userCreateModel);
+  Future<Either<Failure,UserEntity>> call(SignUpModel userCreateModel);
 }
 
 class SignUpUsecaseImpl extends SignUpUsecase {
@@ -15,13 +10,14 @@ class SignUpUsecaseImpl extends SignUpUsecase {
   SignUpUsecaseImpl(this._repository);
   @override
   Future<Either<Failure, UserEntity>> call(
-      UserCreateModel userCreateModel) async {
-    if (userCreateModel.password.length < 6 ||
-        userCreateModel.password.length > 6) {
+      SignUpModel userCreateModel) async {
+        if(userCreateModel.pincode == null) return Left(Failure(message: 'O pincode é obrigatório'));
+    if (userCreateModel.pincode!.length < 6 ||
+        userCreateModel.pincode!.length > 6) {
       return  Left(Failure(message: 'O pincode deve conter 6 digitos'));
     }
     return await _repository.signUp(userCreateModel.copyWith(
-        password: encrypted(userCreateModel.password,
+        pincode: encrypted(userCreateModel.pincode!,
             EnvironmentVariables.getVariable(VarEnvs.secret).toString())));
   }
 }

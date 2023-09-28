@@ -1,8 +1,4 @@
-import 'package:micro_core/micro_core.dart';
-
-import '../../models/form_data.dart';
-import '../../repository/authentication_repository.dart';
-import '../entities/kyc.dart';
+part of 'usecases.dart';
 
 abstract class UpdateKycUsecase {
   Future<Either<Failure,void>> call(FormDataModel formData,LevelRoleEntity role);
@@ -13,10 +9,10 @@ class UpdateKycUsecaseImpl extends UpdateKycUsecase {
 
   UpdateKycUsecaseImpl(this._authenticationRepository);
   @override
-  Future<Either<Failure, void>> call(FormDataModel formData,LevelRoleEntity kyc) async{
-      final ors = kyc.role?.data?.required?.or ?? [];
+  Future<Either<Failure, void>> call(FormDataModel formData,LevelRoleEntity role) async{
+      final ors = role.role?.data?.required?.or ?? [];
       bool orRequired = false;
-      final fieldsRequired = kyc.role?.data?.required?.fields ?? [];
+      final fieldsRequired = role.role?.data?.required?.fields ?? [];
       for(var field in fieldsRequired){
         if(field.type == 'document'){
           for(MultiTypeFile doc in formData.files ?? []){

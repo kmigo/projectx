@@ -1,7 +1,8 @@
 
 
 import '../domain/entities/favorite_user.dart';
-import '../models/favorite_user.dart';
+import '../models/models.dart';
+
 
 abstract class FavoriteUserDatasource {
   Future<FavoriteUserEntity> addFavoriteUser(String currentUid, String userUid,FavoriteUserModel favoriteModel);

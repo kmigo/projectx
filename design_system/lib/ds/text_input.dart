@@ -173,40 +173,37 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
         if(![UolletiKeyboardType.numericWithoutObserver,UolletiKeyboardType.numeric].contains(widget.customKeyboardType)) return;
         _controller?.text = state.text;
       },
-      child: GestureDetector(
-        //onTap: () => _focusNode?.requestFocus(),
-        child: TextFormField(
-          maxLines: widget.maxLines,
-          maxLength: widget.maxLength,
-          initialValue: _controller != null? null: widget.initialValue,
-          enabled: widget.enabled,
-          onChanged: widget.onChanged,
-          controller: _controller,
-          obscureText: widget.obscureText ?? false,
-          validator: widget.validator,
-          textAlign: widget.textAlign ?? TextAlign.start,
-          focusNode: _focusNode,
-          readOnly: widget.customKeyboardType != null,
-          inputFormatters: widget.inputFormatters,
-          decoration: widget.decoration ??
-              InputDecoration(
-                hintText: widget.hintText,
-                prefixIcon: widget.prefixIcon,
-                errorText: widget.errorText,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
+      child: TextFormField(
+        maxLines: widget.maxLines,
+        maxLength: widget.maxLength,
+        initialValue: _controller != null? null: widget.initialValue,
+        enabled: widget.enabled,
+        onChanged: widget.onChanged,
+        controller: _controller,
+        obscureText: widget.obscureText ?? false,
+        validator: widget.validator,
+        textAlign: widget.textAlign ?? TextAlign.start,
+        focusNode: _focusNode,
+        readOnly: widget.customKeyboardType != null,
+        inputFormatters: widget.inputFormatters,
+        decoration: widget.decoration ??
+            InputDecoration(
+              hintText: widget.hintText,
+              prefixIcon: widget.prefixIcon,
+              errorText: widget.errorText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey.shade300),
               ),
-        ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+            ),
       ),
     );
   }

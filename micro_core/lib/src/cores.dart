@@ -88,7 +88,8 @@ void registerInjections(){
   Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     _args = args;
-    final routeName = settings.name;
+    String? routeName = settings.name;
+    String? oldRouteName = routeName;
     if (routeName == null) {
       return null;
     }
@@ -99,6 +100,7 @@ void registerInjections(){
     final querparam = query.split('=');
     obj[querparam[0]] = querparam[1];
   }
+  routeName = routeName.split('?')[0];
   _queryParams = obj;
     }
     final navigateTo = routes[routeName];
@@ -107,6 +109,7 @@ void registerInjections(){
     }
     if (routes.containsKey(routeName)) {
       return MaterialPageRoute(
+        settings: RouteSettings(name: oldRouteName, arguments: args),
           builder: (context) => navigateTo.call(context, args));
     }
     return null;

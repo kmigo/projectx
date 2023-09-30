@@ -1,7 +1,7 @@
 part of 'usecases.dart';
 
 abstract class VerifyPhoneUsecase {
-  Future<Either<Failure, void>> call(VerifyPhoneModel phoneModel);
+  Future<Either<Failure, void>> call(VerifyPhoneModel phoneModel,{bool checkAccountAlreadyExist = false});
 }
 
 class VerifyPhoneUsecaseImpl extends VerifyPhoneUsecase {
@@ -9,7 +9,7 @@ class VerifyPhoneUsecaseImpl extends VerifyPhoneUsecase {
 
   VerifyPhoneUsecaseImpl(this._authenticationRepository);
   @override
-  Future<Either<Failure, void>> call(VerifyPhoneModel phoneModel) async {
+  Future<Either<Failure, void>> call(VerifyPhoneModel phoneModel,{bool checkAccountAlreadyExist = false}) async {
 
 
     if (!HelperValidatorMask.validateMaskToNumbers(phoneModel.phoneNumber, phoneModel.phoneItemConfigModel!.mask!)) {
@@ -19,7 +19,7 @@ class VerifyPhoneUsecaseImpl extends VerifyPhoneUsecase {
       final codeCountry = phoneModel.phoneItemConfigModel!.code;
 
 
-      return await _authenticationRepository.verifyPhone( phoneModel.copyWith(phoneNumber: '$codeCountry$onlyNumber'));
+      return await _authenticationRepository.verifyPhone( phoneModel.copyWith(phoneNumber: '$codeCountry$onlyNumber'),checkAccountAlreadyExist: checkAccountAlreadyExist);
     }
   }
 

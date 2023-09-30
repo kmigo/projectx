@@ -10,6 +10,8 @@ class UolletiKeyboardNumeric extends StatefulWidget {
 }
 
 class _UolletiKeyboardNumericState extends State<UolletiKeyboardNumeric> {
+  final columns = List.generate(3, (index) => index+1);
+  final rows = List.generate(3, (index) => index );
   final bloc = CoreBinding.get<UolletiKeyboardBloc>();
   int digit = 0;
   @override
@@ -34,14 +36,13 @@ class _UolletiKeyboardNumericState extends State<UolletiKeyboardNumeric> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(3, (index) => index + 1)
-                      .map<Widget>((colum) {
+                  children: columns.map<Widget>((colum) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: List.generate(3, (index) => index).map((row) {
+                        children: rows.map((row) {
                           digit++;
                           return _ButtonTileKeyboard.primary(
                             value: digit,

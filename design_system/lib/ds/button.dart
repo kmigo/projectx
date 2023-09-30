@@ -12,7 +12,7 @@ class UolletiButton extends StatelessWidget {
   final Color? textColorDisabled;
   final bool isLoading;
   const UolletiButton({super.key,required this.label, required this.textColorDisabled,required this.backgroundDisabled,this.disabled =false,this.onPressed, this.isLoading = false,this.backgroundColor, this.textColor });
-  UolletiButton.primary({super.key,required this.label,this.disabled = true,this.onPressed, this.isLoading = false}): backgroundColor = colorsDS.primary900, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled, textColorDisabled = colorsDS.textDisabled;
+  UolletiButton.primary({super.key,required this.label,this.disabled = false,this.onPressed, this.isLoading = false}): backgroundColor = colorsDS.primary900, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled, textColorDisabled = colorsDS.textDisabled;
   UolletiButton.positive({super.key,required this.label ,this.disabled =true ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled;
 
   @override

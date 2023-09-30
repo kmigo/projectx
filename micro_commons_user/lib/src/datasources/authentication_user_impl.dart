@@ -37,6 +37,11 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
     if (user == null) return null;
 
     final userJson = await _db.ref(constantsUser).child(user.uid).get();
+
+    if(!userJson.exists){
+      return UserEntity(id: user.uid, 
+      document: '', firstName: '', image: '', balance: 0, phoneNumber: user.phoneNumber ?? '', birthDay: '');
+    }
     return UserDTO.fromMap((userJson.value as Map<String, dynamic>)..['id'] = user.uid);
   }
 
@@ -68,8 +73,13 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
         .child(constantsUser)
         .child(id!)
         .onValue
-        .map<UserEntity>((event) =>
-            UserDTO.fromMap(event.snapshot.value as Map<String, dynamic>..['id']=event.snapshot.key))
+        .map<UserEntity>((event) {
+          if(!event.snapshot.exists){
+            return UserEntity(id: id,balance: 0,document: '',firstName: '',image: '',phoneNumber: '',birthDay: '');
+          }
+          return UserDTO.fromMap(event.snapshot.value as Map<String, dynamic>..['id']=event.snapshot.key);
+        })
+            
         .asBroadcastStream();
   }
 
@@ -79,14 +89,19 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
     if (user == null) {
       throw  Failure(message: 'Não existe usuario logado');
     }
-    final headers = <String, dynamic>{   
-          'x-api-key':EnvironmentVariables.getVariable(VarEnvs.xapikey)
-    } ;
-    final result = await _clientHttp.get(
-        '${HttpRoutes.transaction.userAlreadyExists}/${signUpModel.cpf}',headers:headers );
-    if (result.data['result']) {
-      throw  Failure(message: 'Usuário já existe');
+    // final headers = <String, dynamic>{   
+    //       'x-api-key':EnvironmentVariables.getVariable(VarEnvs.xapikey)
+    // } ;
+    // final result = await _clientHttp.get(
+    //     '${HttpRoutes.transaction.userAlreadyExists}/${signUpModel.cpf}',headers:headers );
+    // if (result.data['result']) {
+    //   throw  Failure(message: 'Usuário já existe');
+    // }
+    final userJson = await _db.ref(constantsUser).child(user.uid).get();
+    if(userJson.exists){
+      throw Failure(message: 'Usuário já existe, entre com o login');
     }
+
     await _db.ref(constantsUser).child(user.uid).set(signUpModel.toMap()
       ..['consumer'] = EnvironmentVariables.getVariable(VarEnvs.consumer));
     return UserDTO.fromMap(signUpModel.toMap()..['id'] = user.uid);
@@ -204,8 +219,13 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
         .child(id!)
         .child(constantsAssets)
         .onValue
-        .map<WalletEntity>((event) => 
-            WalletDTO.fromMap(event.snapshot.value as Map<String, dynamic>))
+        .map<WalletEntity>((event)  {
+          if(!event.snapshot.exists){
+            return const WalletEntity(brlnxt: 0,eth: 0);
+          }
+          return  WalletDTO.fromMap(event.snapshot.value as Map<String, dynamic>);
+        })
+           
         .asBroadcastStream();
   }
 
@@ -228,7 +248,13 @@ await _clientHttp.put("${HttpRoutes.user.root}/",json: address.toMap());
   }
 
   @override
-  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel) async{
+  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false}) async{
+    if(checkAccountAlreadyExist){
+      final usersFound = await searchUser(FilterUser(phoneNumber: updatePhoneModel.phoneNumber));
+      if(usersFound.isNotEmpty){
+        throw Failure(message: 'Telefone já cadastrado');
+      }
+    }
      await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber:"${updatePhoneModel.phoneNumber}",
         timeout: const Duration(minutes: 2),

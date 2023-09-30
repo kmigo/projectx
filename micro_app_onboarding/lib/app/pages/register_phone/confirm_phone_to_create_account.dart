@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:micro_core/micro_core.dart';
 
-import '../../bloc/confirm_phone_to_create_account_bloc/bloc.dart';
-part 'components/send_phone_number.dart';
-part 'components/confirm_phone_sms_code.dart';
+import '../../bloc/register_phone/bloc.dart';
+
+
+part 'components/phone_number.dart';
+part 'components/sms_code.dart';
 
 class ConfirmPhoneToCreatedAccount extends StatefulWidget {
   const ConfirmPhoneToCreatedAccount({super.key});
@@ -35,7 +37,8 @@ class _ConfirmPhoneToCreatedAccount
         bloc: bloc,
         listener: (context, state) {
           if (state.status == ConfirmPhoneToCreateAccountStatus.confirmed) {
-            //CoreNavigator.pushReplacementNamed(routeName);
+
+            CoreNavigator.pushReplacementNamed("${AppRoutes.onboarding.createPin}?phone=${state.getPhoneFormated()}");
           }
         },
         builder: (context, state) {

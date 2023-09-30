@@ -10,7 +10,8 @@ class  _Onboarding {
   static const _root  = '/onboarding';
   const _Onboarding();
   final String root = _root;
-  final String welcome = '$_root/welcome';
+  final String microAppName = 'micro_app_onboarding';
   final String createAccount = '$_root/create-account';
+  final String createPin = '$_root/create-pin';
   final String login = '$_root/login';
 }

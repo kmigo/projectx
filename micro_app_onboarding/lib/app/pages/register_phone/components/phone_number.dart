@@ -70,7 +70,6 @@ class SendPhoneNumberComponent extends StatelessWidget {
                       ),
                       SizedBox(
                         width: ScreenSize.getWidth(context) * 0.88,
-                        height: ScreenSize.getHeight(context) * 0.08,
                         child: Row(
                           children: [
                             UolletiDropDownSimple<PhoneItemConfigModel>(
@@ -108,9 +107,12 @@ class SendPhoneNumberComponent extends StatelessWidget {
                                     UolletiKeyboardType.numericWithoutObserver,
                               ),
                             ),
+
                           ],
                         ),
-                      )
+                        
+                      ),
+                      SizedBox(height: 18,)
                     ],
                   ),
                 ),

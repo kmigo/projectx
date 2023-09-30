@@ -332,9 +332,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> verifyPhone(VerifyPhoneModel updatePhoneModel) async {
+  Future<Either<Failure, void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false}) async {
     try{
-      return Right(await _datasource.verifyPhone(updatePhoneModel));
+      return Right(await _datasource.verifyPhone(updatePhoneModel,checkAccountAlreadyExist: checkAccountAlreadyExist));
     } on FirebaseAuthException catch (e) {
       dev.log(e.toString(),
           name: '$constantsLogErrorFirebaseAuth - verifyPhone ',

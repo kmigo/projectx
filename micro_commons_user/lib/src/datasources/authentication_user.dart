@@ -25,7 +25,7 @@ abstract class AuthenticationDatasource {
   Stream<WalletEntity> listenWallet();
   Future<UserWithKycEntity> getUserWithKyc();
   Future<void> updateKyc(FormDataModel formData);
-  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel);
+  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false});
   Future<void> updatePhone(SmsCodeModel sms);
 
 }

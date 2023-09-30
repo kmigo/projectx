@@ -22,20 +22,22 @@ class ConfirmPhoneToCreateAccountBloc
 void verifyPhoneSend(String phoneNumber) async {
 
 
-    emit(state.copyWith(status: ConfirmPhoneToCreateAccountStatus.loading));
+    emit(state.copyWith(status: ConfirmPhoneToCreateAccountStatus.loading,phone: phoneNumber));
 
     final result = await _verifyPhoneUsecase(VerifyPhoneModel(
       phoneItemConfigModel: state.phoneItemConfigModel!,
         verifycodeId: (codeId) => emit(state.copyWith(
             verificationId: codeId)),
-        phoneNumber: phoneNumber));
+        phoneNumber: phoneNumber),checkAccountAlreadyExist: true);
     result.fold(
         (l) => emit(state.copyWith(
               status: ConfirmPhoneToCreateAccountStatus.error,
               error: l.message,
             )),
         (r) => emit(state.copyWith(
-            status: ConfirmPhoneToCreateAccountStatus.confirmCode)));
+            status: ConfirmPhoneToCreateAccountStatus.confirmCode,
+            phone: phoneNumber
+            )));
   }
 
   Future<void> confirmPhone()async{

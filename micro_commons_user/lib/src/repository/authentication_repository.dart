@@ -52,6 +52,6 @@ abstract class AuthenticationRepository {
   Future<Either<Failure,UserWithKycEntity>> getUserWithKyc();
   Future<Either<Failure,void>> updateKyc(FormDataModel formData);
   Future<Either<Failure,void>> updateAddress(AddressModel addressModel,String uid);
-   Future<Either<Failure,void>> verifyPhone(VerifyPhoneModel updatePhoneModel);
+   Future<Either<Failure,void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false});
 Future<Either<Failure,void>> updatePhone(SmsCodeModel sms);
 }

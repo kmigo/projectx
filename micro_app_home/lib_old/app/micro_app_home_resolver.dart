@@ -1,8 +1,9 @@
 
+import 'package:micro_app_home/app/pages/home/controllers/root_controller.dart';
+import 'package:micro_app_home/app/pages/home/pages/home_page.dart';
 import 'package:micro_core/micro_core.dart';
 
-import 'pages/home/controllers/root_controller.dart';
-import 'pages/home/pages/home_page.dart';
+
 
 class MicroAppHomeResolver extends MicroApp {
   @override

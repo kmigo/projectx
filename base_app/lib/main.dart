@@ -26,7 +26,6 @@ class MyApp extends StatefulWidget  {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'files/env');
-  
 
     await Firebase.initializeApp(options: const FirebaseOptions(
     apiKey: 'AIzaSyC9vmQG0Qz3sSsIaoYNtsjSy7LS2GLMTWk',
@@ -41,11 +40,9 @@ class MyApp extends StatefulWidget  {
 
 await EnvironmentVariables.init();
       FlutterError.onError = (errorDetails) {
-
     };
     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
     PlatformDispatcher.instance.onError = (error, stack) {
-
       return true;
     };
 

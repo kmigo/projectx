@@ -39,6 +39,7 @@ initializeInjectionsUser(){
   CoreBinding.registerLazySingleton<UpdateUserUsecase>((i) => UpdateUserUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<ValidPincodeUsecase>((i) => ValidPincodeUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<VerifyPhoneUsecase>((i) => VerifyPhoneUsecaseImpl(i()));
+  CoreBinding.registerLazySingleton<GetUserWithKycUsecase>((i) => GetUserWithKycImpl(i()));
   CoreBinding.registerLazySingleton<VerifySmsCodeUpdatePhoneNumberUsecase>((i) => VerifySmsCodeUpdatePhoneNumberUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<AuthenticationBloc>((i) => AuthenticationBloc(
     controller: i<AuthenticationRepository>().status,

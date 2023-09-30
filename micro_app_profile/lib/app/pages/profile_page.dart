@@ -157,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
           activate: bloc.statusResponse(5) != KYCSTATUSRESPONSE.completed,
             title: 'Endereço',
             icon: Icons.home_outlined,
-            onTap: () => _changeRoute(AppRoutes.profile.addres),
+            onTap: () => _changeRoute(AppRoutes.profile.address),
             iconRight: Icons.chevron_right_outlined),
         _TileProfile(
             title: 'Telefone',

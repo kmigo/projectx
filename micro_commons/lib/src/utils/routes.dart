@@ -32,7 +32,7 @@ class _Profile {
   const _Profile();
   final String root = _root;
   final String microAppName = 'micro_app_profile';
-  final String addres = '$_root/address';
+  final String address = '$_root/address';
   final String fingerprint = '$_root/fingerprint';
   final String limit = '$_root/limit';
   final String password = '$_root/password';

@@ -112,7 +112,7 @@ class SendPhoneNumberComponent extends StatelessWidget {
                         ),
                         
                       ),
-                      SizedBox(height: 18,)
+                      const SizedBox(height: 18,)
                     ],
                   ),
                 ),

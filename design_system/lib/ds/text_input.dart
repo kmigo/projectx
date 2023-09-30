@@ -102,7 +102,7 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
        _controller = widget.controller ?? TextEditingController(text: widget.initialValue);
        _controller?.addListener(_observerKeyboarding);
     }
-   
+
 
     _focusNode?.addListener(_start
     );
@@ -121,6 +121,7 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
 
   }
   _start(){
+    if(![UolletiKeyboardType.numericWithoutObserver,UolletiKeyboardType.numeric].contains(widget.customKeyboardType)) return;
       if (_focusNode?.hasFocus == true) {
         bloc.init(
             type: widget.customKeyboardType,

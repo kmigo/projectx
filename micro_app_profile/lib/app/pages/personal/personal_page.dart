@@ -29,10 +29,10 @@ class _PersonalPageState extends State<PersonalPage> {
   void initState() {
     super.initState();
     bloc.getKyc();
-    document = CorePageModal.args.queryParams[StringUtils.document];
-    birthDay = CorePageModal.args.queryParams[StringUtils.birthDay];
-    email = CorePageModal.args.queryParams[StringUtils.email];
-    username = CorePageModal.args.queryParams[StringUtils.username];
+    document = CorePageModal.queryParams[StringUtils.document];
+    birthDay = CorePageModal.queryParams[StringUtils.birthDay];
+    email = CorePageModal.queryParams[StringUtils.email];
+    username = CorePageModal.queryParams[StringUtils.username];
     inputs = inputsList();
 
   }

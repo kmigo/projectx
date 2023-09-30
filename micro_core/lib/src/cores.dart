@@ -64,11 +64,6 @@ mixin BaseApp {
 
 
 void registerInjections(){
-  CoreBinding.registerSingleton<ClientHttp>((i) => HttpClientDio(
-    baseUrl:'http://localhost:65182/#/',
-
-  ));
-
   for (var microapp in microApps) {
     microapp.injectionRegister();
   }

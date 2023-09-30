@@ -48,8 +48,8 @@ class _HomePageState extends State<HomePage> {
           leading: Padding(
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
-              // TODO: adicionar micro app de profile
-              //onTap: () => Modular.to.pushNamed(AppRoutes.profile),
+
+              onTap: () => CoreNavigator.pushNamed(AppRoutes.profile.root),
               child: Container(
                 width: 40,
                 height: 40,

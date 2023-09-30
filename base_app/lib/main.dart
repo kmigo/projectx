@@ -59,8 +59,11 @@ class _MyAppState extends State<MyApp> with BaseApp {
     super.initState();
   registerRoutes();
     CoreBinding.registerSingleton<UolletiKeyboardBloc>( (i) =>UolletiKeyboardBloc());
+    
   registerInjections();
+  
   initializeInjectionsUser();
+  commonsInjections();
 bloc = CoreBinding.get<AuthenticationBloc>();
 
 
@@ -132,8 +135,34 @@ bloc = CoreBinding.get<AuthenticationBloc>();
     MicroAppProfileResolver()
 
   ];
-  
+  commonsInjections(){
+  CoreBinding.registerLazySingleton<ClientHttp>((i) => HttpClientDio(
+    baseUrl:EnvironmentVariables.getVariable(VarEnvs.baseUrl),
+     signOut: () async {
+                await i<SignOutUsecase>().call();
+              },
+           refreshToken: () async {
+                try {
+                  await FirebaseAuth.instance.currentUser!
+                      .getIdTokenResult(true);
+                } catch (e) {
+                  debugPrint(e.toString());
+                  return null;
+                }
+              },
+              getToken: () async {
+                try {
+                  return await FirebaseAuth.instance.currentUser!.getIdToken();
+                } catch (e) {
+                  debugPrint(e.toString());
+                  return null;
+                }
+              } 
+    
 
+  ));
+}
+  
 }
 
 class MyNavigatorObserver extends NavigatorObserver {
@@ -161,5 +190,7 @@ void didReplace({Route? newRoute, Route? oldRoute}) {
   super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
 CoreBinding.get<UolletiKeyboardBloc>().hide();
 }
+
+
 
 }

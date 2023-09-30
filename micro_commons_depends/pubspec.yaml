@@ -20,6 +20,7 @@ dependencies:
   bloc: ^8.1.0
   mask_input_formatter: ^0.0.3
   mask_text_input_formatter: ^2.4.0
+  firebase_analytics: ^10.5.0
   shared_preferences: ^2.1.0
   flutter_holo_date_picker: ^1.1.0
   firebase_performance: ^0.9.2+3
@@ -49,7 +50,7 @@ dependencies:
   flutter_masked_text2: ^0.9.1
   jsqr: ^0.1.1
   firebase_remote_config: ^4.2.6
-  firebase_analytics:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

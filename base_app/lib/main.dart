@@ -24,6 +24,7 @@ class MyApp extends StatefulWidget  {
   static Future<void> start()async{
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: 'files/env');
   
 
@@ -37,6 +38,7 @@ class MyApp extends StatefulWidget  {
     storageBucket: 'uoleti-staging.appspot.com',
     measurementId: 'G-2ZK837RNR4',
   ));
+
 await EnvironmentVariables.init();
       FlutterError.onError = (errorDetails) {
 

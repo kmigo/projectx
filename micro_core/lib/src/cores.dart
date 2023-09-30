@@ -127,11 +127,11 @@ class CoreNavigator {
     return await navigatorKey.currentState!.pushReplacementNamed(routeName, arguments: args);
   }
 
-  static void pop() {
-    navigatorKey.currentState!.pop();
+  static void pop<T extends Object?>([T? result]) {
+    navigatorKey.currentState!.pop(result);
   }
 
-  static void popUntil(String routeName) {
+  static void popUntil(String routeName)  {
     navigatorKey.currentState!.popUntil(ModalRoute.withName(routeName));
   }
 

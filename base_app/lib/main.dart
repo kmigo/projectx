@@ -2,7 +2,9 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
+import 'package:micro_app_profile/micro_app_profile.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -125,7 +127,9 @@ bloc = CoreBinding.get<AuthenticationBloc>();
   
   @override
   List<MicroApp> get microApps => [
-    MicroAppOnboardingResolver()
+    MicroAppOnboardingResolver(),
+    MicroAppHomeResolver(),
+    MicroAppProfileResolver()
 
   ];
   

@@ -1,25 +1,39 @@
 {
 	"folders": [
 		{
-			"path": "micro_core"
-		},
-		{
+			"name": "base_app",
 			"path": "base_app"
 		},
 		{
-			"path": "micro_app_onboarding"
+			"name": "micro_core",
+			"path": "micro_core"
 		},
 		{
+			"name": "micro_commons_depends",
 			"path": "micro_commons_depends"
 		},
 		{
-			"path": "micro_commons_user"
-		},
-		{
+			"name": "micro_commons",
 			"path": "micro_commons"
 		},
 		{
+			"name": "micro_commons_user",
+			"path": "micro_commons_user"
+		},
+		{
+			"name": "design_system",
 			"path": "design_system"
+		},
+		{
+			"name": "micro_app_onboarding",
+			"path": "micro_app_onboarding"
+		},
+		{
+			"name": "micro_app_home",
+			"path": "micro_app_home"
+		},
+		{
+			"path": "micro_app_profile"
 		}
 	],
 	"settings": {},

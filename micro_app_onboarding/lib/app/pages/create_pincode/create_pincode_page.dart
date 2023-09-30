@@ -17,7 +17,6 @@ class _CreatePincodePageState extends State<CreatePincodePage> {
   void initState() {
     super.initState();
     phone = CorePageModal.queryParams['phone'];
-    print("phone: $phone");
   }
 
   @override
@@ -29,9 +28,16 @@ class _CreatePincodePageState extends State<CreatePincodePage> {
         child: BlocConsumer<CreatePinCodeBloc, CreatePinCodeState>(
           bloc: bloc,
           listener: (context, state) {
+            if(state.status == CreatePinCodeStatus.success){
+              CoreNavigator.pushNamedAndRemoveUntil(AppRoutes.home.root, ModalRoute.withName(AppRoutes.root));
+            }
           },
           builder: (context, state) {
-            print(state.status);
+            if(state.status == CreatePinCodeStatus.success){
+              return const Center(
+                child: UolletiText.captionXLarge('Conta criada com sucesso, aguarde você será redicionado',bold: true,),
+              );
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

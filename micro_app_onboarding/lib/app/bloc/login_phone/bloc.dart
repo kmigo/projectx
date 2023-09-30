@@ -28,7 +28,7 @@ void verifyPhoneSend(String phoneNumber) async {
       phoneItemConfigModel: state.phoneItemConfigModel!,
         verifycodeId: (codeId) => emit(state.copyWith(
             verificationId: codeId)),
-        phoneNumber: phoneNumber),checkAccountAlreadyExist: true);
+        phoneNumber: phoneNumber),checkAccountAlreadyExist: false);
     result.fold(
         (l) => emit(state.copyWith(
               status: LoginPhoneStatus.error,

@@ -535,10 +535,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  micro_app_home:
+    dependency: "direct main"
+    description:
+      path: "../micro_app_home"
+      relative: true
+    source: path
+    version: "0.0.1"
   micro_app_onboarding:
     dependency: "direct main"
     description:
       path: "../micro_app_onboarding"
+      relative: true
+    source: path
+    version: "0.0.1"
+  micro_app_profile:
+    dependency: "direct main"
+    description:
+      path: "../micro_app_profile"
       relative: true
     source: path
     version: "0.0.1"

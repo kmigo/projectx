@@ -13,7 +13,7 @@ export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 export 'package:firebase_performance/firebase_performance.dart';
-
+export 'package:get/get.dart' hide FormData,Response,Transition,MultipartFile;
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_database/firebase_database.dart';
 export 'package:firebase_auth/firebase_auth.dart';

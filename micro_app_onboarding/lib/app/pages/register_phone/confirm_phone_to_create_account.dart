@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:micro_core/micro_core.dart';
 
+
 import '../../bloc/register_phone/bloc.dart';
 
 
@@ -42,6 +43,11 @@ class _ConfirmPhoneToCreatedAccount
           }
         },
         builder: (context, state) {
+           if(state.status == ConfirmPhoneToCreateAccountStatus.confirmed){
+            return const Center(
+              child: UolletiText.labelXLarge('Aguarde você será redirecionado',bold: true,),
+            );
+          }
 
           if (state.verificationId != null) {
             return ConfirmPhoneSmsCodeComponent(

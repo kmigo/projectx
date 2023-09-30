@@ -3,6 +3,7 @@ import 'package:micro_core/micro_core.dart';
 
 import '../../bloc/login_phone/bloc.dart';
 part 'components/phone_number.dart';
+part 'components/sms_code.dart';
 
 class LoginPhonePage extends StatefulWidget {
   const LoginPhonePage({super.key});
@@ -29,9 +30,29 @@ class _LoginPhonePageState extends State<LoginPhonePage> {
       body: BlocConsumer<LoginPhoneBloc, LoginPhoneState>(
         bloc: bloc,
         listener: (context, state) {
+          if(state.status == LoginPhoneStatus.confirmed){
+              CoreNavigator.pushNamedAndRemoveUntil(AppRoutes.home.root, ModalRoute.withName(AppRoutes.root));
+            }
 
         },
         builder: (context, state) {
+          if(state.status == LoginPhoneStatus.confirmed){
+            return const Center(
+              child: UolletiText.labelXLarge('Aguarde você será redirecionado',bold: true,),
+            );
+          }
+
+          if(state.verificationId != null){
+            return ConfirmPhoneSmsCodeComponent(
+              isLoading: state.status == LoginPhoneStatus.loading,
+              error: false,
+              onChanged: (value) {
+                bloc.changeSmsCode(value);
+              },
+              smsCode: state.smsCode,
+              onContinue: () => bloc.confirmPhone(),
+            );
+          }
           
           return SendPhoneNumberComponent(
                   errorText: state.error,

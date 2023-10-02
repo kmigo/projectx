@@ -64,7 +64,7 @@ class BottomNavigationBarCustom extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        rootController.changePage(PagesRoot.statement);
+                        CoreNavigator.pushNamed(AppRoutes.extract.root);
                       },
                       child: Container(
                         width: 65,

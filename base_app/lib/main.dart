@@ -2,6 +2,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:micro_app_extract/app/micro_app_extract_resolver.dart';
 import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
 import 'package:micro_app_profile/micro_app_profile.dart';
@@ -9,6 +11,7 @@ import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'pages/camera.dart';
 import 'pages/welcome.dart';
 void main() async {
   await MyApp.start();
@@ -46,8 +49,6 @@ await EnvironmentVariables.init();
       return true;
     };
 
-
-
   }
 }
 
@@ -77,6 +78,14 @@ bloc = CoreBinding.get<AuthenticationBloc>();
       routes: routes.map((key, value) => MapEntry(key, (context) =>  value(context,null))),
       onGenerateRoute: generateRoute,
       initialRoute: AppRoutes.root,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
       builder: (context, child) {
       
         return BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -124,14 +133,16 @@ bloc = CoreBinding.get<AuthenticationBloc>();
   @override
 
   Map<String, WidgetBuildArgs> get baseRoutes => {
-    AppRoutes.root : (context, args) => const WelcomePage()
+    AppRoutes.root : (context, args) => const WelcomePage(),
+    AppRoutes.cameraPage:(context, args) => const CameraPhoto()
   };
   
   @override
   List<MicroApp> get microApps => [
     MicroAppOnboardingResolver(),
     MicroAppHomeResolver(),
-    MicroAppProfileResolver()
+    MicroAppProfileResolver(),
+    MicroAppExtractResolver()
 
   ];
   commonsInjections(){

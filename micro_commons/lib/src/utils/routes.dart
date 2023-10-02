@@ -4,6 +4,10 @@ class AppRoutes {
 static const  _Onboarding onboarding =  _Onboarding(); 
 static const _Home home =  _Home(); 
 static const _Profile profile =  _Profile();
+static const _Extract extract =  _Extract();
+static const _SendTransaction sendTransaction =  _SendTransaction();
+static const _PixTransaction pixTransaction =  _PixTransaction();
+
 static String root = '/';
 static String cameraPage = '/camera-page';
 
@@ -40,4 +44,28 @@ class _Profile {
   final String personal = "$_root/personal";
   final String selfie = '$_root/selfie';
   final String validatorDocument = '$_root/validator-document';
+}
+
+class _Extract {
+  static const _root = '/extract';
+  const _Extract();
+  final String root = _root;
+  final String microAppName = 'micro_app_extract';
+  final String filter = '$_root/filter';
+  final String extract = '$_root/extract';
+  final String extractDetail = '$_root/extract-detail';
+}
+
+class _SendTransaction {
+  static const _root = '/send-transaction';
+  const _SendTransaction();
+  final String root = _root;
+  final String microAppName = 'micro_app_send_transaction';
+}
+
+class _PixTransaction {
+  static const _root = '/pix-transaction';
+  final String microAppName = 'micro_app_pix_transaction';
+  const _PixTransaction();
+  final String root = _root;
 }

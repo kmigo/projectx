@@ -23,7 +23,7 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 export 'package:shimmer/shimmer.dart';
-
+export 'package:jsqr/scanner.dart';
 
 export 'package:encrypt/encrypt.dart' hide Key;
 export 'package:qr_code_scanner/qr_code_scanner.dart' hide CameraFacing,Barcode,BarcodeFormat;

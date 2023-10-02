@@ -44,9 +44,9 @@ B call<B extends Object>() {
   }
 }
 var _queryParams = <String,String>{};
-const _binds = [];
 
-var _args;
+
+var _args ;
 
 class CorePageModal {
   static dynamic get args {

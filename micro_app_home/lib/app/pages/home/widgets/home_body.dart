@@ -90,7 +90,7 @@ class HomeBody extends StatelessWidget {
                         const Color.fromARGB(255, 65, 138, 67))),
                 onPressed: () {
 
-                 // Modular.to.pushNamed(AppRoutes.methodToPay);
+                 CoreNavigator.pushNamed(AppRoutes.home.sendTransaction);
                 },
                 child: Padding(
                   padding: EdgeInsets.only(

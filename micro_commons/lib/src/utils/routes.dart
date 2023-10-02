@@ -28,6 +28,7 @@ class _Home {
   const _Home();
   final String root = _root;
   final String microAppName = 'micro_app_home';
+  final String sendTransaction = '$_root/send-transaction';
 
 }
 

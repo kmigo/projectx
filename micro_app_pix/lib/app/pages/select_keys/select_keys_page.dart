@@ -63,10 +63,20 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                   ),
                    UolletiButtonsOutlinedIcons(
                     icon: Icons.badge_outlined,
-                    title: "CPF ou CNPJ",
+                    title: "CPF",
                     subtitle: "Ex: ###.###.###-##",
                     onTap: (){
-                      
+                      CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.cpf.name}");
+                    },
+                  ), const SizedBox(
+                    height: 20,
+                  ),
+                   UolletiButtonsOutlinedIcons(
+                    icon: Icons.business_outlined,
+                    title: "CNPJ",
+                    subtitle: "Ex: ###.###.###-##",
+                    onTap: (){
+                      CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.cnpj.name}");
                     },
                   ),
                   const SizedBox(
@@ -76,7 +86,9 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     icon: Icons.phone,
                     title: "Telefone",
                     subtitle: "Ex: (##) #####-####",
-                     onTap: (){},
+                     onTap: (){
+                        CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.phone.name}");
+                     },
                   ),
                   const SizedBox(
                     height: 20,
@@ -85,7 +97,9 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     icon: Icons.alternate_email_outlined,
                     title: "Email",
                     subtitle: "Ex: example@exmaple.com",
-                     onTap: (){},
+                     onTap: (){
+                        CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.email.name}");
+                     },
                   ),
                   const SizedBox(
                     height: 20,
@@ -94,7 +108,9 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     icon: Icons.vpn_key_outlined,
                     title: "Chave aleatória",
                     subtitle: "Ex: 12sd34sd5sdf67sdf8sd9sfd0",
-                     onTap: (){},
+                     onTap: (){
+                        CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.random.name}");
+                     },
                   ),
                 ],
               ),

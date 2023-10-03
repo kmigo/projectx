@@ -56,6 +56,11 @@ class  TransactionUtilsStatus {
   static const canceled = 'CANCELED';
 }
 enum KYCSTATUSRESPONSE{ idle,pending,inReview,completed,error}
+enum StringUtilsMethodsEnum {cpf,cnpj,email,phone,random,qrcode}
+
+StringUtilsMethodsEnum stringToEnumMethod(String key){
+  return StringUtilsMethodsEnum.values.firstWhere((element) => element.name == key,orElse: ()=>StringUtilsMethodsEnum.random);
+}
 class StringUtils {
   static const keyPayment='keyPayment';
   static const method='method';

@@ -113,6 +113,11 @@ class HelperInputValidator {
     if(HelperValidator.isCPF(text)) return null;
     return 'CPF inválido';
   }
+
+  static String? cnpj(String? text){
+    if(HelperValidator.isCNPJ(text)) return null;
+    return 'CNPJ inválido';
+  }
   static String? birthdate(String? text){
     if(HelperValidator.isBirthDate(text)) return null;
     return 'Data de nascimento inválida';
@@ -125,6 +130,10 @@ class HelperInputValidator {
   static String? cep(String? text){
     if(HelperValidator.cep(text)) return null;
     return 'Cep inválido';
+  }
+  static String? phone(String? text){
+    if(HelperValidator.phone(text)) return null;
+    return 'Telefone inválido';
   }
 }
 

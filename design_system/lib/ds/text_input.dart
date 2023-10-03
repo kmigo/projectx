@@ -17,6 +17,7 @@ class UolletiTextInput extends StatefulWidget {
   final Function()? onDone;
   final InputDecoration? decoration;
   final Function()? onClear;
+  final TextInputType? keyboardType;
   final bool Function(String?)? validateDone;
   final bool? obscureText;
   final bool? enabled;
@@ -31,6 +32,7 @@ class UolletiTextInput extends StatefulWidget {
       this.controller,
       this.enabled,
       this.prefixIcon,
+      this.keyboardType,
       this.validateDone,
       this.initialValue,
       this.obscureText,
@@ -58,6 +60,7 @@ class UolletiTextInput extends StatefulWidget {
       this.decoration,
       this.textAlign,
       this.focus,
+      this.keyboardType,
       this.focusNode,
       this.errorText,
       this.onDone,
@@ -71,6 +74,7 @@ class UolletiTextInput extends StatefulWidget {
       this.maxLines,
       this.controller,
       this.errorText,
+      this.keyboardType,
       this.enabled,
       this.prefixIcon,
       this.validateDone,
@@ -177,6 +181,7 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
       child: TextFormField(
         maxLines: widget.maxLines,
         maxLength: widget.maxLength,
+        keyboardType: widget.keyboardType,
         initialValue: _controller != null? null: widget.initialValue,
         enabled: widget.enabled,
         onChanged: widget.onChanged,

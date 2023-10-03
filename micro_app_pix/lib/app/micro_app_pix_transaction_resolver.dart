@@ -1,4 +1,5 @@
 
+import 'package:micro_app_pix/app/pages/query_pix_key/query_pix_key.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../src/datasources/transaction_datasource.dart';
@@ -28,6 +29,7 @@ class MicroAppPixTransactionResolver extends MicroApp {
   @override
   Map<String, WidgetBuildArgs> get routes => {
     AppRoutes.pixTransaction.selectKeys :(context, args) => const SelectKeysPage(),
+    AppRoutes.pixTransaction.queryPixKey :(context, args) => const QueryPixKeyPage(),
   };
 
 

@@ -93,7 +93,8 @@ class UolletiButtonIcon extends StatelessWidget {
   final bool isLoading;
   final UolletiButtonSize size;
   final bool preFixIcon;
-  const UolletiButtonIcon({super.key,required this.icon, this.preFixIcon =true, required this.label,this.onPressed,this.priority = UolletiButtonPriority.primary,this.size = UolletiButtonSize.infinity, this.isLoading = false});
+  final bool? disabled;
+  const UolletiButtonIcon({super.key,required this.icon, this.preFixIcon =true, this.disabled,required this.label,this.onPressed,this.priority = UolletiButtonPriority.primary,this.size = UolletiButtonSize.infinity, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +107,7 @@ class UolletiButtonIcon extends StatelessWidget {
                   child: icon),
       );
       return GestureDetector(
-        onTap: onPressed == null || isLoading ? null:   (){
+        onTap: onPressed == null || isLoading || disabled == true ? null:   (){
         CoreBinding.get<UolletiKeyboardBloc>().hide();
         onPressed?.call();
       },
@@ -115,7 +116,7 @@ class UolletiButtonIcon extends StatelessWidget {
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: onPressed == null || isLoading ? colorsDS.buttonDisabled : _color(priority),
+            color: onPressed == null || isLoading || disabled == true ? colorsDS.buttonDisabled : _color(priority),
             borderRadius: BorderRadius.circular(8),
             // shadow elevation
             boxShadow: const [

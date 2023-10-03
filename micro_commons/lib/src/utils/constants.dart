@@ -65,6 +65,8 @@ class StringUtils {
   static const receiveMethod ='receive';
   static const document = 'document';
   static const phone = 'phone';
+  static const title = 'title';
+  static const scanner = 'scanner';
   static const email = 'email';
   static const name = 'name';
   static const birthDay = 'birth-day';

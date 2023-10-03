@@ -22,23 +22,33 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircleAvatar(
-            backgroundColor: colorsDS.backgroundMedium,
-            radius: 50,
-            child: Icon(
-              Icons.pix,
-              color: colorsDS.backgroundPure,
-            ),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: colorsDS.backgroundMedium,
+                radius: 30,
+                child: Icon(
+                  Icons.pix,
+                  color: colorsDS.backgroundPure,
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: ()async {
+                  CoreNavigator.pushNamed("${AppRoutes.cameraPage}?${StringUtils.title}=Ler QR Code&${StringUtils.scanner}=1");
+                },
+                child: const Icon(Icons.qr_code,size: 25,))
+            ],
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
-          UolletiText.labelXLarge(
+          const UolletiText.labelXLarge(
             "Para quem você quer enviar?",
-            color: colorsDS.textPure,
+    bold: true,
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           UolletiRichText.contentMedium(
             'Selecione um tipo de <b>chave PIX</b> para enviar',
@@ -52,7 +62,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     height: 20,
                   ),
                    UolletiButtonsOutlinedIcons(
-                    icon: Icons.qr_code,
+                    icon: Icons.badge_outlined,
                     title: "CPF ou CNPJ",
                     subtitle: "Ex: ###.###.###-##",
                     onTap: (){
@@ -63,7 +73,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     height: 20,
                   ),
                    UolletiButtonsOutlinedIcons(
-                    icon: Icons.qr_code,
+                    icon: Icons.phone,
                     title: "Telefone",
                     subtitle: "Ex: (##) #####-####",
                      onTap: (){},
@@ -72,7 +82,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     height: 20,
                   ),
                    UolletiButtonsOutlinedIcons(
-                    icon: Icons.qr_code,
+                    icon: Icons.alternate_email_outlined,
                     title: "Email",
                     subtitle: "Ex: example@exmaple.com",
                      onTap: (){},
@@ -81,7 +91,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     height: 20,
                   ),
                    UolletiButtonsOutlinedIcons(
-                    icon: Icons.qr_code,
+                    icon: Icons.vpn_key_outlined,
                     title: "Chave aleatória",
                     subtitle: "Ex: 12sd34sd5sdf67sdf8sd9sfd0",
                      onTap: (){},

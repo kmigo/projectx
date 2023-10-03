@@ -53,7 +53,7 @@
 				"type": "dart",
 				"program": "${workspaceFolder:base_app}/lib/main.dart",
 				"args": [
-				 "-d","chrome" 
+				 "-d","chrome","--web-renderer=html"
 				]
 			}
 		]

@@ -9,6 +9,14 @@ class CameraPhoto extends StatefulWidget {
 }
 
 class _CameraPhotoState extends State<CameraPhoto> {
+  late String title;
+  late bool scanner;
+  @override
+  void initState() {
+    super.initState();
+    title = CorePageModal.queryParams['title'] ?? 'Tirar foto';
+    scanner = CorePageModal.queryParams['scanner'] == '1' ? true : false;
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -16,7 +24,7 @@ class _CameraPhotoState extends State<CameraPhoto> {
     return Scaffold(
       appBar: UolletiAppBar(
         centerTitle: true,
-        title: UolletiText.labelLarge('Tirar foto',color: colorsDS.backgroundPure,),
+        title: UolletiText.labelLarge(title,color: colorsDS.backgroundPure,),
         leading: IconButton(
           icon: Icon(Icons.arrow_back,color: colorsDS.backgroundPure,),
           onPressed: () => Navigator.pop(context),
@@ -31,7 +39,7 @@ class _CameraPhotoState extends State<CameraPhoto> {
             color: colorsDS.backgroundPure,
             width: size.width,
             height: size.height * 0.55,
-            child: const Scanner(clickToCapture: true,),
+            child:  Scanner(clickToCapture: !scanner,),
           )
         ],
       ),

@@ -12,27 +12,32 @@ class UolletiButtonsOutlinedIcons extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: colorsDS.bordersDark)
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
+            CircleAvatar(
+              backgroundColor: colorsDS.backgroundLight,
+              child: Icon(icon,color: colorsDS.iconsLight,)),
             const SizedBox(width: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(title),
-                Text(subtitle),
+                UolletiText.labelMedium(title,bold: true,),
+               const  SizedBox(height: 5,),
+                UolletiText.captionLarge(subtitle,color: colorsDS.textLight,),
               ],
             ),
             const Spacer(),
-            const Icon(Icons.arrow_forward_ios)
+             Icon(Icons.arrow_forward_ios,color: colorsDS.iconsMedium,
+             size: 14,
+             )
           ],
         ),
       ),

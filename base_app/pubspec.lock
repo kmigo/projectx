@@ -561,6 +561,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  micro_app_pix:
+    dependency: "direct main"
+    description:
+      path: "../micro_app_pix"
+      relative: true
+    source: path
+    version: "0.0.1"
   micro_app_profile:
     dependency: "direct main"
     description:

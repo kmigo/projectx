@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:micro_app_extract/app/micro_app_extract_resolver.dart';
 import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
+import 'package:micro_app_pix/micro_app_pix_transaction.dart';
 import 'package:micro_app_profile/micro_app_profile.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
@@ -142,7 +143,8 @@ bloc = CoreBinding.get<AuthenticationBloc>();
     MicroAppOnboardingResolver(),
     MicroAppHomeResolver(),
     MicroAppProfileResolver(),
-    MicroAppExtractResolver()
+    MicroAppExtractResolver(),
+    MicroAppPixTransactionResolver(),
 
   ];
   commonsInjections(){

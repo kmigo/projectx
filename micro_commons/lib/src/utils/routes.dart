@@ -69,4 +69,6 @@ class _PixTransaction {
   final String microAppName = 'micro_app_pix_transaction';
   const _PixTransaction();
   final String root = _root;
+  final String selectKeys = '$_root/select-keys';
+  
 }

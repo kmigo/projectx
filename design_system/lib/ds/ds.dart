@@ -28,3 +28,4 @@ part 'rich_text.dart';
 part 'switch.dart';
 part 'snackbar.dart';
 part 'bottom_sheet.dart';
+part 'buttons_outlined_icons.dart';

@@ -540,6 +540,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  micro_app_account_bank:
+    dependency: "direct main"
+    description:
+      path: "../micro_app_account_bank"
+      relative: true
+    source: path
+    version: "0.0.1"
   micro_app_extract:
     dependency: "direct main"
     description:

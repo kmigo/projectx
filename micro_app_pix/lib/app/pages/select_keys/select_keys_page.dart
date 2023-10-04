@@ -14,7 +14,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
     return Scaffold(
       appBar: UolletiAppBar(
         title: UolletiText.labelLarge(
-          "Enviar pix",
+          "Consultar pix",
           color: colorsDS.textPure,
         ),
         centerTitle: true,
@@ -33,11 +33,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                 ),
               ),
               const Spacer(),
-              InkWell(
-                onTap: ()async {
-                  CoreNavigator.pushNamed("${AppRoutes.cameraPage}?${StringUtils.title}=Ler QR Code&${StringUtils.scanner}=1");
-                },
-                child: const Icon(Icons.qr_code,size: 25,))
+
             ],
           ),
           const SizedBox(
@@ -104,17 +100,7 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                   UolletiButtonsOutlinedIcons(
-                    icon: Icons.copy,
-                    title: "Pix Copia e Cola",
-                    subtitle: "Ex: 123213dfsdfsd3123342123",
-                     onTap: (){
-                        CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.email.name}");
-                     },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+               
                    UolletiButtonsOutlinedIcons(
                     icon: Icons.vpn_key_outlined,
                     title: "Chave aleatória",

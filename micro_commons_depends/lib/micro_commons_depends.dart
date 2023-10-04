@@ -18,7 +18,7 @@ export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_database/firebase_database.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:equatable/equatable.dart';
-export 'package:dartz/dartz.dart' hide Bind,State;
+export 'package:dartz/dartz.dart' hide Bind,State,id;
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';

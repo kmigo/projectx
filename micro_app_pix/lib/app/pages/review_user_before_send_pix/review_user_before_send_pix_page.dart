@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:micro_app_pix/app/blocs/review_user_before_send_pix/bloc.dart';
+import 'package:micro_app_pix/src/args/key_pix_type.dart';
 import 'package:micro_core/micro_core.dart';
 
 class ReviewUserBeforeSendPixPage extends StatefulWidget {
@@ -15,10 +16,12 @@ class _ReviewUserBeforeSendPixPageState
   final bloc = CoreBinding.get<ReviewUserBeforeSendPixBloc>();
   String? key;
   String? method;
+  String? id;
   @override
   void initState() {
     super.initState();
     key = CorePageModal.queryParams[StringUtils.keyPayment];
+    id = CorePageModal.queryParams[StringUtils.id];
     method = CorePageModal.queryParams[StringUtils.method];
     if (method != null && key != null) {
       bloc.fetchKey(
@@ -103,7 +106,9 @@ class _ReviewUserBeforeSendPixPageState
                   label: 'Continuar',
                   disabled: state.validateKeyEntity == null,
                   suffixIcon: const Icon(Icons.arrow_forward),
-                  onPressed: () {},
+                  onPressed: () {
+                    CoreNavigator.popUntil(AppRoutes.pixTransaction.registerPix,KeyPixType(key: key!, type: method!));
+                  },
                 )
               ],
             );

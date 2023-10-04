@@ -9,6 +9,7 @@ class UolletiTextInput extends StatefulWidget {
   final String? hintText;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
+  final String? label;
   final int? maxLength;
   final String? Function(String?)? validator;
   final UolletiKeyboardType? customKeyboardType;
@@ -29,6 +30,7 @@ class UolletiTextInput extends StatefulWidget {
       this.customKeyboardType,
       this.validator,
       this.maxLines,
+      this.label,
       this.controller,
       this.enabled,
       this.prefixIcon,
@@ -53,6 +55,7 @@ class UolletiTextInput extends StatefulWidget {
       this.maxLines,
       this.controller,
       this.enabled,
+      this.label,
       this.prefixIcon,
       this.validateDone,
       this.initialValue,
@@ -72,6 +75,7 @@ class UolletiTextInput extends StatefulWidget {
       this.customKeyboardType,
       this.validator,
       this.maxLines,
+      this.label,
       this.controller,
       this.errorText,
       this.keyboardType,
@@ -170,15 +174,7 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocListener<UolletiKeyboardBloc, UolletiKeyboardTypeState>(
-      bloc: bloc,
-      listener: (context, state) {
-        if (state.hashCodeWidget != _controller.hashCode) return;
-        if(![UolletiKeyboardType.numericWithoutObserver,UolletiKeyboardType.numeric].contains(widget.customKeyboardType)) return;
-        _controller?.text = state.text;
-      },
-      child: TextFormField(
+    final childText = TextFormField(
         maxLines: widget.maxLines,
         maxLength: widget.maxLength,
         keyboardType: widget.keyboardType,
@@ -210,7 +206,22 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
                 borderSide: BorderSide(color: Colors.grey.shade300),
               ),
             ),
-      ),
+      );
+    return BlocListener<UolletiKeyboardBloc, UolletiKeyboardTypeState>(
+      bloc: bloc,
+      listener: (context, state) {
+        if (state.hashCodeWidget != _controller.hashCode) return;
+        if(![UolletiKeyboardType.numericWithoutObserver,UolletiKeyboardType.numeric].contains(widget.customKeyboardType)) return;
+        _controller?.text = state.text;
+      },
+      child: widget.label != null? Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UolletiText.labelLarge(widget.label!,bold: true,),
+          const SizedBox(height: 5,),
+          childText
+        ],
+      ):childText,
     );
   }
 }

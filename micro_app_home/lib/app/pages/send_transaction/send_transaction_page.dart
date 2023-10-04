@@ -34,7 +34,9 @@ class _SendTransactionPageState extends State<SendTransactionPage> {
                 children: [
                   _TileCard(
                       icon: Icons.account_balance,
-                      onTap: () {},
+                      onTap: () {
+                        CoreNavigator.pushNamed(AppRoutes.accountBank.registerBank);
+                      },
                       title: 'CONTA DE ORIGEM',
                       // conta de origem
                       subtitle:
@@ -44,7 +46,9 @@ class _SendTransactionPageState extends State<SendTransactionPage> {
                   ),
                   _TileCard(
                       icon: Icons.pix,
-                      onTap: () {},
+                      onTap: () {
+                        CoreNavigator.pushReplacementNamed(AppRoutes.pixTransaction.registerPix);
+                      },
                       title: 'PIX DESTINO',
                       subtitle:
                           'Cadastre uma chave PIX para enviar PIX para um contato'),

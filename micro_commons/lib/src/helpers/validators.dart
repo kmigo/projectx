@@ -60,7 +60,7 @@ static bool isBirthDate(String? input) {
   }
   static bool isCNPJ(String? input) {
     if (input == null) return false;
-  if (input.length != 14) return false;
+
 
 final digits = input.replaceAll(RegExp(r'\D'), '').split('').map((d) => int.parse(d)).toList();
   if(digits.length != 14) return false;
@@ -112,7 +112,6 @@ class HelperInputValidator {
   }
   static String? cpf(String? text){
     if(HelperValidator.isCPF(text)) return null;
-    print('invalido');
     return 'CPF inválido';
   }
 

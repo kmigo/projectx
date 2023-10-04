@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:micro_app_home/app/pages/home/widgets/tile_card.dart';
 
 import 'package:micro_core/micro_core.dart';
 
@@ -32,6 +33,17 @@ class _HomePageState extends State<HomePage> {
           logo: UolletiImageLogo.simpleLogo,
           profile: UolletiImageProfile.profile,
         ),
-        body: Column());
+        body: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            children: [
+              TileCard(
+                title: "Aluguel barra",
+                subtitle: "PIX",
+                description: "R\$ 1.000,00",
+                onEdit: (){}, onPay: (){})
+            ],
+          ),
+        ));
   }
 }

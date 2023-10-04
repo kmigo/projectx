@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:micro_app_account_bank/app/micro_app_account_bank_resolver.dart';
 import 'package:micro_app_extract/app/micro_app_extract_resolver.dart';
 import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
@@ -146,6 +147,7 @@ bloc = CoreBinding.get<AuthenticationBloc>();
     MicroAppProfileResolver(),
     MicroAppExtractResolver(),
     MicroAppPixTransactionResolver(),
+    MicroAppAccountBankResolver()
 
   ];
   commonsInjections(){

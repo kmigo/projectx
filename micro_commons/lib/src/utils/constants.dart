@@ -77,6 +77,7 @@ class StringUtils {
   static const name = 'name';
   static const birthDay = 'birth-day';
   static const username ='username';
+  static const id ='id';
 
 
 }

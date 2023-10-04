@@ -7,7 +7,7 @@ static const _Profile profile =  _Profile();
 static const _Extract extract =  _Extract();
 static const _SendTransaction sendTransaction =  _SendTransaction();
 static const _PixTransaction pixTransaction =  _PixTransaction();
-
+static const _AccountBank accountBank =  _AccountBank();
 static String root = '/';
 static String cameraPage = '/camera-page';
 
@@ -72,4 +72,13 @@ class _PixTransaction {
   final String selectKeys = '$_root/select-keys';
   final String queryPixKey = '$_root/query-pix-key';
   final String reviewUserBeforeSendPix = '$_root/review-user-before-send-pix';
+  final String registerPix = '$_root/register-pix';
+}
+
+class _AccountBank {
+  static const _root = '/account-bank';
+  const _AccountBank();
+  final String root = _root;
+  final String microAppName = 'micro_app_account_bank';
+  final String registerBank = '$_root/register-bank';
 }

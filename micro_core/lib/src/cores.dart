@@ -127,7 +127,8 @@ class CoreNavigator {
     navigatorKey.currentState!.pop(result);
   }
 
-  static void popUntil(String routeName)  {
+  static void popUntil(String routeName,[dynamic args])  {
+    _args = args;
     navigatorKey.currentState!.popUntil(ModalRoute.withName(routeName));
   }
 
@@ -189,14 +190,14 @@ class CoreNavigator {
     navigatorKey.currentState!.popAndPushNamed(routeName, arguments: args);
   }
 
-  static void pushNamedAndRemoveUntilRoute(String routeName, {dynamic args}) {
-    navigatorKey.currentState!.pushNamedAndRemoveUntil(
+  static Future<T?> pushNamedAndRemoveUntilRoute<T extends Object?>(String routeName, {dynamic args}) async {
+    return await navigatorKey.currentState!.pushNamedAndRemoveUntil(
         routeName, ModalRoute.withName(routeName),
         arguments: args);
   }
 
-  static void pushRouteReplacementNamed<T extends Object?, TO extends Object?>(Route<T> newRoute, {TO? result}) {
-    navigatorKey.currentState!.pushReplacement(newRoute, result: result);
+  static void pushRouteReplacementNamed<T extends Object?, TO extends Object?>(String newRoute, bool Function(Route<dynamic>) predicate, {TO? result}) {
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(newRoute,predicate,arguments: result);
     }
     
 }

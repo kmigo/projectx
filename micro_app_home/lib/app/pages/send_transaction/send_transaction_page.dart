@@ -13,43 +13,99 @@ class _SendTransactionPageState extends State<SendTransactionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UolletiAppBar(
-        title:  UolletiText.labelLarge('Enviar',color: colorsDS.textPure,),
+        title: UolletiText.labelLarge(
+          'Novo PIX CARD',
+          color: colorsDS.textPure,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const UolletiText.labelLarge('Selecione como deseja enviar'),
-            Expanded(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: (){
-                    CoreNavigator.pushNamed(AppRoutes.pixTransaction.selectKeys);
-                  },
-                  child: Center(
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical:25),
-                      decoration: BoxDecoration(
-                        color: colorsDS.backgroundLight,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: colorsDS.bordersDark),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(Icons.pix,size: 150,color: colorsDS.iconsLight ,),
-                          const SizedBox(height: 10,),
-                           UolletiText.labelLarge('Utilize CPF/CNPJ, telefone, email ou\nchaves aleatórias', color: colorsDS.textLight, textAlign: TextAlign.center,),
-                        ],
-                      ),
-                    ),
+            const UolletiText.labelXLarge('Selecione uma ação:',bold: true,),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _TileCard(
+                      icon: Icons.account_balance,
+                      onTap: () {},
+                      title: 'CONTA DE ORIGEM',
+                      // conta de origem
+                      subtitle:
+                          'cadastrar uma conta de origem para enviar PIX'),
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-              ],
+                  _TileCard(
+                      icon: Icons.pix,
+                      onTap: () {},
+                      title: 'PIX DESTINO',
+                      subtitle:
+                          'Cadastre uma chave PIX para enviar PIX para um contato'),
+                ],
+              ),
             ))
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TileCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+  const _TileCard(
+      {required this.icon,
+      required this.onTap,
+      required this.title,
+      required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 25),
+          decoration: BoxDecoration(
+            color: colorsDS.backgroundLight,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: colorsDS.bordersDark),
+          ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                size: 150,
+                color: colorsDS.iconsLight,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              UolletiText.labelXLarge(
+                title,
+                bold: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              UolletiText.labelLarge(
+                subtitle,
+                color: colorsDS.textLight,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );

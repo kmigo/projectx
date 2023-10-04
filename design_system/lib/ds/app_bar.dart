@@ -1,6 +1,7 @@
 part of 'ds.dart';
 
-
+enum UolletiImageLogo {none,simpleLogo}
+enum UolletiImageProfile {idle,profile}
 class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
   final AppBar _appBar = AppBar();
   final Color? backgroundColor;
@@ -9,8 +10,10 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
   final Widget title;
   final List<Widget> widgets;
   final IconThemeData? iconTheme;
+  final UolletiImageLogo logo;
+  final UolletiImageProfile profile;
   final double? elevation;
-  UolletiAppBar({super.key,this.backgroundColor,this.elevation,this.centerTitle = true,this.title = const SizedBox(),this.iconTheme,this.leading,this.widgets = const <Widget>[]});
+  UolletiAppBar({super.key,this.backgroundColor,this.profile = UolletiImageProfile.idle, this.logo = UolletiImageLogo.none ,this.elevation,this.centerTitle = true,this.title = const SizedBox(),this.iconTheme,this.leading,this.widgets = const <Widget>[]});
   
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
       height: _appBar.preferredSize.height,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: backgroundColor ?? colorsDS.primary900,
+        color: backgroundColor ?? colorsDS.backgroundMedium,
         borderRadius: const BorderRadius.only(
         ),
         // shadow elevation
@@ -43,7 +46,7 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
             flex: 1,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: leading ?? arrowBack ?? const SizedBox(),
+              child: _logoWidget() ?? leading ?? arrowBack ?? const SizedBox(),
             ),),
           Expanded(
             flex: 2,
@@ -51,12 +54,39 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
           Expanded(
             flex: 1,
             child: Row(
-              children: [
-                ...widgets],
+              mainAxisAlignment: MainAxisAlignment.end,
+              children:  [
+                if(profile != UolletiImageProfile.idle)...[
+                  _profileWidget()! 
+                ]else...[
+                   ...widgets
+                ]
+                ],
             )),
         ],
       ),
     );
+  }
+
+  Widget? _logoWidget(){
+    switch (logo) {
+      case UolletiImageLogo.simpleLogo:
+        return UolletiText.contentMedium("LOGO",color: colorsDS.textPure,);
+      default:
+        return null;
+    }
+  }
+
+    Widget? _profileWidget(){
+    switch (profile) {
+      case UolletiImageProfile.profile:
+        return CircleAvatar(
+          backgroundColor: colorsDS.bordersMedium,
+          child: Icon(Icons.person,color: colorsDS.primary900,),
+        );
+      default:
+        return null;
+    }
   }
   
   @override

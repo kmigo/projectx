@@ -78,6 +78,7 @@ bloc = CoreBinding.get<AuthenticationBloc>();
       navigatorObservers: [MyNavigatorObserver()],
       routes: routes.map((key, value) => MapEntry(key, (context) =>  value(context,null))),
       onGenerateRoute: generateRoute,
+      debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.root,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

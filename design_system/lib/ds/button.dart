@@ -11,13 +11,28 @@ class UolletiButton extends StatelessWidget {
   final Color? textColor;
   final Color? textColorDisabled;
   final bool isLoading;
-  const UolletiButton({super.key,required this.label, required this.textColorDisabled,required this.backgroundDisabled,this.disabled =false,this.onPressed, this.isLoading = false,this.backgroundColor, this.textColor });
-  UolletiButton.primary({super.key,required this.label,this.disabled = false,this.onPressed, this.isLoading = false}): backgroundColor = colorsDS.primary900, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled, textColorDisabled = colorsDS.textDisabled;
-  UolletiButton.positive({super.key,required this.label ,this.disabled =true ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled;
+  final bool? isOutline;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  const UolletiButton({super.key,required this.label, this.isOutline, this.suffixIcon  ,this.prefixIcon,required this.textColorDisabled,required this.backgroundDisabled,this.disabled =false,this.onPressed, this.isLoading = false,this.backgroundColor, this.textColor });
+  UolletiButton.primary({super.key,required this.label, this.prefixIcon, this.suffixIcon,this.disabled = false,this.onPressed, this.isLoading = false}): backgroundColor = colorsDS.primary900, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled, textColorDisabled = colorsDS.textDisabled,isOutline = false;
+  UolletiButton.positive({super.key,required this.label ,this.prefixIcon,this.suffixIcon ,this.disabled =false ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled,isOutline = false;
+  UolletiButton.outline({super.key,required this.label ,this.prefixIcon,this.suffixIcon,this.disabled =false ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textDanger, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled,isOutline = true;
 
   @override
   Widget build(BuildContext context) {
-
+    final preicon = prefixIcon != null ?  IconTheme(
+      data: IconThemeData(
+        color: isOutline ==true ? textColor :disabled ? textColorDisabled : colorsDS.iconsPure
+      ),
+      child: prefixIcon!,
+    ) : null;
+    final posicon = suffixIcon != null ?  IconTheme(
+      data: IconThemeData(
+        color: isOutline ==true ? textColor :disabled ? textColorDisabled : colorsDS.iconsPure
+      ),
+      child: suffixIcon!,
+    ) : null;
     return SizedBox(
       height: 48,
       width: double.infinity,
@@ -30,9 +45,9 @@ class UolletiButton extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: disabled ? backgroundDisabled : backgroundColor,
+            color: isOutline == true? Colors.transparent : disabled  ? backgroundDisabled : backgroundColor,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: const[
+            boxShadow: isOutline == true? null:  const[
                BoxShadow(
                 color: Colors.black12,
                 offset:  Offset(0, 2),
@@ -42,7 +57,22 @@ class UolletiButton extends StatelessWidget {
           ),
           child: isLoading ?  const Center(
             child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.white),),
-          ) : UolletiText.labelLarge(label,color: disabled ? textColorDisabled : textColor,),
+          ) : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if(prefixIcon != null)...[
+                
+                preicon!,
+                const SizedBox(width: 10,),
+                ],
+              UolletiText.labelLarge(label,color: disabled ? textColorDisabled : textColor,),
+              if(posicon != null)...[
+                const SizedBox(width: 10,),
+                posicon
+                ],
+              
+            ],
+          ),
         ),
       ),
       // child: ElevatedButton(onPressed: onPressed!= null ? (){

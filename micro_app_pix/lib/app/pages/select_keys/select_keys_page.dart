@@ -105,6 +105,17 @@ class _SelectKeysPageState extends State<SelectKeysPage> {
                     height: 20,
                   ),
                    UolletiButtonsOutlinedIcons(
+                    icon: Icons.copy,
+                    title: "Pix Copia e Cola",
+                    subtitle: "Ex: 123213dfsdfsd3123342123",
+                     onTap: (){
+                        CoreNavigator.pushNamed("${AppRoutes.pixTransaction.queryPixKey}?${StringUtils.method}=${StringUtilsMethodsEnum.email.name}");
+                     },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                   UolletiButtonsOutlinedIcons(
                     icon: Icons.vpn_key_outlined,
                     title: "Chave aleatória",
                     subtitle: "Ex: 12sd34sd5sdf67sdf8sd9sfd0",

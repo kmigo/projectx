@@ -27,7 +27,8 @@ class HelperValidator {
   }
   static bool isCPF(String? input) {
     if (input == null) return false;
-  if (input.length != 11) return false;
+
+
 
   final digits = input.replaceAll(RegExp(r'\D'), '').split('').map((d) => int.parse(d)).toList();
   if(digits.length != 11) return false;
@@ -111,6 +112,7 @@ class HelperInputValidator {
   }
   static String? cpf(String? text){
     if(HelperValidator.isCPF(text)) return null;
+    print('invalido');
     return 'CPF inválido';
   }
 

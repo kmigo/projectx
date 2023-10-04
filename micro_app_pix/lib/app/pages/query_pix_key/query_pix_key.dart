@@ -13,6 +13,7 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
   late String typeKey;
   final _formKey = GlobalKey<FormState>();
   late StringUtilsMethodsEnum typeKeyEnum;
+  String keyPayment = '';
   @override
   void initState() {
     super.initState();
@@ -49,9 +50,12 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
                       UolletiTextInput(
                         inputFormatters: mask(typeKeyEnum),
                         validator: validator(typeKeyEnum),
+                        onChanged: (value) {
+                          keyPayment = value;
+                          print(value);  
+                        },
                         hintText: hint(typeKeyEnum),
                         keyboardType: keyboardType(typeKeyEnum),
-
                       )
                     ],
                   ),
@@ -64,7 +68,7 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
                 preFixIcon: false,
                 onPressed: (){
                   if(_formKey.currentState!.validate()){
-
+                    CoreNavigator.pushNamed("${AppRoutes.pixTransaction.reviewUserBeforeSendPix}?${StringUtils.method}=${typeKeyEnum.name}&${StringUtils.keyPayment}=$keyPayment");
                   }
                 },
               )
@@ -86,6 +90,8 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
         return 'o Email';
       case StringUtilsMethodsEnum.phone:
         return 'o Telefone';
+      case StringUtilsMethodsEnum.copyAndPaste:
+        return 'a Chave copia e cola';
       case StringUtilsMethodsEnum.random:
       default:
         return 'a Chave aleatória';
@@ -103,6 +109,8 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
         return 'Email';
       case StringUtilsMethodsEnum.phone:
         return 'Telefone';
+      case StringUtilsMethodsEnum.copyAndPaste:
+        return 'Pix Copia e Cola';
       case StringUtilsMethodsEnum.random:
       default:
         return 'Chave aleatória';

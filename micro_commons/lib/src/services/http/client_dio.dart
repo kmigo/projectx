@@ -206,9 +206,7 @@ class HttpClientDio extends ClientHttp {
     debugPrint(
         '$color-- $title($now) $ms ## -> HEADERS: \x1B[0m${const JsonEncoder.withIndent('  ').convert(headers)}');
 
-    dev.log('\n');
-    dev.log('#' * 60);
-    dev.log('\n');
+   
   }
 }
 

@@ -71,4 +71,5 @@ class _PixTransaction {
   final String root = _root;
   final String selectKeys = '$_root/select-keys';
   final String queryPixKey = '$_root/query-pix-key';
+  final String reviewUserBeforeSendPix = '$_root/review-user-before-send-pix';
 }

@@ -12,7 +12,8 @@ dependencies:
     sdk: flutter
   micro_commons_depends:
     path: ../micro_commons_depends
-
+  micro_commons_user:
+    path: ../micro_commons_user
   micro_commons:
     path: ../micro_commons
   design_system:

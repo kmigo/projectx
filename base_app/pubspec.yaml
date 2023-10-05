@@ -34,8 +34,7 @@ dependencies:
   micro_core:
     path: ../micro_core
 
-  micro_commons_user:
-    path: ../micro_commons_user
+
   
   micro_app_onboarding:
     path: ../micro_app_onboarding

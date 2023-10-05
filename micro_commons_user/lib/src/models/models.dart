@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:micro_core/micro_core.dart';
 
-import '../domain/entities/user.dart';
+
 
 part 'address_model.dart';
 part 'favorite_user.dart';

@@ -8,7 +8,7 @@ import 'package:micro_commons_user/src/repository/favorite_user_repository.dart'
 import 'package:micro_commons_user/src/repository/favorite_user_repository_impl.dart';
 
 
-import '../micro_commons_user.dart';
+
 import '../src/datasources/authentication_user.dart';
 import 'package:micro_core/micro_core.dart';
 

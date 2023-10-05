@@ -597,7 +597,7 @@ packages:
     source: path
     version: "0.0.1"
   micro_commons_user:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../micro_commons_user"
       relative: true

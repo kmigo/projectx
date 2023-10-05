@@ -17,6 +17,7 @@ const constantsAssets = 'assets';
 class HttpRoutes {
   static const  transaction = _Transaction();
   static const user = _User();
+  static const accountBank = _AccountBank();
   
 }
 
@@ -36,6 +37,12 @@ class _Transaction {
   final String root = '/transaction';
   final String pixCashout ='/transaction/pix-out';
   final String myTransactions = '/transaction/my-transactions';
+}
+
+class _AccountBank {
+  const _AccountBank();
+  final String account = '/account';
+
 }
 
 class PaymentsType {

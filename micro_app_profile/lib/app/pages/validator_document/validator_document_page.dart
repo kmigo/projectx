@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:micro_app_profile/app/pages/validator_document/widgets/choice_type_document_widget.dart';
 import 'package:micro_app_profile/app/pages/validator_document/widgets/take_photo_front_document.dart';
-import 'package:micro_commons_user/micro_commons_user.dart';
+
 import 'package:micro_core/micro_core.dart';
 
 import '../../../src/models/document_input_validator.dart';

@@ -14,7 +14,7 @@ class UolletiButton extends StatelessWidget {
   final bool? isOutline;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  const UolletiButton({super.key,required this.label, this.isOutline, this.suffixIcon  ,this.prefixIcon,required this.textColorDisabled,required this.backgroundDisabled,this.disabled =false,this.onPressed, this.isLoading = false,this.backgroundColor, this.textColor });
+  const UolletiButton({super.key,required this.label, this.isOutline, this.suffixIcon  ,this.prefixIcon, this.textColorDisabled, this.backgroundDisabled,this.disabled =false,this.onPressed, this.isLoading = false,this.backgroundColor, this.textColor });
   UolletiButton.primary({super.key,required this.label, this.prefixIcon, this.suffixIcon,this.disabled = false,this.onPressed, this.isLoading = false}): backgroundColor = colorsDS.primary900, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled, textColorDisabled = colorsDS.textDisabled,isOutline = false;
   UolletiButton.positive({super.key,required this.label ,this.prefixIcon,this.suffixIcon ,this.disabled =false ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textPure, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled,isOutline = false;
   UolletiButton.outline({super.key,required this.label ,this.prefixIcon,this.suffixIcon,this.disabled =false ,this.onPressed,this.isLoading = false}): backgroundColor = colorsDS.buttonPositive, textColor = colorsDS.textDanger, backgroundDisabled = colorsDS.buttonDisabled,textColorDisabled = colorsDS.textDisabled,isOutline = true;

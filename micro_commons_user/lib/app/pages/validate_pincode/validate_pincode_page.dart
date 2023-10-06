@@ -22,12 +22,12 @@ class _ValidatePincodePageState extends State<ValidatePincodePage> {
     return BlocConsumer<ValidPinCodeBloc, ValidPinCodeState>(
       bloc: bloc,
       listener: (context, state) {
-        if(ValidPinCodeStatus.loading == state.status){
+        if(ValidPinCodeStatus.success == state.status){
           widget.onContinue();
           }
       },
       builder: (context, state) {
-        print(state.failure);
+
         if(ValidPinCodeStatus.success == state.status){
           if(widget.child != null){
               return widget.child!;

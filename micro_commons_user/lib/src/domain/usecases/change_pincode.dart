@@ -7,7 +7,7 @@ class ChangePincodeUsecaseImpl extends ChangePincodeUsecase {
   ChangePincodeUsecaseImpl(this._repository);
   @override
   Future<Either<Failure, void>> call(String code) async{
-    return await _repository.changePincode(encrypted(code, EnvironmentVariables.getVariable(VarEnvs.secret) ));
+    return await _repository.changePincode(CryptoHelper.encryptValue(code ));
   }
 
 }

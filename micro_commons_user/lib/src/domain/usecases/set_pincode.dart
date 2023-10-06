@@ -19,7 +19,6 @@ class SetPincodeUsecaseImpl extends SetPinCodeUsecase {
       return  Left(Failure(message: 'O pincode não confere'));
     }
     return await _repository.setPincode(setPincode.copyWith(
-        pincode: encrypted(setPincode.pincode,
-            EnvironmentVariables.getVariable(VarEnvs.secret).toString())));
+        pincode: CryptoHelper.encryptValue(setPincode.pincode)));
   }
 }

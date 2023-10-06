@@ -1,10 +1,12 @@
 
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:micro_core/micro_core.dart';
 
-enum VarEnvs { secret, baseUrl,consumer,xapikey}
+enum VarEnvs { secret_key,secret_iv, baseUrl,consumer,xapikey}
 
 enum RemoteConfigVars {apps,phones}
 

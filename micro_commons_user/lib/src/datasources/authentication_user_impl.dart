@@ -171,8 +171,7 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
     }
     final user = UserDTO.fromMap(doc.value as Map<String, dynamic>..['id'] = doc.key);
     if (signInModel.password !=
-        decrypt(signInModel.password,
-            EnvironmentVariables.getVariable(VarEnvs.secret))) {
+        CryptoHelper.decryptValue(signInModel.password)) {
       throw  Failure(message: 'Senha incorreta');
     }
 

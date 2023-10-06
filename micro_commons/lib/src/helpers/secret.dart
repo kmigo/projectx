@@ -2,26 +2,24 @@
 
 part of 'helpers.dart';
 
-String encrypted(String password, String secret) {
-  final plainText = password;
-  final key = encrypt.Key.fromUtf8(secret);
-  final iv = encrypt.IV.fromLength(16);
-  final encrypter = encrypt.Encrypter(encrypt.AES(key));
-  final encrypted = encrypter.encrypt(plainText, iv: iv);
-  return encrypted.base64;
+
+class CryptoHelper {
+  static final key = encrypt.Key.fromUtf8(EnvironmentVariables.getVariable(VarEnvs.secret_key));
+  static final iv = encrypt.IV.fromUtf8(EnvironmentVariables.getVariable(VarEnvs.secret_iv));
+
+  static String encryptValue(String plainText) {
+    final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
+    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    return encrypted.base64;
+  }
+
+  static String decryptValue(String cipherText) {
+    final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
+    final decrypted = encrypter.decrypt64(cipherText, iv: iv);
+    return decrypted;
+  }
 }
 
-decrypt(String password, String secret) {
-  final key = encrypt.Key.fromUtf8(secret);
-  final iv = encrypt.IV.fromLength(16);
-
-  final encrypter = encrypt.Encrypter(encrypt.AES(key));
-  final encryptedPassword = encrypt.Encrypted.fromBase64(
-      password); // A senha criptografada que você obteve de Python.
-
-  final decrypted = encrypter.decrypt(encryptedPassword, iv: iv);
-  return decrypted;
-}
 
 
 

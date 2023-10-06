@@ -85,6 +85,7 @@ class StringUtils {
   static const birthDay = 'birth-day';
   static const username ='username';
   static const id ='id';
+  static const pincodeValidation ='pincodeValidation';
 
 
 }

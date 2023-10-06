@@ -41,14 +41,14 @@ initializeInjectionsUser(){
   CoreBinding.registerLazySingleton<UpdateFavoriteUserUsecase>((i) => UpdateFavoriteUserUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<UpdateKycUsecase>((i) => UpdateKycUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<UpdateUserUsecase>((i) => UpdateUserUsecaseImpl(i()));
-  CoreBinding.registerLazySingleton<ValidPincodeUsecase>((i) => ValidPincodeUsecaseImpl(i()));
+  CoreBinding.registerLazySingleton<ValidPincodeUsecase>((i) => ValidPincodeUsecaseImpl(i(),i()));
   CoreBinding.registerLazySingleton<VerifyPhoneUsecase>((i) => VerifyPhoneUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<GetUserWithKycUsecase>((i) => GetUserWithKycImpl(i()));
   CoreBinding.registerLazySingleton<VerifySmsCodeUpdatePhoneNumberUsecase>((i) => VerifySmsCodeUpdatePhoneNumberUsecaseImpl(i()));
   CoreBinding.registerFactory<ValidPinCodeBloc>((i) => ValidPinCodeBloc(i()));
   CoreBinding.registerFactory<VerifyPhoneBloc>((i) => VerifyPhoneBloc(i(),i(),));
   CoreBinding.registerFactory<CreatePinCodeBloc>((i) => CreatePinCodeBloc(i()));
-  
+
   CoreBinding.registerLazySingleton<AuthenticationBloc>((i) => AuthenticationBloc(
     controller: i<AuthenticationRepository>().status,
     signOutUsecase: i(),

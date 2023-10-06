@@ -1,5 +1,7 @@
 part of 'helpers.dart';
 
+
+
 abstract class CacheHelper {
   Future<bool> setInt(String key,int value);
   Future<bool> setBool(String key, bool value);
@@ -12,10 +14,12 @@ abstract class CacheHelper {
   Future<String?> getString(String key);
   Future<List<String>?> getStringList(String key);
   Future<bool> clear();
-
+  Map<String,dynamic> get cache;
 }
 
 class CacheHelperImpl extends CacheHelper {
+  final Map<String,dynamic> _cache = <String,dynamic>{};
+
   @override
   Future<bool?> getBool(String key, bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,30 +53,35 @@ class CacheHelperImpl extends CacheHelper {
   @override
   Future<bool> setBool(String key, bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+     _cache[key] = value;
     return await prefs.setBool(key, value);
   }
 
   @override
   Future<bool> setDouble(String key, double value) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+     _cache[key] = value;
     return await prefs.setDouble(key, value);
   }
 
   @override
   Future<bool> setInt(String key, int value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+     _cache[key] = value;
     return await prefs.setInt(key, value);
   }
 
   @override
   Future<bool> setString(String key, String value)async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+     _cache[key] = value;
     return await prefs.setString(key, value);
   }
 
   @override
   Future<bool> setStringList(String key, List<String> value) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _cache[key] = value;
     return prefs.setStringList(key, value);
   }
   
@@ -80,8 +89,12 @@ class CacheHelperImpl extends CacheHelper {
   Future<bool> clear() async{
    final SharedPreferences prefs = await SharedPreferences.getInstance();
    await prefs.clear();
+   _cache.clear();
    return true;
   }
+  
+  @override
+  Map<String, dynamic> get cache => _cache;
   
 
 }

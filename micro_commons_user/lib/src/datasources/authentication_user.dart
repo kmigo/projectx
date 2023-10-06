@@ -16,7 +16,7 @@ abstract class AuthenticationDatasource {
   Future<UserEntity> getUserByUid(String uid);
   Future<List<UserEntity>> searchUser(FilterUser filterUser);
   Future<UserEntity> signIn(SignInModel signInModel);
-  Future<UserEntity> signUp(SignUpModel signUpModel);
+  Future<void> setPincode(SetPinCodeModel setPincode);
   Future<void> changePincode(String code);
   Future<void> updateUser(UserEntity userEntity);
   Future<void> updateAddress(AddressModel address,String uid);
@@ -25,7 +25,7 @@ abstract class AuthenticationDatasource {
   Stream<WalletEntity> listenWallet();
   Future<UserWithKycEntity> getUserWithKyc();
   Future<void> updateKyc(FormDataModel formData);
-  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false});
+  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool veryToCreateAccount = false, bool verifyToLogin= false});
   Future<void> updatePhone(SmsCodeModel sms);
 
 }

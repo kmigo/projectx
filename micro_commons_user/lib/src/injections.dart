@@ -1,5 +1,8 @@
 library micro_commons_user;
 
+import 'package:micro_commons_user/app/blocs/create_pincode/bloc.dart';
+import 'package:micro_commons_user/app/blocs/verify_phone/bloc.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_commons_user/src/datasources/favorite_datasource.dart';
 import 'package:micro_commons_user/src/datasources/favorite_datasource_impl.dart';
 
@@ -9,6 +12,7 @@ import 'package:micro_commons_user/src/repository/favorite_user_repository_impl.
 
 
 
+import '../app/blocs/validate_code/bloc.dart';
 import '../src/datasources/authentication_user.dart';
 import 'package:micro_core/micro_core.dart';
 
@@ -32,7 +36,7 @@ initializeInjectionsUser(){
   CoreBinding.registerLazySingleton<RemoveFavoriteUserUsecase>((i) => RemoveFavoriteUserUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<SignInUsecase>((i) => SignInUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<SignOutUsecase>((i) => SignOutUsecaseImpl(i()));
-  CoreBinding.registerLazySingleton<SignUpUsecase>((i) => SignUpUsecaseImpl(i()));
+  CoreBinding.registerLazySingleton<SetPinCodeUsecase>((i) => SetPincodeUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<UpdateAddressUsecase>((i) => UpdateAddressUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<UpdateFavoriteUserUsecase>((i) => UpdateFavoriteUserUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<UpdateKycUsecase>((i) => UpdateKycUsecaseImpl(i()));
@@ -41,6 +45,10 @@ initializeInjectionsUser(){
   CoreBinding.registerLazySingleton<VerifyPhoneUsecase>((i) => VerifyPhoneUsecaseImpl(i()));
   CoreBinding.registerLazySingleton<GetUserWithKycUsecase>((i) => GetUserWithKycImpl(i()));
   CoreBinding.registerLazySingleton<VerifySmsCodeUpdatePhoneNumberUsecase>((i) => VerifySmsCodeUpdatePhoneNumberUsecaseImpl(i()));
+  CoreBinding.registerFactory<ValidPinCodeBloc>((i) => ValidPinCodeBloc(i()));
+  CoreBinding.registerFactory<VerifyPhoneBloc>((i) => VerifyPhoneBloc(i(),i(),));
+  CoreBinding.registerFactory<CreatePinCodeBloc>((i) => CreatePinCodeBloc(i()));
+  
   CoreBinding.registerLazySingleton<AuthenticationBloc>((i) => AuthenticationBloc(
     controller: i<AuthenticationRepository>().status,
     signOutUsecase: i(),

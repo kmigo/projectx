@@ -1,4 +1,5 @@
 
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
 
@@ -19,7 +20,7 @@ part 'refresh_token.dart';
 part 'remove_favorite_user.dart';
 part 'sign_in.dart';
 part 'sign_out.dart';
-part 'sign_up.dart';
+part 'set_pincode.dart';
 part 'update_address.dart';
 part 'update_kyc.dart';
 part 'update_user.dart';

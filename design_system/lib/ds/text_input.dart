@@ -151,8 +151,8 @@ class _UolletiTextInputState extends State<UolletiTextInput> {
   void dispose() {
     _focusNode?.removeListener(_start);
     _controller?.removeListener(_observerKeyboarding);
-    _controller?.dispose();
-    _focusNode?.dispose();
+
+    
     super.dispose();
   }
 

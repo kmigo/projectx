@@ -4,8 +4,8 @@ import 'package:micro_app_home/app/pages/home/widgets/tile_card.dart';
 import 'package:micro_core/micro_core.dart';
 
 
-import '../controllers/root_controller.dart';
-import '../widgets/bottom_navigation_bar_custom.dart';
+
+import 'widgets/bottom_navigation_bar_custom.dart';
 
 
 
@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  RootController rootController = CoreBinding.get();
+
 
   @override
   void initState() {

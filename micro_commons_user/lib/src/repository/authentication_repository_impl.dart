@@ -3,6 +3,7 @@
 import 'dart:async';
 
 
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 import 'dart:developer' as dev;
 
@@ -122,24 +123,20 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signUp(
-      SignUpModel signUpModel) async {
+  Future<Either<Failure, void>> setPincode(SetPinCodeModel setPincode) async {
     try {
-      final result = await _datasource.signUp(signUpModel);
-      _user = result;
-      _controller
-          .add(AuthenticationStatus(result, StatusAuthentication.signup));
+      final result = await _datasource.setPincode(setPincode);
+
 
       _listenUser();
       return Right(result);
     } on FirebaseAuthException catch (e) {
-      _streamSubscription?.cancel();
-      _streamSubscriptionWallet?.cancel();
+
       final message = _getFirebaseAuthErrorMessage(e.code);
       final idref = FirebaseDatabase.instance.ref('errors').push();
       idref.set({
         'event': 'signUp-error-firebase',
-        'data': signUpModel.toMap(),
+        'data': setPincode.toMap(),
         'error': e.toString(),
         'message': message
       });
@@ -147,12 +144,10 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
 
       return Left(Failure(message: e.toString()));
     } on Failure catch (e) {
-      _streamSubscription?.cancel();
-      _streamSubscriptionWallet?.cancel();
+    
       return Left(e);
     } catch (e) {
-      _streamSubscription?.cancel();
-      _streamSubscriptionWallet?.cancel();
+
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
   }
@@ -331,9 +326,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false}) async {
+  Future<Either<Failure, void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool veryToCreateAccount = false, bool verifyToLogin= false}) async {
     try{
-      return Right(await _datasource.verifyPhone(updatePhoneModel,checkAccountAlreadyExist: checkAccountAlreadyExist));
+      return Right(await _datasource.verifyPhone(updatePhoneModel,verifyToLogin: verifyToLogin,veryToCreateAccount: veryToCreateAccount));
     } on FirebaseAuthException catch (e) {
       dev.log(e.toString(),
           name: '$constantsLogErrorFirebaseAuth - verifyPhone ',

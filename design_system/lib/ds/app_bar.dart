@@ -80,9 +80,14 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
     Widget? _profileWidget(){
     switch (profile) {
       case UolletiImageProfile.profile:
-        return CircleAvatar(
-          backgroundColor: colorsDS.bordersMedium,
-          child: Icon(Icons.person,color: colorsDS.primary900,),
+        return InkWell(
+          onTap: (){
+            CoreNavigator.pushNamed(AppRoutes.profile.root);
+          },
+          child: CircleAvatar(
+            backgroundColor: colorsDS.bordersMedium,
+            child: Icon(Icons.person,color: colorsDS.primary900,),
+          ),
         );
       default:
         return null;

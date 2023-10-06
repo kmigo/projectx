@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:micro_app_account_bank/src/models/account_create_model.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../../blocs/register_account_bank/bloc.dart';
@@ -19,11 +20,11 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
   final TextEditingController _nameBankController = TextEditingController();
   final TextEditingController _accountNumberController =
       TextEditingController();
-  final TextEditingController _routeNumberController =TextEditingController();
+  final TextEditingController _routeNumberController = TextEditingController();
   final TextEditingController _accountHolderNameController =
       TextEditingController();
   final TextEditingController _labelController = TextEditingController();
-  String? checking ;
+  String? checking;
   @override
   void initState() {
     super.initState();
@@ -39,9 +40,24 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
           color: colorsDS.textPure,
         ),
       ),
-      body: BlocBuilder< RegisterAccountBankBloc, RegisterAccountBankState>(
+      body: BlocConsumer<RegisterAccountBankBloc, RegisterAccountBankState>(
+        listener: (ctx, state) {
+          if (state.status == RegisterAccountBankStatus.error) {
+            UolletiSnackbar.bottom(
+              backgroundColor: colorsDS.iconsDanger,
+              title: const UolletiText.contentMedium(
+                  'Desulpe houve algum erro, tente novamente'),
+            );
+          }
+        },
         bloc: bloc,
         builder: (context, state) {
+          if (state.status == RegisterAccountBankStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           return Padding(
             padding: const EdgeInsets.all(18.0),
             child: SingleChildScrollView(
@@ -97,28 +113,28 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                   UolletiTextInput(
+                  UolletiTextInput(
                     label: 'Numero da conta',
                     controller: _accountNumberController,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                   UolletiTextInput(
+                  UolletiTextInput(
                     label: 'Numero de rota',
                     controller: _routeNumberController,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                   UolletiTextInput(
+                  UolletiTextInput(
                     label: 'Nome do titular da conta',
                     controller: _accountHolderNameController,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                   UolletiTextInput(
+                  UolletiTextInput(
                     label: 'Label',
                     controller: _labelController,
                   ),
@@ -126,9 +142,15 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
                     height: 20,
                   ),
                   UolletiButton.primary(
-                      label: id != null ? 'Atualizar' : 'Salvar',
-                      onPressed: id != null ? null: ()=> bloc.create(AccountCreateModel(type: 'Checking',data: {},name: _nameBankController.text,userId: '1')),
-                      )
+                    label: id != null ? 'Atualizar' : 'Salvar',
+                    onPressed: id != null
+                        ? null
+                        : () => bloc.create(AccountCreateModel(
+                            type: 'Checking',
+                            data: {},
+                            name: _nameBankController.text,
+                            userId: blocUser.state.status.user?.id ?? '1')),
+                  )
                 ],
               ),
             ),

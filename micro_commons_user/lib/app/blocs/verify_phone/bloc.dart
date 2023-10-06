@@ -1,15 +1,16 @@
 
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 part 'state.dart';
 
-class ConfirmPhoneToCreateAccountBloc
-    extends Cubit<ConfirmPhoneToCreateAccountState> {
+class VerifyPhoneBloc
+    extends Cubit<LoginPhoneState> {
   final VerifyPhoneUsecase _verifyPhoneUsecase;
   final ConfirmPhoneUsecase _confirmPhoneUsecase;
-  ConfirmPhoneToCreateAccountBloc(
+  VerifyPhoneBloc(
       this._confirmPhoneUsecase, this._verifyPhoneUsecase)
-      : super(const ConfirmPhoneToCreateAccountState(
-            status: ConfirmPhoneToCreateAccountStatus.idle));
+      : super(const LoginPhoneState(
+            status: LoginPhoneStatus.idle));
   void changeSmsCode(String smsCode) {
     emit(state.copyWith(smsCode: smsCode));
   }        
@@ -19,32 +20,32 @@ class ConfirmPhoneToCreateAccountBloc
     emit(state.copyWith(phoneItemConfigModel: phoneItemConfigModel));
     }
 
-void verifyPhoneSend(String phoneNumber) async {
+void verifyPhoneSend(String phoneNumber,{bool veryToCreateAccount = false, bool verifyToLogin= false}) async {
 
 
-    emit(state.copyWith(status: ConfirmPhoneToCreateAccountStatus.loading,phone: phoneNumber));
+    emit(state.copyWith(status: LoginPhoneStatus.loading,phone: phoneNumber));
 
     final result = await _verifyPhoneUsecase(VerifyPhoneModel(
       phoneItemConfigModel: state.phoneItemConfigModel!,
         verifycodeId: (codeId) => emit(state.copyWith(
             verificationId: codeId)),
-        phoneNumber: phoneNumber),checkAccountAlreadyExist: true);
+        phoneNumber: phoneNumber),veryToCreateAccount: veryToCreateAccount,verifyToLogin: verifyToLogin);
     result.fold(
         (l) => emit(state.copyWith(
-              status: ConfirmPhoneToCreateAccountStatus.error,
+              status: LoginPhoneStatus.error,
               error: l.message,
             )),
         (r) => emit(state.copyWith(
-            status: ConfirmPhoneToCreateAccountStatus.confirmCode,
+            status: LoginPhoneStatus.confirmCode,
             phone: phoneNumber
             )));
   }
 
   Future<void> confirmPhone()async{
-    emit(state.copyWith(status: ConfirmPhoneToCreateAccountStatus.loading));
+    emit(state.copyWith(status: LoginPhoneStatus.loading));
     final result = await _confirmPhoneUsecase(SmsCodeModel(verificattionId: state.verificationId!, smsCode: state.smsCode!));
-    result.fold((l) => emit(state.copyWith(error: l.message,status:ConfirmPhoneToCreateAccountStatus.error)), (r) => emit(state.copyWith(
-      status: ConfirmPhoneToCreateAccountStatus.confirmed,
+    result.fold((l) => emit(state.copyWith(error: l.message,status:LoginPhoneStatus.error)), (r) => emit(state.copyWith(
+      status: LoginPhoneStatus.confirmed,
     )));
   }
 }

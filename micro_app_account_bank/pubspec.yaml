@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   micro_core:
     path: ../micro_core
+  micro_commons_user:
+    path: ../micro_commons_user
 dev_dependencies:
   flutter_test:
     sdk: flutter

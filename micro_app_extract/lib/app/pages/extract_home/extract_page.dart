@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors_in_immutables, unused_element
 
 import 'package:flutter/material.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 
 import 'package:micro_core/micro_core.dart';
 import '../../blocs/extract/bloc.dart';

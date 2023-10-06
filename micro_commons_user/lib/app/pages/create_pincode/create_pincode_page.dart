@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:micro_core/micro_core.dart';
 
-import '../../bloc/create_pincode/bloc.dart';
+
+import '../../blocs/create_pincode/bloc.dart';
 
 class CreatePincodePage extends StatefulWidget {
-  const CreatePincodePage({super.key});
+  final String? phone;
+  final Widget? child;
+  final VoidCallback? onContinue;
+  const CreatePincodePage({super.key, this.phone,this.onContinue,this.child});
 
   @override
   State<CreatePincodePage> createState() => _CreatePincodePageState();
@@ -16,7 +20,7 @@ class _CreatePincodePageState extends State<CreatePincodePage> {
   @override
   void initState() {
     super.initState();
-    phone = CorePageModal.queryParams['phone'];
+    phone = CorePageModal.queryParams['phone'] ?? widget.phone;
   }
 
   @override
@@ -29,13 +33,20 @@ class _CreatePincodePageState extends State<CreatePincodePage> {
           bloc: bloc,
           listener: (context, state) {
             if(state.status == CreatePinCodeStatus.success){
+              if(widget.onContinue != null){
+                widget.onContinue!.call();
+                return;
+              }
               CoreNavigator.pushNamedAndRemoveUntil(AppRoutes.home.root, ModalRoute.withName(AppRoutes.root));
             }
           },
           builder: (context, state) {
             if(state.status == CreatePinCodeStatus.success){
+              if(widget.child != null){
+                return widget.child!;
+              }
               return const Center(
-                child: UolletiText.captionXLarge('Conta criada com sucesso, aguarde você será redicionado',bold: true,),
+                child: Material(child: UolletiText.captionXLarge('Pin criado com sucesso, aguarde você será redicionado',bold: true,)),
               );
             }
             return Column(

@@ -18,6 +18,7 @@ class  _Onboarding {
   const _Onboarding();
   final String root = _root;
   final String microAppName = 'micro_app_onboarding';
+  final String validatePin = '$_root/validate-pin';
   final String createAccount = '$_root/create-account';
   final String createPin = '$_root/create-pin';
   final String login = '$_root/login';

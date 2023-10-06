@@ -9,6 +9,7 @@ import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
 import 'package:micro_app_pix/micro_app_pix_transaction.dart';
 import 'package:micro_app_profile/micro_app_profile.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 
 import 'package:micro_core/micro_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -33,13 +34,13 @@ class MyApp extends StatefulWidget  {
   await dotenv.load(fileName: 'files/env');
 
     await Firebase.initializeApp(options: const FirebaseOptions(
-    apiKey: 'AIzaSyC9vmQG0Qz3sSsIaoYNtsjSy7LS2GLMTWk',
-    appId: '1:1008638544397:web:b30ca9d192136fc1412344',
-    messagingSenderId: '1008638544397',
-    projectId: 'uoleti-staging',
-    authDomain: 'uoleti-staging.firebaseapp.com',
-    databaseURL: 'https://uoleti-staging-default-rtdb.firebaseio.com',
-    storageBucket: 'uoleti-staging.appspot.com',
+    apiKey: 'AIzaSyDkqMNn5xwLEfpT4uT06QAvqSIaqSfAssA',
+    appId: '1:591107971587:web:881cd3033f51bfad834c36',
+    messagingSenderId: '591107971587',
+    projectId: 'project-x-a4278',
+    authDomain: 'project-x-a4278.firebaseapp.com',
+    databaseURL: 'https://project-x-a4278-default-rtdb.firebaseio.com',
+    storageBucket: 'project-x-a4278.appspot.com',
     measurementId: 'G-2ZK837RNR4',
   ));
 

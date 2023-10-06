@@ -21,7 +21,7 @@ class LoginPhoneState extends Equatable {
   @override
   List<Object?> get props => [verificationId,status,error,phoneItemConfigModel,smsCode];
 
-
+  
   LoginPhoneState copyWith({
     LoginPhoneStatus? status,
     String? verificationId,

@@ -1,5 +1,6 @@
 
 
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
 
@@ -36,7 +37,7 @@ class AuthenticationStatus  extends Equatable {
 
 abstract class AuthenticationRepository {
 
-  Future<Either<Failure,UserEntity>> signUp( SignUpModel signUpModel);
+  Future<Either<Failure,void>> setPincode(SetPinCodeModel setPincode);
   Future<Either<Failure,void>> signOut();
   Future<Either<Failure,void>> confirmPhone(SmsCodeModel code);
   Future<Either<Failure,UserVerifyPin>> validPincode(String code);
@@ -51,6 +52,6 @@ abstract class AuthenticationRepository {
   Future<Either<Failure,UserWithKycEntity>> getUserWithKyc();
   Future<Either<Failure,void>> updateKyc(FormDataModel formData);
   Future<Either<Failure,void>> updateAddress(AddressModel addressModel,String uid);
-   Future<Either<Failure,void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false});
+   Future<Either<Failure,void>> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool veryToCreateAccount = false, bool verifyToLogin= false});
 Future<Either<Failure,void>> updatePhone(SmsCodeModel sms);
 }

@@ -5,6 +5,7 @@ import 'dart:developer';
 
 
 import 'package:flutter/foundation.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 
 import 'package:micro_core/micro_core.dart';
 
@@ -83,7 +84,7 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
   }
 
   @override
-  Future<UserEntity> signUp(SignUpModel signUpModel) async {
+  Future<void> setPincode(SetPinCodeModel setPincode) async {
     final user = _auth.currentUser;
     if (user == null) {
       throw  Failure(message: 'Não existe usuario logado');
@@ -98,12 +99,14 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
     // }
     final userJson = await _db.ref(constantsUser).child(user.uid).get();
     if(userJson.exists){
-      throw Failure(message: 'Usuário já existe, entre com o login');
+      await _db.ref(constantsUser).child(user.uid).update(setPincode.toMap());
+    }else{
+      await _db.ref(constantsUser).child(user.uid).set(setPincode.toMap()
+      ..['consumer'] = EnvironmentVariables.getVariable(VarEnvs.consumer));
     }
 
-    await _db.ref(constantsUser).child(user.uid).set(signUpModel.toMap()
-      ..['consumer'] = EnvironmentVariables.getVariable(VarEnvs.consumer));
-    return UserDTO.fromMap(signUpModel.toMap()..['id'] = user.uid);
+   
+
   }
 
 
@@ -247,11 +250,18 @@ await _clientHttp.put("${HttpRoutes.user.root}/",json: address.toMap());
   }
 
   @override
-  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool checkAccountAlreadyExist = false}) async{
-    if(checkAccountAlreadyExist){
+  Future<void> verifyPhone(VerifyPhoneModel updatePhoneModel,{bool veryToCreateAccount = false, bool verifyToLogin= false}) async{
+    if(veryToCreateAccount){
       final usersFound = await searchUser(FilterUser(phoneNumber: updatePhoneModel.phoneNumber));
       if(usersFound.isNotEmpty){
         throw Failure(message: 'Telefone já cadastrado');
+      }
+    }
+
+    if(verifyToLogin){
+      final usersFound = await searchUser(FilterUser(phoneNumber: updatePhoneModel.phoneNumber));
+      if(usersFound.isEmpty){
+        throw Failure(message: 'Telefone não cadastrado');
       }
     }
      await FirebaseAuth.instance.verifyPhoneNumber(

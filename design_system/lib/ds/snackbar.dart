@@ -13,7 +13,7 @@ class UolletiSnackbar extends StatelessWidget {
   final double? rigth;
   final EdgeInsetsGeometry? padding;
   const UolletiSnackbar({super.key,required this.backgroundColor ,this.padding ,this.left , this.top , this.bottom, this.rigth , required this.title,required this.trailling,required this.leading}) ;
-  const UolletiSnackbar.bottom({super.key,required this.backgroundColor ,this.padding , required this.title,required this.trailling,required this.leading}) : top = null, left = null, rigth = null, bottom = 0;
+  const UolletiSnackbar.bottom({super.key,required this.backgroundColor ,this.padding , required this.title, this.trailling, this.leading}) : top = null, left = null, rigth = null, bottom = 0;
    UolletiSnackbar.bottomError({super.key ,this.padding ,required String message}) : top = null, left = null, rigth = null, bottom = 0,backgroundColor=colorsDS.iconsDanger, title = UolletiText.contentLarge(message,color: colorsDS.textPure, bold: true),trailling= const SizedBox(),leading= const SizedBox();
   @override
   Widget build(BuildContext context) {

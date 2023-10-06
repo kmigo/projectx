@@ -1,4 +1,4 @@
-part of '../confirm_phone_to_create_account.dart';
+part of '../register_phone_page.dart';
 
 class ConfirmPhoneSmsCodeComponent extends StatelessWidget {
   final ValueChanged<String> onChanged;

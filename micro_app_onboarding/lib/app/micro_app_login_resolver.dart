@@ -1,16 +1,17 @@
 
 
 
-import 'package:micro_app_onboarding/app/bloc/login_phone/bloc.dart';
-import 'package:micro_app_onboarding/app/pages/register_phone/confirm_phone_to_create_account.dart';
+
+import 'package:micro_app_onboarding/app/pages/login_page/login_page.dart';
+import 'package:micro_app_onboarding/app/pages/register_phone/register_phone_page.dart';
 import 'package:micro_core/micro_core.dart';
 
+import 'pages/create_pincode_user/create_picode_user_page.dart';
+import 'pages/validate_pincode/validate_picode.dart';
 
-import 'bloc/create_pincode/bloc.dart';
 
-import 'bloc/register_phone/bloc.dart';
-import 'pages/create_pincode/create_pincode_page.dart';
-import 'pages/login_phone/login_phone_page.dart';
+
+
 
 class MicroAppOnboardingResolver implements MicroApp {
   @override
@@ -18,17 +19,17 @@ class MicroAppOnboardingResolver implements MicroApp {
   
   @override
   Map<String, WidgetBuildArgs> get routes => {
-    AppRoutes.onboarding.createAccount : (ctx,args) => const ConfirmPhoneToCreatedAccount(),
-    AppRoutes.onboarding.createPin : (ctx,args) => const CreatePincodePage(),
-    AppRoutes.onboarding.login : (ctx,args) => const LoginPhonePage(),
+    AppRoutes.onboarding.createAccount : (ctx,args) => const RegisterPhone(),
+    AppRoutes.onboarding.createPin : (ctx,args) => const CreatePincodeUserPage(),
+    AppRoutes.onboarding.validatePin : (ctx,args) => const ValidatePincodeUserPage(),
+    AppRoutes.onboarding.login :(context, args) => const LoginPage()
 
   };
   
   @override
   void Function() get injectionRegister => (){
-    CoreBinding.registerFactory<ConfirmPhoneToCreateAccountBloc>((i) => ConfirmPhoneToCreateAccountBloc(i(),i()));
-    CoreBinding.registerFactory<CreatePinCodeBloc>((i) => CreatePinCodeBloc(i()));
-    CoreBinding.registerFactory<LoginPhoneBloc>((i) => LoginPhoneBloc(i(),i() ));
+
+
   };
 
 

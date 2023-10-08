@@ -5,7 +5,7 @@ enum RegisterAccountBankStatus { idle, loading, success, error }
 
 class RegisterAccountBankState extends Equatable {
   final RegisterAccountBankStatus status;
-  final Failure? failure;
+  final String? failure;
 
   const RegisterAccountBankState({
      this.status = RegisterAccountBankStatus.idle,
@@ -18,7 +18,7 @@ class RegisterAccountBankState extends Equatable {
 
   RegisterAccountBankState copyWith({
     RegisterAccountBankStatus? status,
-    Failure? failure,
+    String? failure,
   }) {
     return RegisterAccountBankState(
       status: status ?? this.status,

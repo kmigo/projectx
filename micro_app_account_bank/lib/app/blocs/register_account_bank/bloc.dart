@@ -14,7 +14,7 @@ class RegisterAccountBankBloc extends Cubit<RegisterAccountBankState> {
     emit(state.copyWith(status: RegisterAccountBankStatus.loading));
     final result = await _createBankAccountUsecase(account);
     result.fold(
-      (failure) => emit(state.copyWith(status: RegisterAccountBankStatus.error, failure: failure)),
+      (error) => emit(state.copyWith(status: RegisterAccountBankStatus.error, failure: error.message)),
       (account) => emit(state.copyWith(status: RegisterAccountBankStatus.success))
     );
   }

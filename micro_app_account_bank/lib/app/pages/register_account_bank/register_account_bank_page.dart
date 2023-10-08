@@ -42,12 +42,14 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
       ),
       body: BlocConsumer<RegisterAccountBankBloc, RegisterAccountBankState>(
         listener: (ctx, state) {
+         
           if (state.status == RegisterAccountBankStatus.error) {
-            UolletiSnackbar.bottom(
+
+            showUolletiSnackbar(context, UolletiSnackbar.bottom(
               backgroundColor: colorsDS.iconsDanger,
-              title: const UolletiText.contentMedium(
-                  'Desulpe houve algum erro, tente novamente'),
-            );
+              title:  UolletiText.contentMedium( state.failure ??
+                  'Desulpe houve algum erro, tente novamente',color: colorsDS.textPure,),
+            ), const Duration(seconds: 3));
           }
         },
         bloc: bloc,
@@ -103,7 +105,7 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
                     height: 10,
                   ),
                   UolletiDropDown(
-                    items: const ['Checking'],
+                    items: const ['DEFAULT', 'RECEIVER_ACCOUNT', 'ORIGIN_ACCOUNT'],
                     onChanged: (value) {
                       checking = value;
                     },
@@ -146,7 +148,7 @@ class _RegisterAccountBankPageState extends State<RegisterAccountBankPage> {
                     onPressed: id != null
                         ? null
                         : () => bloc.create(AccountCreateModel(
-                            type: 'Checking',
+                            type: checking ?? 'DEFAULT',
                             data: {},
                             name: _nameBankController.text,
                             userId: blocUser.state.status.user?.id ?? '1')),

@@ -136,7 +136,7 @@ class HttpClientDio extends ClientHttp {
             status: status, data: e.response?.data, isSuccessfull: false);
       }
       throw FailureRequest(
-          message: genericError.message!,
+          fallBackMessage: genericError.message!,
           statusCode: status,
           data: e.response?.data,
           path: url);

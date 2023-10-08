@@ -14,6 +14,7 @@ import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'config.dart';
 import 'pages/camera.dart';
 import 'pages/welcome.dart';
 void main() async {
@@ -32,7 +33,7 @@ class MyApp extends StatefulWidget  {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'files/env');
-
+    currentFlavorConfig();
     await Firebase.initializeApp(options: const FirebaseOptions(
     apiKey: 'AIzaSyDkqMNn5xwLEfpT4uT06QAvqSIaqSfAssA',
     appId: '1:591107971587:web:881cd3033f51bfad834c36',
@@ -152,6 +153,9 @@ bloc = CoreBinding.get<AuthenticationBloc>();
 
   ];
   commonsInjections(){
+
+    CoreBinding.registerLazySingleton<CacheHelper>((p0) => CacheHelperImpl());
+
   CoreBinding.registerLazySingleton<ClientHttp>((i) => HttpClientDio(
     baseUrl:EnvironmentVariables.getVariable(VarEnvs.baseUrl),
      signOut: () async {

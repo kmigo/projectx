@@ -20,7 +20,7 @@ class EnvironmentVariables {
       minimumFetchInterval: const Duration(hours:1),
     ));
 
-    await _remoteConfig!.fetch();
+    await _remoteConfig!.fetchAndActivate();
     _remoteConfig!.setDefaults({
   "phones":"""{
   "+55": {

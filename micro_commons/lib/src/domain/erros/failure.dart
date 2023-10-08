@@ -2,7 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 
-class Failure implements Exception {
+class Failure implements Exception  {
   final String? message;
   final Exception? e;
    Failure({this.message, this.e}){
@@ -14,7 +14,7 @@ class Failure implements Exception {
   }
   @override
   String toString() {
-    return 'Message: $message\nstrackTrace: $e';
+    return message ?? 'Failure';
   }
 }
 
@@ -29,11 +29,14 @@ class FailureRequest extends Failure {
   final int statusCodeValue;
   final dynamic dataValue;
   final String pathValue;
-  FailureRequest({required String message, int statusCode =500,dynamic data, String path =''}) : statusCodeValue = statusCode, pathValue = path,dataValue = data ,super(message: _errorMessage(statusCode, data, message,path));
+  FailureRequest({required String fallBackMessage, int statusCode =500,dynamic data, String path =''}) : statusCodeValue = statusCode, pathValue = path,dataValue = data ,super(message: _errorMessage(statusCode, data, fallBackMessage,path));
 
   static String _errorMessage(int statusCode, dynamic data,String fallBackMessage,String path){
     if(data['message'] == 'level 1 already processed or not found.'){
       return 'Suas informações já foram validadas. Caso tenha alguma dúvida, entre em contato com o suporte técnico.';
+    }
+    if(data['message'] == 'Unauthorized'){
+      return 'Você não tem permissão para realizar essa ação.';
     }
     if(data['code'] == '007'){
       return 'Você ainda tem informações para ser validada no seu perfil. Por favor, acesse o aplicativo e valide suas informações.';

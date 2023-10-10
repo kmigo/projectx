@@ -33,6 +33,7 @@ class MyApp extends StatefulWidget  {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'files/env');
+  createFirebaseLibraryScript();
     currentFlavorConfig();
     await Firebase.initializeApp(options: const FirebaseOptions(
     apiKey: 'AIzaSyDkqMNn5xwLEfpT4uT06QAvqSIaqSfAssA',

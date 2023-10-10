@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+
 import 'dart:html' as html;
 
 const String flavorDev = '''
@@ -58,8 +60,3 @@ void createScriptElement() {
   html.document.head!.append(script);
 }
 
-void main() {
-  createFirebaseLibraryScript();
-  createScriptElement();
-  // Rest of your main function
-}

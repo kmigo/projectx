@@ -79,6 +79,9 @@ class StringUtils {
   static const document = 'document';
   static const phone = 'phone';
   static const title = 'title';
+  static const accountBankTypeDefault = 'DEFAULT';
+  static const accountBankTypeReceiver = 'RECEIVER_ACCOUNT';
+  static const accountBankTypeOrigin = 'ORIGIN_ACCOUNT';
   static const scanner = 'scanner';
   static const email = 'email';
   static const name = 'name';

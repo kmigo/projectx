@@ -10,6 +10,9 @@ class Failure implements Exception  {
      if(e!= null){
       debugPrint('$color Failure: $e \x1B[0m');
      }
+     if(message != null){
+      debugPrint('$color Failure: $message \x1B[0m');
+     }
     
   }
   @override

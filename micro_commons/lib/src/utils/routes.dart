@@ -29,7 +29,7 @@ class _Home {
   const _Home();
   final String root = _root;
   final String microAppName = 'micro_app_home';
-  final String sendTransaction = '$_root/send-transaction';
+  
 
 }
 
@@ -82,4 +82,7 @@ class _AccountBank {
   final String root = _root;
   final String microAppName = 'micro_app_account_bank';
   final String registerBank = '$_root/register-bank';
+  final String reviewNewRecharge = '$_root/review-new-recharge';
+  final String recharge = '$_root/new-recharge';
+  final String sendTransaction = '$_root/send-transaction';
 }

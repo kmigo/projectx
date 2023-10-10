@@ -1,6 +1,6 @@
 part of '/src/domain/entities/account_entity.dart';
 
-extension AccountDTO on AccountEntity {
+extension AccountDTO on AccountBankEntity {
 Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -12,8 +12,8 @@ Map<String, dynamic> toMap() {
     };
   }
 
-  static fromMap(Map<String, dynamic> map) {
-    return AccountEntity(
+  static AccountBankEntity fromMap(Map<String, dynamic> map) {
+    return AccountBankEntity(
       id: map['id'] != null ? map['id'] as String : null,
       type: map['type'] != null ? map['type'] as String : null,
       data: map['data'] as dynamic,

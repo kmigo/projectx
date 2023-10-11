@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:micro_app_pix/src/args/key_pix_type.dart';
+
+
 import 'package:micro_core/micro_core.dart';
 
-class RegisterPixPage extends StatefulWidget {
-  const RegisterPixPage({super.key});
+class RegisterAccountBankReceiverPage extends StatefulWidget {
+  const RegisterAccountBankReceiverPage({super.key});
 
   @override
-  State<RegisterPixPage> createState() => _RegisterPixPageState();
+  State<RegisterAccountBankReceiverPage> createState() => _RegisterAccountBankReceiverPageState();
 }
 
-class _RegisterPixPageState extends State<RegisterPixPage> {
+class _RegisterAccountBankReceiverPageState extends State<RegisterAccountBankReceiverPage> {
   String? id;
   String? method;
   String? keyPayment;
@@ -97,8 +98,8 @@ class _RegisterPixPageState extends State<RegisterPixPage> {
 
   void _setKey()async{
     await CoreNavigator.pushNamed(AppRoutes.pixTransaction.selectKeys);
-    if(CorePageModal.args is KeyPixType){
-      final args =(CorePageModal.args as KeyPixType);
+    if(CorePageModal.args != null){
+      final args =(CorePageModal.args as KeyPixTypeModel);
       setState(() {
         keyPayment = args.key;
         method = args.type;

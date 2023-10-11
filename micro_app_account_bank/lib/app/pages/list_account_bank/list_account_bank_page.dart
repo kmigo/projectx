@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:micro_app_account_bank/app/blocs/list_accounts_bank/bloc.dart';
-import 'package:micro_app_account_bank/src/domain/entities/account_bank_receiver.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
-import '../../../src/domain/entities/account_bank_origin.dart';
 
 class ListAccountBankPage extends StatefulWidget {
   const ListAccountBankPage({super.key});
@@ -39,52 +37,101 @@ class _ListAccountBankPageState extends State<ListAccountBankPage> {
               child: CircularProgressIndicator(),
             );
           }
-          // filtrando as contas de origem e destino
-          final receiversAccount = state.accountsBank
-              .where((element) => state.isReceiverAccountBank(element))
-              .toList();
-          final originsAccount = state.accountsBank
-              .where((element) => !state.isReceiverAccountBank(element))
-              .toList();
-
-          // convertendo para entidades
-          final receivers = receiversAccount
-              .map<AccountBankReceiverEntity>(
-                  (e) => AccountBankReceiverDTO.fromMap(e.data))
-              .toList();
-          final origins = originsAccount
-              .map<AccountBankOriginEntity>(
-                  (e) => AccountBankOriginDTO.fromMap(e.data))
-              .toList();
+         final receivers = state.receivers;
+          final origins = state.origins;
 
           return Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const UolletiText.labelXLarge(
-                  'Selecione uma ação:',
-                  bold: true,
-                ),
+           
                 const SizedBox(
                   height: 20,
                 ),
                 // mostrar as contas de origem
+                 Row(
+                  children: [
+                    const UolletiText.labelXLarge(
+                      'Contas origem:',
+                      bold: true,
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: ()async {
+                         final created = await CoreNavigator.pushNamed(AppRoutes.accountBank.registerBankOrigin);
+                             if(created != null && created == true){
+                               bloc.getAllAccountsBank();
+                             }
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(Icons.add,size: 15,),
+                          Icon(Icons.account_balance_wallet),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10,),
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (ctx, index) => _TileCard.origin(
-                            onTap: () {},
+                            onTap: () async{
+                              final created = await CoreNavigator.pushNamed("${AppRoutes.accountBank.registerBankOrigin}?${StringUtils.id}=${state.origins[index].id}");
+                             if(created != null && created == true){
+                               bloc.getAllAccountsBank();
+                             }
+                            },
                             title: origins[index].bankName,
-                            subtitle: origins[index].accountNumber),
+                            subtitle: origins[index].bankName),
                         separatorBuilder: (ctx, index) => const SizedBox(
                               height: 10,
                             ),
                         itemCount: origins.length)),
+                        const SizedBox(
+                  height: 20,
+                ),
+                // mostrar as contas de origem
+                 const SizedBox(
+                  height: 20,
+                ),
+                // mostrar as contas de origem
+                 Row(
+                  children: [
+                     const UolletiText.labelXLarge(
+                      'Contas destino:',
+                      bold: true,
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () async{
+                         final created = await CoreNavigator.pushNamed(AppRoutes.accountBank.registerBankReceiver);
+                             if(created != null && created == true){
+                               bloc.getAllAccountsBank();
+                             }
+
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(Icons.add,size: 15,),
+                          Icon(Icons.pix),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10,),
                 // mostrar as contas de destino
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (ctx, index) => _TileCard.origin(
-                            onTap: () {},
+                            onTap: () async {
+                             final update = await CoreNavigator.pushNamed("${AppRoutes.accountBank.registerBankReceiver}?${StringUtils.id}=${state.receivers[index].id}}");
+                             if(update != null && update == true){
+                               bloc.getAllAccountsBank();
+                             }
+                            },
                             title: receivers[index].tagName,
                             subtitle: receivers[index].keyAccountPix),
                         separatorBuilder: (ctx, index) => const SizedBox(
@@ -124,14 +171,25 @@ class _TileCard extends StatelessWidget {
       child: Center(
         child: Container(
           width: double.infinity,
-          //padding: const EdgeInsets.symmetric(vertical: 25),
+          padding:  const EdgeInsets.all( 10),
           decoration: BoxDecoration(
             color: colorsDS.backgroundLight,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: colorsDS.bordersDark),
           ),
-          child: Column(
-            children: [],
+          child: Row(
+            children: [
+              Icon(icon),
+              const SizedBox(
+                height: 10,
+              ),Expanded(child: Column(
+                children: [
+                  UolletiText.labelLarge(title,bold: true,),
+                  UolletiText.labelSmall(subtitle),
+                ],
+              ))
+
+            ],
           ),
         ),
       ),

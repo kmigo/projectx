@@ -4,9 +4,14 @@
 
 import 'package:micro_core/micro_core.dart';
 
+abstract class AccountModel {
+  Map<String,dynamic> toMap();
+}
+
+
 class AccountCreateModel extends Equatable {
   final String type;
-  final dynamic data;
+  final AccountModel data;
   final String name;
   final String userId;
   const AccountCreateModel({
@@ -25,7 +30,7 @@ class AccountCreateModel extends Equatable {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'type': type,
-      'data': data,
+      'data': data.toMap(),
       'name': name,
       'userId': userId,
     };
@@ -41,4 +46,18 @@ class AccountCreateModel extends Equatable {
   }
 
 
+
+  AccountCreateModel copyWith({
+    String? type,
+    AccountModel? data,
+    String? name,
+    String? userId,
+  }) {
+    return AccountCreateModel(
+      type: type ?? this.type,
+      data: data ?? this.data,
+      name: name ?? this.name,
+      userId: userId ?? this.userId,
+    );
+  }
 }

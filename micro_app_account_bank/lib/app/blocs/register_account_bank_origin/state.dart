@@ -7,11 +7,16 @@ class RegisterAccountBankState extends Equatable {
   final RegisterAccountBankStatus status;
   final String? failure;
 
+   const RegisterAccountBankState.init({
+     this.status = RegisterAccountBankStatus.idle,
+
+    this.failure,
+  }) ;
   const RegisterAccountBankState({
      this.status = RegisterAccountBankStatus.idle,
     this.failure,
+
   });
-  
   @override
   List<Object?> get props => [status, failure];
 
@@ -19,6 +24,8 @@ class RegisterAccountBankState extends Equatable {
   RegisterAccountBankState copyWith({
     RegisterAccountBankStatus? status,
     String? failure,
+    AccountBankOriginModel? accountOrigin,
+    AccountCreateModel? account
   }) {
     return RegisterAccountBankState(
       status: status ?? this.status,

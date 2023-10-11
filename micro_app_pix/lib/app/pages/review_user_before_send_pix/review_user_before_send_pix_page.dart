@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:micro_app_pix/app/blocs/review_user_before_send_pix/bloc.dart';
-import 'package:micro_app_pix/src/args/key_pix_type.dart';
+
 import 'package:micro_core/micro_core.dart';
+
+
 
 class ReviewUserBeforeSendPixPage extends StatefulWidget {
   const ReviewUserBeforeSendPixPage({super.key});
@@ -107,7 +109,7 @@ class _ReviewUserBeforeSendPixPageState
                   disabled: state.validateKeyEntity == null,
                   suffixIcon: const Icon(Icons.arrow_forward),
                   onPressed: () {
-                    CoreNavigator.popUntil(AppRoutes.pixTransaction.registerPix,KeyPixType(key: key!, type: method!));
+                    CoreNavigator.popUntil(AppRoutes.accountBank.registerBankReceiver,KeyPixTypeModel(key: key!, type: method!));
                   },
                 )
               ],

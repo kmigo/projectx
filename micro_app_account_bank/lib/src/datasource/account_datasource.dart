@@ -5,6 +5,8 @@ import 'package:micro_core/micro_core.dart';
 
 import '../models/account_create_model.dart';
 
+
+
 abstract class AccountDatasource {
   Future<void> createBankAccount(AccountCreateModel bankAccount);
   Future<List<AccountBankEntity>> getBankAccounts();

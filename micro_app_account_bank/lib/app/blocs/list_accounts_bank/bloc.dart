@@ -1,6 +1,8 @@
 import 'package:micro_app_account_bank/src/domain/entities/account_entity.dart';
 import 'package:micro_core/micro_core.dart';
 
+import '../../../src/domain/entities/account_bank_origin.dart';
+import '../../../src/domain/entities/account_bank_receiver.dart';
 import '../../../src/usecases/get_all_accounts_bank.dart';
 
 part 'state.dart';

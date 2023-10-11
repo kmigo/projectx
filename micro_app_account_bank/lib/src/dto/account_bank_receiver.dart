@@ -12,11 +12,13 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
   }
 
   static fromMap(Map<String, dynamic> map) {
+    
     return AccountBankReceiverEntity(
-      tagName: map['tagName'] ?? '',
+      tagName: map['tagName'] ?? 'Sem nome',
       typeBeneficiary: map['typeBeneficiary'] ?? '',
       beneficiaryName: map['beneficiaryName'] ?? '',
-      typeKeyAccountPix: map['typeKeyAccountPix'] ?? '',
+      id: map['id'],
+      typeKeyAccountPix: map['typeKeyAccountPix'] ?? '--------',
       keyAccountPix: map['keyAccountPix'] ?? '',
     );
   }

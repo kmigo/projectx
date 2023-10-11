@@ -10,8 +10,10 @@ class AccountBankOriginEntity extends Equatable {
   final String routingNumber;
   final String accountHolder;
   final String label;
+  final String id;
   const AccountBankOriginEntity({
     required this.bankName,
+    required this.id,
     required this.account,
     required this.accountNumber,
     required this.routingNumber,
@@ -20,7 +22,7 @@ class AccountBankOriginEntity extends Equatable {
   });
   
   @override
-  List<Object?> get props => [bankName, account, accountNumber, routingNumber, accountHolder, label];
+  List<Object?> get props => [bankName, id,account, accountNumber, routingNumber, accountHolder, label];
 
   
 

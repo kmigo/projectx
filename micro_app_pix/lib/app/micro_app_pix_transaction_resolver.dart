@@ -1,7 +1,6 @@
 
 import 'package:micro_app_pix/app/blocs/review_user_before_send_pix/bloc.dart';
 import 'package:micro_app_pix/app/pages/query_pix_key/query_pix_key.dart';
-import 'package:micro_app_pix/app/pages/register_pix/register_pix_page.dart';
 import 'package:micro_app_pix/app/pages/review_user_before_send_pix/review_user_before_send_pix_page.dart';
 import 'package:micro_core/micro_core.dart';
 
@@ -37,8 +36,7 @@ class MicroAppPixTransactionResolver extends MicroApp {
   Map<String, WidgetBuildArgs> get routes => {
     AppRoutes.pixTransaction.selectKeys :(context, args) => const SelectKeysPage(),
     AppRoutes.pixTransaction.queryPixKey :(context, args) => const QueryPixKeyPage(),
-    AppRoutes.pixTransaction.reviewUserBeforeSendPix :(context, args) => const ReviewUserBeforeSendPixPage(),
-    AppRoutes.pixTransaction.registerPix:(context, args) => const RegisterPixPage()
+    AppRoutes.pixTransaction.reviewUserBeforeSendPix :(context, args) => const ReviewUserBeforeSendPixPage()
   };
 
 

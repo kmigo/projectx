@@ -7,9 +7,11 @@ class AccountBankReceiverEntity extends Equatable {
   final String beneficiaryName;
   final String typeKeyAccountPix;
   final String keyAccountPix;
+  final String id;
 
   const AccountBankReceiverEntity({
     required this.tagName,
+    required this.id,
     required this.typeBeneficiary,
     required this.beneficiaryName,
     required this.typeKeyAccountPix,
@@ -17,6 +19,6 @@ class AccountBankReceiverEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [tagName, typeBeneficiary, beneficiaryName, typeKeyAccountPix, keyAccountPix];
+  List<Object?> get props => [tagName, id,typeBeneficiary, beneficiaryName, typeKeyAccountPix, keyAccountPix];
 
 }

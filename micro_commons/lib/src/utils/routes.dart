@@ -73,7 +73,7 @@ class _PixTransaction {
   final String selectKeys = '$_root/select-keys';
   final String queryPixKey = '$_root/query-pix-key';
   final String reviewUserBeforeSendPix = '$_root/review-user-before-send-pix';
-  final String registerPix = '$_root/register-pix';
+
 }
 
 class _AccountBank {
@@ -81,7 +81,8 @@ class _AccountBank {
   const _AccountBank();
   final String root = _root;
   final String microAppName = 'micro_app_account_bank';
-  final String registerBank = '$_root/register-bank';
+  final String registerBankOrigin = '$_root/register-bank';
+  final String registerBankReceiver = '$_root/register-bank-receiver';
   final String reviewNewRecharge = '$_root/review-new-recharge';
   final String recharge = '$_root/new-recharge';
   final String sendTransaction = '$_root/send-transaction';

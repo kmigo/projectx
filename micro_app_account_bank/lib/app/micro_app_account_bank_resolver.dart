@@ -9,6 +9,7 @@ import '../src/repositories/account_repository.dart';
 import '../src/usecases/create_account_bank.dart';
 import 'blocs/list_accounts_bank/bloc.dart';
 
+import 'blocs/register_account_bank_receiver/bloc.dart';
 import 'pages/register_account_bank_receiver/register_account_bank_receiver_page.dart';
 import 'pages/review_new_recharge/review_new_recharge_page.dart';
 
@@ -25,6 +26,7 @@ class MicroAppAccountBankResolver extends MicroApp {
     // BLOC
     CoreBinding.registerFactory((i) => RegisterAccountBankOriginBloc(i()));
     CoreBinding.registerLazySingleton((i) => ListAccountsBankBloc(i()));
+    CoreBinding.registerLazySingleton((i) => RegisterAccountBankReceiverBloc(i()));
 
   };
 

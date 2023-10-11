@@ -59,7 +59,7 @@ class _RegisterAccountBankOriginPageState
                 const Duration(seconds: 3));
           }
           if(state.status == RegisterAccountBankStatus.success){
-            Navigator.pop(context);
+            CoreNavigator.pop(true);
           }
         },
         bloc: bloc,

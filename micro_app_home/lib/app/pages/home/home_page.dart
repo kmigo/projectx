@@ -44,6 +44,14 @@ class _HomePageState extends State<HomePage> {
                 onEdit: (){}, onPay: (){})
             ],
           ),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            CoreNavigator.pushNamed(AppRoutes.accountBank.newCardAccountBank);
+          },
+          backgroundColor: colorsDS.primary900,
+          child: const Icon(Icons.add),
+        ),
+        );
   }
 }

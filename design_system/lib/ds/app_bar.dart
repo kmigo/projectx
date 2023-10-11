@@ -56,7 +56,7 @@ class UolletiAppBar extends StatelessWidget  implements PreferredSizeWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children:  [
-                if(profile != UolletiImageProfile.idle)...[
+                if(profile == UolletiImageProfile.profile)...[
                   _profileWidget()! 
                 ]else...[
                    ...widgets

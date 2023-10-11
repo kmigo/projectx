@@ -8,7 +8,7 @@ part 'state.dart';
 
 class RegisterAccountBankOriginBloc extends Cubit<RegisterAccountBankState> {
   final CreateBankAccountUsecase _createBankAccountUsecase;
-   RegisterAccountBankOriginBloc(this._createBankAccountUsecase):super(  RegisterAccountBankState.init());
+   RegisterAccountBankOriginBloc(this._createBankAccountUsecase):super(  const RegisterAccountBankState.init());
 
 
   create(AccountCreateModel account)async{

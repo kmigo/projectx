@@ -189,7 +189,7 @@ class _RegisterAccountBankReceiverPageState
                     UolletiButton.primary(
                         label: 'CRIAR',
                         onPressed: () async {
-                          if (!formKey.currentState!.validate()) return;
+                          if (formKey.currentState?.validate() == false) return;
                           bloc.create(AccountCreateModel(
                               type: 'RECEIVER_ACCOUNT',
                               data: AccountBankReceiverModel(
@@ -201,7 +201,7 @@ class _RegisterAccountBankReceiverPageState
                                 keyAccountPix: keyPayment!,
                               ),
                               name: _cardNameController.text,
-                              userId: blocUser.state.status.user!.id));
+                              userId: blocUser.state.status.user?.id ?? '1'));
                         }),
                   ],
                 ),

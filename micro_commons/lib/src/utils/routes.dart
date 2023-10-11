@@ -83,7 +83,8 @@ class _AccountBank {
   final String microAppName = 'micro_app_account_bank';
   final String registerBankOrigin = '$_root/register-bank';
   final String registerBankReceiver = '$_root/register-bank-receiver';
-  final String reviewNewRecharge = '$_root/review-new-recharge';
+  final String newRecharge = '$_root/review-new-recharge';
+  final String newCardAccountBank = '$_root/new-card-account-bank';
   final String recharge = '$_root/new-recharge';
-  final String sendTransaction = '$_root/send-transaction';
+  final String accounts = '$_root/accounts';
 }

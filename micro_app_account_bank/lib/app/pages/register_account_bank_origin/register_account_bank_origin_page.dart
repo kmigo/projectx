@@ -183,7 +183,7 @@ class _RegisterAccountBankOriginPageState
                                     _accountHolderNameController.text,
                                 label: _labelController.text),
                             name: _labelController.text,
-                            userId: blocUser.state.status.user!.id));
+                            userId: blocUser.state.status.user?.id ?? ''));
                             }
                           },
                     )

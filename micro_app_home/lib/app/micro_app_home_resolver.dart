@@ -16,7 +16,6 @@ class MicroAppHomeResolver extends MicroApp {
   String get microAppName => AppRoutes.home.microAppName;
 
   @override
-  // TODO: implement routes
   Map<String, WidgetBuildArgs> get routes => {
     AppRoutes.home.root : (ctx,args) => const HomePage(),
 

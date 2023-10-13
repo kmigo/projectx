@@ -37,7 +37,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       dev.log(e.toString(),
           name: '$constantsLogFailure - confirmPhone ',
           time: DateTime.now());
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } on FirebaseAuthException catch (e) {
       dev.log(e.toString(),
           name: '$constantsLogErrorFirebaseAuth - confirmPhone ',
@@ -51,7 +51,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       dev.log(e.toString(),
           name: '$constantsLogException - confirmPhone ',
           time: DateTime.now());
-      return  Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return  Left(Failure(message: genericError.message,e:e),);
     }
   }
 
@@ -80,7 +80,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       _streamSubscriptionWallet?.cancel();
       _controller
           .add(const AuthenticationStatus(null, StatusAuthentication.error));
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
       _streamSubscription?.cancel();
       _streamSubscriptionWallet?.cancel();
@@ -95,7 +95,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try {
       return Right(await _datasource.refreshToken());
     } catch (e) {
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e,));
     }
   }
 
@@ -114,11 +114,11 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       _streamSubscriptionWallet?.cancel();
       _controller
           .add(const AuthenticationStatus(null, StatusAuthentication.error));
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
       _streamSubscription?.cancel();
       _streamSubscriptionWallet?.cancel();
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e,));
     }
   }
 
@@ -133,22 +133,17 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     } on FirebaseAuthException catch (e) {
 
       final message = _getFirebaseAuthErrorMessage(e.code);
-      final idref = FirebaseDatabase.instance.ref('errors').push();
-      idref.set({
-        'event': 'signUp-error-firebase',
-        'data': setPincode.toMap(),
-        'error': e.toString(),
-        'message': message
-      });
+
+     
 
 
-      return Left(Failure(message: e.toString()));
+      return Left(Failure(message: message));
     } on Failure catch (e) {
     
       return Left(e);
     } catch (e) {
 
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e),);
     }
   }
 
@@ -176,7 +171,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       final result = await _datasource.updateUser(userEntity);
       return Right(result);
     } on Failure catch (e) {
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -221,9 +216,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try {
       return Right(await _datasource.validPincode(code));
     } on Failure catch (e) {
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e),);
     }
   }
 
@@ -232,9 +227,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try {
       return Right(await _datasource.changePincode(code));
     } on Failure catch (e) {
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e),);
     }
   }
 
@@ -245,9 +240,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       _user=result;
       return Right(_user!);
     } on Failure catch (e) {
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     } catch (e) {
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e: e),);
     }
   }
 
@@ -256,9 +251,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try {
       return Right(await _datasource.getUserByUid(uid));
     } on Failure catch (e) {
-      return Left(e);
+      return Left(Failure(e: e,message: e.message));
     } catch (e) {
-      return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
+      return Left(Failure(message: genericError.message,e:e),);
     }
   }
   
@@ -267,7 +262,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try{
       return Right(await _datasource.searchUser(filter));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -279,7 +274,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try {
       return Right(await _datasource.getUserWithKyc());
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -290,7 +285,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try{
       return Right(await _datasource.updateKyc(formData));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -301,7 +296,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
     try{
       return Right(await _datasource.updateAddress(addressModel, uid));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -319,7 +314,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       final message = _getFirebaseAuthErrorMessage(e.code);
       return Left(Failure(message: message));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
   }
@@ -337,7 +332,7 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
       final message = _getFirebaseAuthErrorMessage(e.code);
       return Left(Failure(message: message));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
       }catch(e){
        return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
       }

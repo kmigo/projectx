@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class Failure implements Exception  {
   final String? message;
-  final Exception? e;
+  final Object? e;
    Failure({this.message, this.e}){
      const color = '\x1B[6;30;31m';
      if(e!= null){

@@ -19,7 +19,7 @@ class FavoriteUserRepositoryImpl extends FavoriteUserRepository {
       return Right(await _datasource.addFavoriteUser(currentUid, userUid, favoriteModel));
     }on Failure catch(e){
 
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
 
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
@@ -31,7 +31,7 @@ class FavoriteUserRepositoryImpl extends FavoriteUserRepository {
     try{  
       return Right(await _datasource.getFavoriteUsers(currentUserId));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -42,7 +42,7 @@ class FavoriteUserRepositoryImpl extends FavoriteUserRepository {
    try{  
       return Right(await _datasource.removeFavoriteUser(currentUid, favoriteUserUid));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }
@@ -53,7 +53,7 @@ class FavoriteUserRepositoryImpl extends FavoriteUserRepository {
     try{  
       return Right(await _datasource.updateFavoriteUser(currentUid, favoriteUserUid, favoriteModel));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message,e: e));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }

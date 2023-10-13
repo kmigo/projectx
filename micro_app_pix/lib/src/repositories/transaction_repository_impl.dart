@@ -20,7 +20,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try{
       return Right(await _datasource.validateKey(key,type));
     } on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message));
   }catch(e){
     return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
   }
@@ -31,7 +31,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     try{
       return Right(await _datasource.createPix(transaction));
     }on Failure catch(e){
-      return Left(e);
+      return Left(Failure(message: e.message));
     }catch(e){
       return Left(Failure(message: genericError.message,e: Exception(e.toString())),);
     }

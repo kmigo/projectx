@@ -52,7 +52,6 @@ class _QueryPixKeyPageState extends State<QueryPixKeyPage> {
                         validator: validator(typeKeyEnum),
                         onChanged: (value) {
                           keyPayment = value;
-                          print(value);  
                         },
                         hintText: hint(typeKeyEnum),
                         keyboardType: keyboardType(typeKeyEnum),

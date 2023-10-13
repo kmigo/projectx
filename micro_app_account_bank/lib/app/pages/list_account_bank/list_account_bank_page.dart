@@ -157,6 +157,7 @@ class _TileCard extends StatelessWidget {
       required this.onTap,
       required this.title,
       required this.subtitle});
+  // ignore: unused_element
   const _TileCard.receiver(
       {required this.onTap, required this.title, required this.subtitle})
       : icon = Icons.pix;

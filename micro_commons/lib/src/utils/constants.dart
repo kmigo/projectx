@@ -15,21 +15,23 @@ const constantsAssets = 'assets';
 
 
 class HttpRoutes {
-  static const  transaction = _Transaction();
-  static const user = _User();
-  static const accountBank = _AccountBank();
+  static const  transaction = _TransactionHttp();
+  static const user = _UserHttp();
+  static const accountBank = _AccountBankHttp();
+  static const cards = _CardHttp();
+  
   
 }
 
-class _User {
-  const _User();
+class _UserHttp {
+  const _UserHttp();
   final String me = '/user/me';
   final String kyc = '/user/kyc';
   final String root = '/user';
 }
 
-class _Transaction {
-  const _Transaction();
+class _TransactionHttp {
+  const _TransactionHttp();
   final String qrCode = '/transaction/qrcode';
   final String createTransactionBetweenAcc = '/transaction/between-accounts';
   final String userAlreadyExists = '/admin/user/verify';
@@ -39,9 +41,15 @@ class _Transaction {
   final String myTransactions = '/transaction/my-transactions';
 }
 
-class _AccountBank {
-  const _AccountBank();
+class _AccountBankHttp {
+  const _AccountBankHttp();
   final String account = '/account';
+
+}
+
+class _CardHttp {
+  const _CardHttp();
+  final String card = '/card';
 
 }
 

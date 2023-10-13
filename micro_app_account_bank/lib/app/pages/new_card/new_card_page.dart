@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
 import 'package:flutter/material.dart';
+import 'package:micro_app_account_bank/app/pages/new_card/dialogs/name_card.dart';
+import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../../blocs/list_accounts_bank/bloc.dart';
-
+part 'components/tile_card.dart';
 class SelectedsAccounts {
   final String? originId;
   final String? receiverId;
@@ -20,23 +22,24 @@ class SelectedsAccounts {
   }
 }
 
-class NewCardAccountsBankPage extends StatefulWidget {
-  const NewCardAccountsBankPage({super.key});
+class NewCardPage extends StatefulWidget {
+  const NewCardPage({super.key});
 
   @override
-  State<NewCardAccountsBankPage> createState() =>
-      _NewCardAccountsBankPageState();
+  State<NewCardPage> createState() =>
+      _NewCardPageState();
 }
 
-class _NewCardAccountsBankPageState extends State<NewCardAccountsBankPage> {
+class _NewCardPageState extends State<NewCardPage> {
   final bloc = CoreBinding.get<ListAccountsBankBloc>();
-
+  final blocUser = CoreBinding.get<AuthenticationBloc>(); 
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
     bloc.getAllAccountsBank();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +64,7 @@ class _NewCardAccountsBankPageState extends State<NewCardAccountsBankPage> {
             final origins = state.origins;
             return FormField<SelectedsAccounts>(
               initialValue: const SelectedsAccounts(),
+              key: _formKey,
               builder: (stateFormField) {
                 return Column(
                   children: [
@@ -111,8 +115,19 @@ class _NewCardAccountsBankPageState extends State<NewCardAccountsBankPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    UolletiButton.primary(label: 'Criar card', onPressed: (){
-                      CoreNavigator.pushNamed(AppRoutes.accountBank.newRecharge);
+                    UolletiButton.primary(label: 'Criar card', onPressed: () async{
+                    
+                      if(stateFormField.value?.originId != null && stateFormField.value?.receiverId != null  && blocUser.state.status.user != null  ){
+                       final result = await UolletiDialogs.dialogShowGeneric(
+                        NameCardDialog(originAcountId: stateFormField.value?.originId ?? '', receiverAcountId: stateFormField.value?.receiverId ?? '', userId:  blocUser.state.status.user?.id ?? ''),
+                        barrierDismissible: false
+                        );
+                        if(result == true){
+                          CoreNavigator.pop(true);
+                        }
+                        return;
+                      }
+                      
                     }),
                   ],
                 );
@@ -125,57 +140,3 @@ class _NewCardAccountsBankPageState extends State<NewCardAccountsBankPage> {
   }
 }
 
-
-class _TileCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final VoidCallback onTap;
-  final bool? isSelected;
-  const _TileCard(
-      {required this.icon,
-      required this.onTap,
-      required this.title,
-      required this.subtitle,
-      this.isSelected
-      });
-  const _TileCard.receiver(
-      {required this.onTap, required this.title, required this.subtitle,this.isSelected})
-      : icon = Icons.pix;
-  const _TileCard.origin(
-      {required this.onTap, required this.title, required this.subtitle,this.isSelected})
-      : icon = Icons.account_balance_outlined;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Center(
-        child: Container(
-          width: double.infinity,
-          padding:  const EdgeInsets.all( 10),
-          decoration: BoxDecoration(
-            
-            color: isSelected == true? colorsDS.backgroundMedium :  colorsDS.backgroundLight,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: colorsDS.bordersDark),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, color:  isSelected ==true ? colorsDS.textPure  :  colorsDS.backgroundMedium ,),
-              const SizedBox(
-                height: 10,
-              ),Expanded(child: Column(
-                children: [
-                  UolletiText.labelLarge(title,bold: true,color: isSelected ==true ? colorsDS.textPure  :  colorsDS.backgroundMedium , ),
-                  UolletiText.labelSmall(subtitle, color: isSelected ==true ? colorsDS.textPure  :  colorsDS.backgroundMedium ,),
-                ],
-              ))
-
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

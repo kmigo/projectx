@@ -4,24 +4,25 @@ part of 'ds.dart';
 
 class UolletiDialogs {
 
-  static dialogGenericState(bool success ,{BuildContext? context, VoidCallback? onTap,String? message,String? title, }){
+  static Future<T?> dialogGenericState<T>(bool success ,{BuildContext? context, Color? backgorund , BorderRadiusGeometry? borderRadius ,EdgeInsetsGeometry? padding, VoidCallback? onTap,String? message,String? title, })async{
       final ctx = context ?? navigatorKey.currentContext!;
-      showDialog(
+      return await showDialog<T>(
         context: ctx,
         builder: (context) =>  _DialogAlert(_GenericState(
           success,
           message: message,
           title: title,
           onTap: onTap,
-        )),
+        ),backgorund ?? colorsDS.backgroundPure,padding ?? const EdgeInsets.all(15), borderRadius ?? BorderRadius.circular(5)),
       );
    }
 
-  static dialogShowGeneric(Widget child,{BuildContext? context}){
+  static Future<T?> dialogShowGeneric<T>(Widget child,{bool barrierDismissible = true,BuildContext? context,Color? backgorund ,BorderRadiusGeometry? borderRadius ,EdgeInsetsGeometry? padding}) async {
       final ctx = context ?? navigatorKey.currentContext!;
-      showDialog(
+      return await showDialog<T>(
+        barrierDismissible: barrierDismissible,
         context: ctx,
-        builder: (context) =>  _DialogAlert(child),
+        builder: (context) =>  _DialogAlert(child, backgorund ?? colorsDS.backgroundPure,padding ?? const EdgeInsets.all(15), borderRadius ?? BorderRadius.circular(5) ),
       );
   }
 
@@ -36,13 +37,24 @@ class UolletiDialogs {
 
 class _DialogAlert extends StatelessWidget {
   final Widget child;
-  const _DialogAlert(this.child);
+  final Color background;
+  final EdgeInsetsGeometry padding;
+  final BorderRadiusGeometry borderRadius;
+  const _DialogAlert(this.child,this.background,this.padding,this.borderRadius);
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Center(
-        child: child,
+    return Padding(
+       padding: padding ,
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Material(
+            borderRadius: borderRadius,
+            color: background,
+            child: child,
+          ),
+        ],
       ),
     );
   }

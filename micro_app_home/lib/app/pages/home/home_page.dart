@@ -57,8 +57,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          CoreNavigator.pushNamed(AppRoutes.accountBank.newCardAccountBank);
+        onPressed: () async {
+         final result =  await CoreNavigator.pushNamed(AppRoutes.accountBank.newCardAccountBank);
+         if(result == true){
+           bloc.getCards();
+         }
+
         },
         backgroundColor: colorsDS.primary900,
         child: const Icon(Icons.add),

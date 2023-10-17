@@ -23,6 +23,7 @@ class UolletiTextInput extends StatefulWidget {
   final bool? obscureText;
   final bool? enabled;
   final String? errorText;
+
   const UolletiTextInput(
       {super.key,
       this.maxLength,
@@ -91,6 +92,29 @@ class UolletiTextInput extends StatefulWidget {
       this.onDone,
       this.onClear,
       this.onChanged}): inputFormatters = [PhoneInputFormatter()],hintText = MaskHintText.maskPhoneCountry('s');
+UolletiTextInput.currency(
+      {super.key,
+      required String currency,
+      this.maxLength,
+      this.customKeyboardType,
+      this.validator,
+      this.maxLines,
+      this.label,
+      this.controller,
+      this.errorText,
+      this.keyboardType,
+      this.enabled,
+      this.prefixIcon,
+      this.validateDone,
+      this.initialValue,
+      this.obscureText,
+      this.decoration,
+      this.textAlign,
+      this.focus,
+      this.focusNode,
+      this.onDone,
+      this.onClear,
+      this.onChanged}): assert(["US","R\$"].contains(currency), 'currency should US or R\$'), inputFormatters = [CurrencyInputFormatter(currency: currency)],hintText = MaskHintText.maskPhoneCountry('s');
 
   @override
   State<UolletiTextInput> createState() => _UolletiTextInputState();

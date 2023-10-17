@@ -54,7 +54,7 @@ class TileCard extends StatelessWidget {
                 onTap: onPay,
                 child: CircleAvatar(
                   backgroundColor: colorsDS.bordersDark,
-                  child: Icon(Icons.payment,color: colorsDS.iconsLight,)),
+                  child: Icon(Icons.savings,color: colorsDS.iconsPositive,)),
               ),
               const SizedBox(width: 10,),
             ],

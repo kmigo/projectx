@@ -36,6 +36,44 @@ class HelperMask {
 }
 
 
+class CurrencyInputFormatter extends TextInputFormatter {
+  final String currency;
+
+  CurrencyInputFormatter({required this.currency});
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String newText = newValue.text;
+    
+    // Remove caracteres não numéricos
+    newText = newText.replaceAll(RegExp('[^0-9]'), '');
+
+    if (newText.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    double value = double.parse(newText) / 100;
+
+    String formattedValue;
+
+    if (currency == 'US') {
+      formattedValue = '\$${value.toStringAsFixed(2)}';
+    } else if (currency == 'R\$') {
+      formattedValue = 'R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}';
+    } else {
+      formattedValue = newValue.text;
+    }
+
+    return newValue.copyWith(
+      text: formattedValue,
+      selection: TextSelection.collapsed(offset: formattedValue.length),
+    );
+  }
+}
+
 
 class CpfInputFormatter extends TextInputFormatter {
 

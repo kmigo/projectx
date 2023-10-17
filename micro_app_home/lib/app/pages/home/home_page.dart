@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         child: BlocConsumer<CardListBloc, CardListState>(
           bloc: bloc,
           listener: (context, state) {
-            // TODO: implement listener
+
           },
           builder: (context, state) {
             if(state.status == CardListStatus.loading){
@@ -50,7 +50,12 @@ class _HomePageState extends State<HomePage> {
                           subtitle: "PIX",
                           description: card.receiverAccount.data.keyAccountPix,
                           onEdit: () {},
-                          onPay: () {});
+                          onPay: () {
+                            CoreNavigator.pushNamed(
+                                "${AppRoutes.accountBank.newRecharge}?${StringUtils.id}=${card.id}",
+                                );
+
+                          });
                   }, separatorBuilder: (ctx,index) => const SizedBox(height: 5,), 
                   itemCount: state.cards.length);
           },

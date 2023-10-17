@@ -29,48 +29,68 @@ class _NewRechargePageState extends State<NewRechargePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
-        child: SingleChildScrollView(
-          child: BlocConsumer<ListAccountsBankBloc, ListAccountBankState>(
-            bloc: bloc,
-            listener: (context, state) {
-              // TODO: implement listener
-            },
-            builder: (context, state) {
-              if(state.status == ListAccountsBankStatus.loading){
-                return const Center(child: CircularProgressIndicator(),);
-              }
-              final receivers = state.receivers;
-              final origins = state.origins;
-              return Column(
-                children: [
-                  const UolletiText.labelXLarge('Nova Recarga'),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                   const UolletiText.labelLarge('Conta de origem'),
-                  UolletiDropDown<AccountBankOriginEntity>(items: origins, 
-                  onChanged: (value){
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: BlocConsumer<ListAccountsBankBloc, ListAccountBankState>(
+                  bloc: bloc,
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
 
-                  }, onChild: (value) => UolletiText.labelLarge(value.bankName)),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const UolletiText.labelLarge('Conta de destino'),
-                  UolletiDropDown<AccountBankReceiverEntity>(items: receivers, 
-                  onChanged: (value){
-                    
-                  }, onChild: (value) => UolletiText.labelLarge(value.tagName)),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  UolletiSliderButton(
+                    if(state.status == ListAccountsBankStatus.loading){
+                      return const Center(child: CircularProgressIndicator(),);
+                    }
+                    final receivers = state.receivers;
+                    final origins = state.origins;
+                    return Column(
+                      children: [
+                        const UolletiText.labelXLarge('Nova Recarga'),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                         const UolletiText.labelLarge('Conta de origem'),
+                        UolletiDropDown<AccountBankOriginEntity>(items: origins, 
+                        onChanged: (value){
+            
+                        }, onChild: (value) => UolletiText.labelLarge(value.bankName)),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const UolletiText.labelLarge('Conta de destino'),
+                        UolletiDropDown<AccountBankReceiverEntity>(items: receivers, 
+                        onChanged: (value){
+                          
+                        }, onChild: (value) => UolletiText.labelLarge(value.tagName)),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        UolletiTextInput.currency(currency: "US", label: "Envia US", onChanged: (value){},),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                         UolletiTextInput.currency(currency: "R\$", label: "RECEBE BRL", onChanged: (value){},),
+                         const SizedBox(
+                          height: 20,
+                        ),
+                        UolletiTextInput(
+                          label: 'Descrição',
+                        maxLines: 3,
+                        )
+                        
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+            UolletiSliderButton(
                     onTap: (){},
                     text: "Arraste para confirmar",
                   )
-                ],
-              );
-            },
-          ),
+          ],
         ),
       ),
     );

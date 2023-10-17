@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:micro_app_account_bank/app/blocs/register_account_bank_origin/bloc.dart';
 import 'package:micro_app_account_bank/src/models/account_create_model.dart';
 import 'package:micro_app_account_bank/src/models/account_create_origin_model.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
+
+
 
 class RegisterAccountBankOriginPage extends StatefulWidget {
   const RegisterAccountBankOriginPage({super.key});
@@ -119,9 +122,7 @@ class _RegisterAccountBankOriginPageState
                     ),
                     UolletiDropDown(
                       items: const [
-                        'DEFAULT',
-                        'RECEIVER_ACCOUNT',
-                        'ORIGIN_ACCOUNT'
+                        "Checkings" , "Savings"
                       ],
                       validator: HelperInputValidator.required,
                       onChanged: (value) {

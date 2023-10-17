@@ -23,7 +23,7 @@ class BottomNavigationBarCustom extends StatelessWidget {
         children: [
           const SizedBox(width: 20,),
           _TileButton(icon: Icons.add_card, backgroundColor: colorsDS.bordersMedium, onTap: (){
-            CoreNavigator.pushNamed(AppRoutes.accountBank.accounts);
+        
 
           }),
           const SizedBox(width: 20,),

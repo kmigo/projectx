@@ -25,7 +25,7 @@ class _ListAccountBankPageState extends State<ListAccountBankPage> {
     return Scaffold(
       appBar: UolletiAppBar(
         title: UolletiText.labelLarge(
-          'Novo PIX CARD',
+          'Contas bancárias',
           color: colorsDS.textPure,
         ),
       ),

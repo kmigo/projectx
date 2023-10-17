@@ -82,9 +82,30 @@ class _NewCardPageState extends State<NewCardPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const UolletiText.labelLarge(
-                      'Conta de origem',
+                     Row(
+                  children: [
+                     const UolletiText.labelXLarge(
+                      'Contas de origem:',
+                      bold: true,
                     ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () async{
+                         final created = await CoreNavigator.pushNamed(AppRoutes.accountBank.registerBankOrigin);
+                             if(created != null && created == true){
+                               bloc.getAllAccountsBank();
+                             }
+
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(Icons.add,size: 15,),
+                          Icon(Icons.account_balance_outlined),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -98,10 +119,30 @@ class _NewCardPageState extends State<NewCardPage> {
                      const SizedBox(
                       height: 20,
                     ),
-                    const UolletiText.labelLarge(
-                      'Conta de origem',
-
+                     Row(
+                  children: [
+                     const UolletiText.labelXLarge(
+                      'Contas destino:',
+                      bold: true,
                     ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () async{
+                         final created = await CoreNavigator.pushNamed(AppRoutes.accountBank.registerBankReceiver);
+                             if(created != null && created == true){
+                               bloc.getAllAccountsBank();
+                             }
+
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(Icons.add,size: 15,),
+                          Icon(Icons.pix),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                     const SizedBox(
                       height: 20,
                     ),

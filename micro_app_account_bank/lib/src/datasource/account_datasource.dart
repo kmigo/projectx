@@ -28,8 +28,5 @@ class AccountDatasourceImpl implements AccountDatasource {
     final result = await _clientHttp.get(HttpRoutes.accountBank.account);
     return  result.data.map<AccountBankEntity>((dynamic e) => AccountDTO.fromMap(e)).toList();
   }
-  
-
-
 
 }

@@ -3,12 +3,11 @@ import 'package:micro_app_account_bank/src/models/account_create_model.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../datasource/account_datasource.dart';
-import '../models/card.dart';
+
 
 abstract class RepositoryAccount {
   Future<Either<Failure,void>> createBankAccount(AccountCreateModel account);
   Future<Either<Failure,List<AccountBankEntity>>> getBankAccounts();
-  Future<Either<Failure,void>> createCard(CardModel cardModel);
 }
 
 class RepositoryAccountImpl implements RepositoryAccount {
@@ -39,15 +38,5 @@ class RepositoryAccountImpl implements RepositoryAccount {
     }
   }
   
-  @override
-  Future<Either<Failure, void>> createCard(CardModel cardModel) async {
-    try{
-      await datasource.createCard(cardModel);
-      return const Right(null);
-    } on Exception catch(e){
-      return Left(Failure(message: e.toString()));
-    }catch(e){
-      return Left(Failure(message: e.toString()));
-    }
-  }
+
 }

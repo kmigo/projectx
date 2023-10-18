@@ -8,6 +8,7 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
       'beneficiaryName': beneficiaryName,
       'typeKeyAccountPix': typeKeyAccountPix,
       'keyAccountPix': keyAccountPix,
+      'id': id,
     };
   }
 
@@ -17,7 +18,7 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
       tagName: map['tagName'] ?? 'Sem nome',
       typeBeneficiary: map['typeBeneficiary'] ?? '',
       beneficiaryName: map['beneficiaryName'] ?? '',
-      id: map['id'],
+      id: map['id'] ??'',
       typeKeyAccountPix: map['typeKeyAccountPix'] ?? '--------',
       keyAccountPix: map['keyAccountPix'] ?? '',
     );

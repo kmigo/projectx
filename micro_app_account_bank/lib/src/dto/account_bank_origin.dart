@@ -12,6 +12,7 @@ extension AccountBankOriginDTO on AccountBankOriginEntity {
       'routingNumber': routingNumber,
       'accountHolder': accountHolder,
       'label': label,
+      'id': id,
     };
   }
 
@@ -20,7 +21,7 @@ extension AccountBankOriginDTO on AccountBankOriginEntity {
     return AccountBankOriginEntity(
       bankName: map['bankName'] ?? 'Sem nome',
       account: map['account'] ?? '----',
-      id: map['id'],
+      id: map['id'] ?? '',
       accountNumber: map['accountNumber'] ?? '',
       routingNumber: map['routingNumber'] ?? '',
       accountHolder: map['accountHolder'] ?? '',

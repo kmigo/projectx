@@ -129,7 +129,7 @@ class HttpClientDio extends ClientHttp {
           queryString: queryString,
           headers: headers,
           statusCode: status,
-          url: url,
+          url: e.response?.realUri ?? url,
           createAt: now);
       if (retry) {
         return ClientResponse(

@@ -102,7 +102,6 @@ UolletiTextInput.currency(
       this.label,
       this.controller,
       this.errorText,
-      this.keyboardType,
       this.enabled,
       this.prefixIcon,
       this.validateDone,
@@ -113,8 +112,9 @@ UolletiTextInput.currency(
       this.focus,
       this.focusNode,
       this.onDone,
+      this.hintText,
       this.onClear,
-      this.onChanged}): assert(["US","R\$"].contains(currency), 'currency should US or R\$'), inputFormatters = [CurrencyInputFormatter(currency: currency)],hintText = MaskHintText.maskPhoneCountry('s');
+      this.onChanged}): assert(["US","R\$"].contains(currency), 'currency should US or R\$'), inputFormatters = [CurrencyInputFormatter(currency: currency)],keyboardType  = TextInputType.number;
 
   @override
   State<UolletiTextInput> createState() => _UolletiTextInputState();

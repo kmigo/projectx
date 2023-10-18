@@ -36,7 +36,7 @@ class EnvironmentVariables {
     "hint": "(000) 000-00000",
     "is_activate": false,
     "country": "",
-    "abbreviation": "CAN",
+    "abbreviation": "US",
     "img": "https://firebasestorage.googleapis.com/v0/b/project-x-a4278.appspot.com/o/canada.jpg?alt=media&token=e6a8af48-b4c2-4daa-957b-476e54ecb89e"
   }
 }"""

@@ -1,13 +1,17 @@
 import 'package:micro_app_account_bank/app/blocs/register_account_bank_origin/bloc.dart';
 import 'package:micro_app_account_bank/app/pages/register_account_bank_origin/register_account_bank_origin_page.dart';
 import 'package:micro_app_account_bank/app/pages/list_account_bank/list_account_bank_page.dart';
+import 'package:micro_app_account_bank/src/datasource/card_datasource.dart';
 import 'package:micro_app_account_bank/src/usecases/get_all_accounts_bank.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../src/datasource/account_datasource.dart';
 import '../src/repositories/account_repository.dart';
+import '../src/repositories/card.dart';
 import '../src/usecases/create_account_bank.dart';
 import '../src/usecases/create_card.dart';
+import '../src/usecases/get_card_by_id.dart';
+import 'blocs/get_card/bloc.dart';
 import 'blocs/list_accounts_bank/bloc.dart';
 
 import 'blocs/new_card/bloc.dart';
@@ -21,17 +25,24 @@ class MicroAppAccountBankResolver extends MicroApp {
   void Function() get injectionRegister => (){
     // DATASOURCE
     CoreBinding.registerLazySingleton<AccountDatasource>((i) => AccountDatasourceImpl(i()));
+    CoreBinding.registerLazySingleton<CardDatasource>((i) => CardDatasourceImpl(i()));
+    
     // REPOSITORY
+    CoreBinding.registerLazySingleton<CardRepository>( (i) => CardRepositoryImpl(i()));
     CoreBinding.registerLazySingleton<RepositoryAccount>((i) => RepositoryAccountImpl(i()));
+
     // USECASE
     CoreBinding.registerLazySingleton<CreateBankAccountUsecase>((i) => CreateBankAccountUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<GetAllAccountsBankUsecase>((i) => GetAllAccountsBankUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<CreateCardUsecase>((i) => CreateCardUsecaseImpl(i()));
+    CoreBinding.registerLazySingleton<GetCardByIdUsecase>((i) => GetCardByIdUsecaseImpl(i()));
+    
     // BLOC
     CoreBinding.registerFactory((i) => RegisterAccountBankOriginBloc(i()));
     CoreBinding.registerLazySingleton((i) => ListAccountsBankBloc(i()));
     CoreBinding.registerFactory((i) => RegisterAccountBankReceiverBloc(i()));
     CoreBinding.registerFactory((i) => NewCardBloc(i()));
+    CoreBinding.registerFactory<GetCardBloc>((i)=> GetCardBloc(i()));
 
   };
 

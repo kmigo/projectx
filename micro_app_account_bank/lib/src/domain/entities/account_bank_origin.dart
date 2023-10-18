@@ -22,7 +22,7 @@ class AccountBankOriginEntity extends Equatable {
   });
   
   @override
-  List<Object?> get props => [bankName, id,account, accountNumber, routingNumber, accountHolder, label];
+  List<Object?> get props => [id];
 
   
 

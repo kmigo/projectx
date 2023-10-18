@@ -19,6 +19,6 @@ class AccountBankReceiverEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [tagName, id,typeBeneficiary, beneficiaryName, typeKeyAccountPix, keyAccountPix];
+  List<Object?> get props => [ id];
 
 }

@@ -19,9 +19,9 @@ extension AccountBankOriginDTO on AccountBankOriginEntity {
   static fromMap(Map<String, dynamic> map) {
 
     return AccountBankOriginEntity(
-      bankName: map['bankName'] ?? 'Sem nome',
-      account: map['account'] ?? '----',
-      id: map['id'] ?? '',
+      bankName: map['bankName'] ??'',
+      account: map['account'] ?? '',
+      id: map['id'],
       accountNumber: map['accountNumber'] ?? '',
       routingNumber: map['routingNumber'] ?? '',
       accountHolder: map['accountHolder'] ?? '',

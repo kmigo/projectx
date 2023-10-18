@@ -14,7 +14,7 @@ Map<String, dynamic> toMap() {
 
   static AccountBankEntity fromMap(Map<String, dynamic> map) {
     return AccountBankEntity(
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['id'],
       type: map['type'] != null ? map['type'] as String : null,
       data: map['data'] as dynamic,
       userId: map['userId'] != null ? map['userId'] as String : null,

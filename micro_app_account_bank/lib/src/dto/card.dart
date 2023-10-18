@@ -13,6 +13,25 @@ extension ReceiverAccountDTO on ReceiverAccountEntity {
       'id': id,
     };
   }
+    ReceiverAccountEntity copyWith({
+    int? createdAt,
+    String? credentialId,
+    String? userId,
+    String? type,
+    String? document,
+    AccountBankReceiverEntity? data,
+    String? id,
+  }) {
+    return ReceiverAccountEntity(
+      createdAt: createdAt ?? this.createdAt,
+      credentialId: credentialId ?? this.credentialId,
+      userId: userId ?? this.userId,
+      type: type ?? this.type,
+      document: document ?? this.document,
+      data: data ?? this.data,
+      id: id ?? this.id,
+    );
+  }
 
   static ReceiverAccountEntity fromMap(Map<String, dynamic> map) {
     return ReceiverAccountEntity(
@@ -21,10 +40,12 @@ extension ReceiverAccountDTO on ReceiverAccountEntity {
       userId: map['user_id'] as String,
       type: map['type'] as String,
       document: map['document'] != null ? map['document'] as String : null,
-      data: ReceiverAccountBankDetailDTO.fromMap(map['data'] as Map<String,dynamic>),
+      data: AccountBankReceiverDTO.fromMap(map['data']..['id']=map['id']),
       id: map['id'] as String,
     );
   }
+
+
 }
 
 
@@ -68,6 +89,26 @@ extension OriginAccountDTO on OriginAccountEntity {
     };
   }
 
+   OriginAccountEntity copyWith({
+    int? createdAt,
+    String? credentialId,
+    String? userId,
+    String? type,
+    String? document,
+    AccountBankOriginEntity? data,
+    String? id,
+  }) {
+    return OriginAccountEntity(
+      createdAt: createdAt ?? this.createdAt,
+      credentialId: credentialId ?? this.credentialId,
+      userId: userId ?? this.userId,
+      type: type ?? this.type,
+      document: document ?? this.document,
+      data: data ?? this.data,
+      id: id ?? this.id,
+    );
+  }
+
   static  OriginAccountEntity fromMap(Map<String, dynamic> map) {
     return OriginAccountEntity(
       createdAt: map['created_at'] as int,
@@ -75,7 +116,7 @@ extension OriginAccountDTO on OriginAccountEntity {
       userId: map['user_id'] as String,
       type: map['type'] as String,
       document: map['document'] != null ? map['document'] as String : null,
-      data: OriginAccountBankDetailDTO.fromMap(map['data'] as Map<String,dynamic>),
+      data: AccountBankOriginDTO.fromMap(map['data']..['id']=map['id']),
       id: map['id'] as String,
     );
   }
@@ -102,6 +143,7 @@ extension OriginAccountBankDetailDTO on OriginAccountBankDetailEntity{
       accountNumber: map['accountNumber'] as String,
       accountHolder: map['accountHolder'] as String,
       account: map['account'] as String,
+      id: map['id'] ?? '',
       bankName: map['bankName'] as String,
       routingNumber: map['routingNumber'] as String,
       label: map['label'] as String,

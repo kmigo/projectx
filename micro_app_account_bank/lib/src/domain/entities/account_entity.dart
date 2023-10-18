@@ -7,14 +7,14 @@ import 'package:micro_core/micro_core.dart';
 
 part '../../dto/account_bank.dart';
 class AccountBankEntity extends Equatable {
-  final String? id;
+  final String id;
   final String? type;
   final dynamic data;
   final String? userId;
   final int? createdAt;
   final int? updatedAt;
   const AccountBankEntity({
-    this.id,
+    required this.id,
     this.type,
     required this.data,
     this.userId,

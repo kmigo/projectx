@@ -23,6 +23,7 @@ class RepositoryAccountImpl implements RepositoryAccount {
     } on Failure catch (e) {
       return Left(Failure(message: e.message));
     } catch (e) {
+      
       return Left(Failure(message: genericError.message));
     }
   }

@@ -1,5 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:micro_core/micro_core.dart';
+
+import 'account_bank_origin.dart';
+import 'account_bank_receiver.dart';
 
 part '../../dto/card.dart';
 
@@ -53,7 +57,7 @@ class ReceiverAccountEntity extends Equatable {
   final String userId;
   final String type;
   final String? document;
-  final ReceiverAccountBankDetailEntity data;
+  final AccountBankReceiverEntity data;
   final String id;
   const ReceiverAccountEntity({
     required this.createdAt,
@@ -69,6 +73,8 @@ class ReceiverAccountEntity extends Equatable {
   List<Object?> get props => [
     createdAt,credentialId,userId,type,document,data,id
   ];
+
+
  }
 
 class ReceiverAccountBankDetailEntity extends Equatable {
@@ -100,7 +106,7 @@ class OriginAccountEntity extends Equatable {
   final String userId;
   final String type;
   final String? document;
-  final OriginAccountBankDetailEntity data;
+  final AccountBankOriginEntity data;
   final String id;
   const OriginAccountEntity({
     required this.createdAt,
@@ -118,6 +124,8 @@ class OriginAccountEntity extends Equatable {
 
 
 
+
+ 
   }
 
 class OriginAccountBankDetailEntity extends Equatable {

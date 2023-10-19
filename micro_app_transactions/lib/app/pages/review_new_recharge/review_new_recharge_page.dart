@@ -7,6 +7,8 @@ import 'package:micro_core/micro_core.dart';
 import '../../../src/domain/entities/account_bank_origin.dart';
 import '../../../src/domain/entities/account_bank_receiver.dart';
 import '../../../src/domain/entities/card.dart';
+import '../../../src/models/transaction_send.dart';
+import '../../blocs/create_transaction/bloc.dart';
 import '../../blocs/get_card/bloc.dart';
 import '../../blocs/get_currency/bloc.dart';
 import '../../blocs/list_accounts_bank/bloc.dart';
@@ -49,6 +51,7 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
   final bloc = CoreBinding.get<ListAccountsBankBloc>();
   final blocGetCard = CoreBinding.get<GetCardBloc>();
   final blocGetCurrency = CoreBinding.get<GetCurrencyBloc>();
+  final blocCreateTransaction = CoreBinding.get<CreateTransactionBloc>();
   final realController = TextEditingController();
   final dolarController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -69,7 +72,8 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
       final value =
           realController.text.replaceAll('R\$ ', '').replaceAll(',', '.');
       double realValue = double.parse(value);
-      double dolarValue = realValue / blocGetCurrency.state.currency!.value.toDouble();
+      double dolarValue =
+          realValue / blocGetCurrency.state.currency!.value.toDouble();
       dolarController.text = "\$ ${dolarValue.toStringAsFixed(2)}";
     });
 
@@ -77,12 +81,14 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
       final value =
           dolarController.text.replaceAll('\$', '').replaceAll(' ', '');
       double dolarValue = double.parse(value);
-      double realValue = dolarValue * blocGetCurrency.state.currency!.value.toDouble();
+      double realValue =
+          dolarValue * blocGetCurrency.state.currency!.value.toDouble();
       realController.text =
           "R\$ ${realValue.toStringAsFixed(2).replaceAll('.', ',')}";
     });
 
-    blocGetCurrency.getCurrency(const CurrencyModel(currencyIn: 'USD', currencyOut: "BRL"));
+    blocGetCurrency.getCurrency(
+        const CurrencyModel(currencyIn: 'USD', currencyOut: "BRL"));
   }
 
   @override
@@ -138,59 +144,71 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
                                     ),
                                     const UolletiText.labelLarge(
                                         'Conta de origem'),
-                                    UolletiDropDown<AccountBankOriginEntity>(
-                                        value: stateForm.value?.origin,
-                                        items: origins,
-                                        validator: (e) {
-                                          return HelperInputValidator.required(
-                                              e?.id);
-                                        },
-                                        onChanged: (value) {
-                                          stateForm.didChange(stateForm.value
-                                              ?.copyWith(origin: value));
-                                        },
-                                        onChild: (value) =>
-                                            UolletiText.labelLarge(
-                                                value.bankName)),
+                                    IgnorePointer(
+                                      ignoring: true,
+                                      child: UolletiDropDown<AccountBankOriginEntity>(
+                                          value: stateForm.value?.origin,
+                                          items: origins,
+                                          validator: (e) {
+                                            return HelperInputValidator.required(
+                                                e?.id);
+                                          },
+                                          onChanged: (value) {
+                                            stateForm.didChange(stateForm.value
+                                                ?.copyWith(origin: value));
+                                          },
+                                          onChild: (value) =>
+                                              UolletiText.labelLarge(
+                                                  value.bankName)),
+                                    ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const UolletiText.labelLarge(
                                         'Conta de destino'),
-                                    UolletiDropDown<AccountBankReceiverEntity>(
-                                        value: stateGetCard
-                                                    .card
-                                                    ?.originAccountEntity
-                                                    .data !=
-                                                null
-                                            ? AccountBankReceiverDTO.fromMap(
-                                                stateGetCard.card!.receiverAccount.data
-                                                    .toMap()
-                                                  ..['id'] = stateGetCard
-                                                      .card!.receiverAccount.id)
-                                            : null,
-                                        items: receivers,
-                                        validator: (e) =>
-                                            HelperInputValidator.required(
-                                                e?.id),
-                                        onChanged: (value) {
-                                          stateForm.didChange(stateForm.value
-                                              ?.copyWith(receiver: value));
-                                        },
-                                        onChild: (value) =>
-                                            UolletiText.labelLarge(value.tagName)),
+                                    IgnorePointer(
+                                      ignoring: true,
+                                      child: UolletiDropDown<AccountBankReceiverEntity>(
+                                          value: stateGetCard
+                                                      .card
+                                                      ?.originAccountEntity
+                                                      .data !=
+                                                  null
+                                              ? AccountBankReceiverDTO.fromMap(
+                                                  stateGetCard.card!.receiverAccount.data
+                                                      .toMap()
+                                                    ..['id'] = stateGetCard
+                                                        .card!.receiverAccount.id)
+                                              : null,
+                                          items: receivers,
+                                          validator: (e) =>
+                                              HelperInputValidator.required(
+                                                  e?.id),
+                                          onChanged: (value) {
+                                            stateForm.didChange(stateForm.value
+                                                ?.copyWith(receiver: value));
+                                          },
+                                          onChild: (value) =>
+                                              UolletiText.labelLarge(value.tagName)),
+                                    ),
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    BlocBuilder<GetCurrencyBloc, GetCurrencyState>(
+                                    BlocBuilder<GetCurrencyBloc,
+                                        GetCurrencyState>(
                                       bloc: blocGetCurrency,
                                       builder: (context, state) {
-                                        if(state.status == GetCurrencyStatus.loading){
-                                          return const Center(child: CircularProgressIndicator(),);
+                                        if (state.status ==
+                                            GetCurrencyStatus.loading) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
                                         }
 
-                                        if(state.status == GetCurrencyStatus.error){
-                                          return const UolletiText.captionLarge('Erro ao buscar cotação');
+                                        if (state.status ==
+                                            GetCurrencyStatus.error) {
+                                          return const UolletiText.captionLarge(
+                                              'Erro ao buscar cotação');
                                         }
 
                                         return Column(
@@ -230,13 +248,38 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
                                 ),
                               ),
                             ),
-                            UolletiSliderButton(
-                                text: 'Arraste para confirmar',
-                                onTap: () {
-                                  if (formValidateKey.currentState
-                                          ?.validate() ==
-                                      true) {}
-                                })
+                            BlocConsumer<CreateTransactionBloc, CreateTransactionState>(
+                              bloc: blocCreateTransaction,
+                              listener: (ctx,state){
+                                if(state.status == CreateTransactionStatus.success){
+                                  CoreNavigator.pushNamedAndRemoveUntil(AppRoutes.transactions.success, ModalRoute.withName(AppRoutes.home.root));
+                                }
+                                if(state.status == CreateTransactionStatus.error){
+                                  UolletiDialogs.dialogShowGeneric(UolletiSnackbar.bottom(backgroundColor: colorsDS.iconsDanger, title: UolletiText.labelLarge(state.failure!.message!)));
+                                }
+                              },
+                              builder: (context, state) {
+                                if(state.status == CreateTransactionStatus.loading){
+                                  return const Center(child: CircularProgressIndicator(),);
+                                }
+                                return UolletiSliderButton(
+                                    text: 'Arraste para confirmar',
+                                    onTap: () {
+                                      if (formValidateKey.currentState
+                                              ?.validate() ==
+                                          true) {
+                                            blocCreateTransaction.createTransaction(
+                                              TransactionSend(
+                                                cardId: blocGetCard.state.card!.id,
+                                                amount: double.parse(dolarController.text.replaceAll('\$', '').replaceAll(' ', '')),
+                                                description: descriptionController.text,
+                                                quotation: blocGetCurrency.state.currency!.value,
+                                              )
+                                            );
+                                          }
+                                    });
+                              },
+                            )
                           ],
                         ),
                       );

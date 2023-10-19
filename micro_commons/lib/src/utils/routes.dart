@@ -30,6 +30,7 @@ class _Transactions {
   final String root = _root;
   final String microAppName = 'micro_app_transactions';
   final String reviewNewRecharge = '$_root/review-new-recharge';
+  final String success = '$_root/success';
 }
 
 class _Home {

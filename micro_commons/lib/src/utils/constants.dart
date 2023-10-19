@@ -37,6 +37,7 @@ class _TransactionHttp {
   const _TransactionHttp();
   static const _root = '/transaction';
   final String qrCode = '/transaction/qrcode';
+  final String directTransaction ='/transaction/direct-transaction';
    final String currency = '$_root/quotation';
   final String createTransactionBetweenAcc = '/transaction/between-accounts';
   final String userAlreadyExists = '/admin/user/verify';

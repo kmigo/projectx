@@ -34,10 +34,15 @@ class _NewCardPageState extends State<NewCardPage> {
   final bloc = CoreBinding.get<ListAccountsBankBloc>();
   final blocUser = CoreBinding.get<AuthenticationBloc>(); 
   final _formKey = GlobalKey<FormState>();
+  String? id;
   @override
   void initState() {
     super.initState();
     bloc.getAllAccountsBank();
+    id = CorePageModal.queryParams[StringUtils.id];
+    if(id != null){
+      
+    }
   }
   
   @override

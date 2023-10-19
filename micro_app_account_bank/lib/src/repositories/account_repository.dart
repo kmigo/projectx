@@ -8,6 +8,8 @@ import '../datasource/account_datasource.dart';
 abstract class RepositoryAccount {
   Future<Either<Failure,void>> createBankAccount(AccountCreateModel account);
   Future<Either<Failure,List<AccountBankEntity>>> getBankAccounts();
+    Future<Either<Failure,void>> updateBankAccount(AccountCreateModel bankAccount,String id);
+  Future<Either<Failure,AccountBankEntity>> getAccount(String id);
 }
 
 class RepositoryAccountImpl implements RepositoryAccount {
@@ -37,6 +39,29 @@ class RepositoryAccountImpl implements RepositoryAccount {
     }catch(e){
       return Left(Failure(message: genericError.message,e: e));
     }
+  }
+  
+  @override
+  Future<Either<Failure, AccountBankEntity>> getAccount(String id) async{
+    try{
+    return Right(await datasource.getAccount(id));
+    }on Failure catch(e){
+      return Left(Failure(message: e.message,e: e));
+    }catch(e){
+      return Left(Failure(message: genericError.message,e: e));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> updateBankAccount(AccountCreateModel bankAccount, String id) async{
+    try{
+      return Right(await datasource.updateBankAccount(bankAccount, id));
+    } on Failure catch(e){
+      return Left(Failure(message: e.message,e: e));
+    }catch(e){
+      return Left(Failure(message: genericError.message,e: e));
+    }
+
   }
   
 

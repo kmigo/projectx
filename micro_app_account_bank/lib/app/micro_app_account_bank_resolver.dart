@@ -3,6 +3,7 @@ import 'package:micro_app_account_bank/app/pages/register_account_bank_origin/re
 import 'package:micro_app_account_bank/app/pages/list_account_bank/list_account_bank_page.dart';
 import 'package:micro_app_account_bank/src/datasource/card_datasource.dart';
 import 'package:micro_app_account_bank/src/usecases/get_all_accounts_bank.dart';
+import 'package:micro_app_account_bank/src/usecases/update_account.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../src/datasource/account_datasource.dart';
@@ -12,6 +13,9 @@ import '../src/usecases/create_account_bank.dart';
 import '../src/usecases/create_card.dart';
 
 
+import '../src/usecases/get_account_bank.dart';
+import '../src/usecases/get_card.dart';
+import '../src/usecases/update_card.dart';
 import 'blocs/list_accounts_bank/bloc.dart';
 
 import 'blocs/new_card/bloc.dart';
@@ -35,12 +39,15 @@ class MicroAppAccountBankResolver extends MicroApp {
     CoreBinding.registerLazySingleton<CreateBankAccountUsecase>((i) => CreateBankAccountUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<GetAllAccountsBankUsecase>((i) => GetAllAccountsBankUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<CreateCardUsecase>((i) => CreateCardUsecaseImpl(i()));
-    
+    CoreBinding.registerLazySingleton<GetCardUsecase>((i) => GetCardUsecaseImpl(i()));
+    CoreBinding.registerLazySingleton<UpdateAccountUsecase>((i) => UpdateAccountUsecaseImpl(i()));
+    CoreBinding.registerLazySingleton<GetAccountBankUsecase>((i) => GetAccountBankUsecaseImpl(i()));
+    CoreBinding.registerLazySingleton<UpdateCardUsecase>((i) => UpdateCardUsecaseImpl(i()));
     // BLOC
     CoreBinding.registerFactory((i) => RegisterAccountBankOriginBloc(i()));
     CoreBinding.registerLazySingleton((i) => ListAccountsBankBloc(i()));
     CoreBinding.registerFactory((i) => RegisterAccountBankReceiverBloc(i()));
-    CoreBinding.registerFactory((i) => NewCardBloc(i()));
+    CoreBinding.registerFactory((i) => NewCardBloc(i(),i(),i()));
 
 
   };

@@ -1,6 +1,6 @@
 part of'bloc.dart';
 
-enum GetCardStatus {idle,loading,success,error}
+enum GetCardStatus {idle,loading,success,updated,error}
 
 class GetCardState extends Equatable {
   final GetCardStatus status;

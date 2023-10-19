@@ -49,7 +49,11 @@ class _HomePageState extends State<HomePage> {
                           title: card.name,
                           subtitle: "PIX",
                           description: card.receiverAccount.data.keyAccountPix,
-                          onEdit: () {},
+                          onEdit: () {
+                            CoreNavigator.pushNamed(
+                                "${AppRoutes.accountBank.newCardAccountBank}?${StringUtils.id}=${card.id}",
+                                );
+                          },
                           onPay: () {
                             CoreNavigator.pushNamed(
                                 "${AppRoutes.transactions.reviewNewRecharge}?${StringUtils.id}=${card.id}",

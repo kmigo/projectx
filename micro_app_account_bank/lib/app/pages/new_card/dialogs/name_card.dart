@@ -7,10 +7,16 @@ class NameCardDialog extends StatefulWidget {
   final String userId;
   final String originAcountId;
   final String receiverAcountId;
+  final bool updated;
+  final String? nameCard;
+  final Function(String) onUpdated;
   const NameCardDialog(
       {super.key,
       required this.originAcountId,
       required this.receiverAcountId,
+       this.nameCard,
+      required this.updated,
+      required this.onUpdated,
       required this.userId});
 
   @override
@@ -21,6 +27,12 @@ class _NameCardDialogState extends State<NameCardDialog> {
   final TextEditingController _controller = TextEditingController();
   final NewCardBloc bloc = CoreBinding.get();
   final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.nameCard ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,6 +53,7 @@ class _NameCardDialogState extends State<NameCardDialog> {
               ],
             ),
             UolletiTextInput(
+              initialValue: widget.nameCard,
               label: 'Nome do cartão',
               controller: _controller,
               validator: HelperInputValidator.required,
@@ -60,10 +73,14 @@ class _NameCardDialogState extends State<NameCardDialog> {
                 return Column(
                   children: [
                     UolletiButton.primary(
-                      label: 'Criar',
+                      label: widget.updated? "Atualizar" : 'Criar',
                       isLoading: state.status == NewCardStatus.loading,
                       onPressed: () {
                         if(_formKey.currentState?.validate() == false){
+                          return;
+                        }
+                        if(widget.updated){
+                          widget.onUpdated(_controller.text);
                           return;
                         }
                         bloc.createCard(CardModel(originAccountId: widget.originAcountId, receiverAccountId: widget.receiverAcountId, name: _controller.text, userId: widget.userId));

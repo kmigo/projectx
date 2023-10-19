@@ -25,7 +25,7 @@ class _TransactionSucessPageState extends State<TransactionSucessPage> {
             const SizedBox(height: 100,),
             const Icon(Icons.check_circle_outline,size: 100,color: Colors.green,),
             const SizedBox(height: 20,),
-            const Text('Transação realizada com sucesso',style: TextStyle(fontSize: 20),),
+             UolletiText.labelXLarge('Aguardando instruções de deposito da equipe americana para conciliar',color:colorsDS.primary900,),
             const SizedBox(height: 20,),
             UolletiButton.primary(onPressed: (){
               Navigator.pop(context);

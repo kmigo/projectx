@@ -55,7 +55,9 @@ class CorePageModal {
     return _args;
   }
   static Map<String,String>  get queryParams {
-    return _queryParams;
+    final copy = Map<String,String>.from(_queryParams);
+    _queryParams.clear();
+    return copy;
   }
 }
 

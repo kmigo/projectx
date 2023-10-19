@@ -173,7 +173,7 @@ extension CardDTO on CardEntity {
       name: map['name'] as String,
       userId: map['user_id'] as String,
       createdAt: map['created_at'] as int,
-      updatedAt: map['updated_at'] != null ? map['updated_at'] as int : null,
+      updatedAt: map['updated_at'],
       receiverAccount: ReceiverAccountDTO.fromMap(map['receiver_account'] as Map<String,dynamic>),
       originAccountEntity: OriginAccountDTO.fromMap(map['origin_account'] as Map<String,dynamic>),
     );

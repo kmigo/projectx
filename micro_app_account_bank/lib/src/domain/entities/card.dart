@@ -168,7 +168,7 @@ class CardEntity extends Equatable {
   final String name;
   final String userId;
   final int createdAt;
-  final int? updatedAt;
+  final dynamic updatedAt;
   final ReceiverAccountEntity receiverAccount;
   final OriginAccountEntity originAccountEntity;
   const CardEntity({

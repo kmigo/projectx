@@ -100,7 +100,7 @@ class _NewCardPageState extends State<NewCardPage> {
                       }
                       return Column(
                         children: [
-                          const UolletiText.labelXLarge(
+                         if(id == null)  UolletiText.labelXLarge(
                             'Crie um novo card para realizar pagamentos',
                             bold: true,
                           ),
@@ -233,8 +233,7 @@ class _NewCardPageState extends State<NewCardPage> {
                               label: id != null ? "Atualizar" : 'Criar card',
                               onPressed: () async {
                                 if (stateFormField.value?.originId != null &&
-                                    stateFormField.value?.receiverId != null &&
-                                    blocUser.state.status.user != null) {
+                                    stateFormField.value?.receiverId != null ) {
                                   final result =
                                       await UolletiDialogs.dialogShowGeneric(
                                           NameCardDialog(

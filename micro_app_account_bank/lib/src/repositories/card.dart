@@ -36,9 +36,9 @@ class CardRepositoryImpl implements CardRepository {
    try{
     return Right(await _datasource.getCard(id));
    }on Failure catch(e){
-     return Left(Failure(message: e.message));
+     return Left(Failure(message: e.message,e:e));
   }catch(e){
-    return Left(Failure(message: genericError.message));
+    return Left(Failure(message: genericError.message,e: e));
   }
   
   }

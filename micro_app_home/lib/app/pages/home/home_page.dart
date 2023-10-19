@@ -49,10 +49,13 @@ class _HomePageState extends State<HomePage> {
                           title: card.name,
                           subtitle: "PIX",
                           description: card.receiverAccount.data.keyAccountPix,
-                          onEdit: () {
-                            CoreNavigator.pushNamed(
+                          onEdit: () async {
+                             final create = await CoreNavigator.pushNamed(
                                 "${AppRoutes.accountBank.newCardAccountBank}?${StringUtils.id}=${card.id}",
                                 );
+                              if(create == true){
+                                bloc.getCards();
+                              }
                           },
                           onPay: () {
                             CoreNavigator.pushNamed(

@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                           onEdit: () {},
                           onPay: () {
                             CoreNavigator.pushNamed(
-                                "${AppRoutes.accountBank.newRecharge}?${StringUtils.id}=${card.id}",
+                                "${AppRoutes.transactions.reviewNewRecharge}?${StringUtils.id}=${card.id}",
                                 );
 
                           });

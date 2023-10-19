@@ -60,7 +60,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     String formattedValue;
 
     if (currency == 'US') {
-      formattedValue = '\$${value.toStringAsFixed(2)}';
+      formattedValue = '\$ ${value.toStringAsFixed(2)}';
     } else if (currency == 'R\$') {
       formattedValue = 'R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}';
     } else {

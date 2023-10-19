@@ -50,6 +50,8 @@ dependencies:
     path: ../micro_app_pix
   micro_app_account_bank:
     path: ../micro_app_account_bank
+  micro_app_transactions:
+    path: ../micro_app_transactions
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

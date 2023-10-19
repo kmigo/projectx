@@ -1,6 +1,5 @@
-import 'package:micro_app_account_bank/src/domain/entities/card.dart';
 import 'package:micro_core/micro_core.dart';
-
+import '../../../src/domain/entities/card.dart';
 import '../../../src/usecases/get_card_by_id.dart';
 
 part 'state.dart';

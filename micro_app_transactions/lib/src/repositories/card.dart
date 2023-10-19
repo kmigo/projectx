@@ -1,33 +1,31 @@
 
-import 'package:micro_app_account_bank/src/models/card.dart';
 import 'package:micro_core/micro_core.dart';
 
 import '../datasource/card_datasource.dart';
+import '../domain/entities/card.dart';
 
 abstract class CardRepository {
-  Future<Either<Failure,void>> createCard(CardModel cardModel);
 
+  Future<Either<Failure,CardEntity>> getCard(String id);
 }
 
 class CardRepositoryImpl implements CardRepository {
   final CardDatasource _datasource;
   CardRepositoryImpl(this._datasource);
+
   
   @override
-  Future<Either<Failure, void>> createCard(CardModel cardModel) async {
+  Future<Either<Failure, CardEntity>> getCard(String id) async{
     
     try{
-      final result = await _datasource.createCard(cardModel);
+      final result = await _datasource.getCard(id);
       return Right(result);
     }on Failure catch(e){
       return Left(Failure(message: e.message));
     }catch(e){
       return Left(Failure(message: genericError.message));
     }
-
   }
-  
-
 
 
 }

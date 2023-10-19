@@ -19,6 +19,7 @@ class HttpRoutes {
   static const user = _UserHttp();
   static const accountBank = _AccountBankHttp();
   static const cards = _CardHttp();
+
   
   
 }
@@ -30,9 +31,13 @@ class _UserHttp {
   final String root = '/user';
 }
 
+
+
 class _TransactionHttp {
   const _TransactionHttp();
+  static const _root = '/transactions';
   final String qrCode = '/transaction/qrcode';
+   final String currency = '$_root/quotation/currency';
   final String createTransactionBetweenAcc = '/transaction/between-accounts';
   final String userAlreadyExists = '/admin/user/verify';
   final String validateKey = '/transaction/validate-key';

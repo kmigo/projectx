@@ -9,6 +9,7 @@ import 'package:micro_app_home/micro_app_home.dart';
 import 'package:micro_app_onboarding/app/micro_app_login_resolver.dart';
 import 'package:micro_app_pix/micro_app_pix_transaction.dart';
 import 'package:micro_app_profile/micro_app_profile.dart';
+import 'package:micro_app_transactions/app/micro_app_transactions_resolver.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 
 import 'package:micro_core/micro_core.dart';
@@ -150,7 +151,8 @@ bloc = CoreBinding.get<AuthenticationBloc>();
     MicroAppProfileResolver(),
     MicroAppExtractResolver(),
     MicroAppPixTransactionResolver(),
-    MicroAppAccountBankResolver()
+    MicroAppAccountBankResolver(),
+    MicroAppTransactionsResolver()
 
   ];
   commonsInjections(){

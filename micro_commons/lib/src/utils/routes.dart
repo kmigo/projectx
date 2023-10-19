@@ -5,7 +5,7 @@ static const  _Onboarding onboarding =  _Onboarding();
 static const _Home home =  _Home(); 
 static const _Profile profile =  _Profile();
 static const _Extract extract =  _Extract();
-static const _SendTransaction sendTransaction =  _SendTransaction();
+static const _Transactions transactions =  _Transactions();
 static const _PixTransaction pixTransaction =  _PixTransaction();
 static const _AccountBank accountBank =  _AccountBank();
 static String root = '/';
@@ -22,6 +22,14 @@ class  _Onboarding {
   final String createAccount = '$_root/create-account';
   final String createPin = '$_root/create-pin';
   final String login = '$_root/login';
+}
+
+class _Transactions {
+  static const _root = '/transactions';
+  const _Transactions();
+  final String root = _root;
+  final String microAppName = 'micro_app_transactions';
+  final String reviewNewRecharge = '$_root/review-new-recharge';
 }
 
 class _Home {
@@ -58,12 +66,7 @@ class _Extract {
   final String extractDetail = '$_root/extract-detail';
 }
 
-class _SendTransaction {
-  static const _root = '/send-transaction';
-  const _SendTransaction();
-  final String root = _root;
-  final String microAppName = 'micro_app_send_transaction';
-}
+
 
 class _PixTransaction {
   static const _root = '/pix-transaction';
@@ -83,8 +86,6 @@ class _AccountBank {
   final String microAppName = 'micro_app_account_bank';
   final String registerBankOrigin = '$_root/register-bank';
   final String registerBankReceiver = '$_root/register-bank-receiver';
-  final String newRecharge = '$_root/review-new-recharge';
   final String newCardAccountBank = '$_root/new-card-account-bank';
-  final String recharge = '$_root/new-recharge';
   final String accounts = '$_root/accounts';
 }

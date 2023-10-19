@@ -10,15 +10,15 @@ import '../src/repositories/account_repository.dart';
 import '../src/repositories/card.dart';
 import '../src/usecases/create_account_bank.dart';
 import '../src/usecases/create_card.dart';
-import '../src/usecases/get_card_by_id.dart';
-import 'blocs/get_card/bloc.dart';
+
+
 import 'blocs/list_accounts_bank/bloc.dart';
 
 import 'blocs/new_card/bloc.dart';
 import 'blocs/register_account_bank_receiver/bloc.dart';
 import 'pages/new_card/new_card_page.dart';
 import 'pages/register_account_bank_receiver/register_account_bank_receiver_page.dart';
-import 'pages/new_recharge/new_recharge_page.dart';
+
 
 class MicroAppAccountBankResolver extends MicroApp {
   @override
@@ -35,14 +35,13 @@ class MicroAppAccountBankResolver extends MicroApp {
     CoreBinding.registerLazySingleton<CreateBankAccountUsecase>((i) => CreateBankAccountUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<GetAllAccountsBankUsecase>((i) => GetAllAccountsBankUsecaseImpl(i()));
     CoreBinding.registerLazySingleton<CreateCardUsecase>((i) => CreateCardUsecaseImpl(i()));
-    CoreBinding.registerLazySingleton<GetCardByIdUsecase>((i) => GetCardByIdUsecaseImpl(i()));
     
     // BLOC
     CoreBinding.registerFactory((i) => RegisterAccountBankOriginBloc(i()));
     CoreBinding.registerLazySingleton((i) => ListAccountsBankBloc(i()));
     CoreBinding.registerFactory((i) => RegisterAccountBankReceiverBloc(i()));
     CoreBinding.registerFactory((i) => NewCardBloc(i()));
-    CoreBinding.registerFactory<GetCardBloc>((i)=> GetCardBloc(i()));
+
 
   };
 
@@ -52,7 +51,6 @@ class MicroAppAccountBankResolver extends MicroApp {
   @override
   Map<String, WidgetBuildArgs> get routes => {
     AppRoutes.accountBank.registerBankOrigin : (ctx,args) => const RegisterAccountBankOriginPage(),
-    AppRoutes.accountBank.newRecharge : (ctx,args) => const NewRechargePage(),
     AppRoutes.accountBank.accounts:(context, args) => const ListAccountBankPage(),
     AppRoutes.accountBank.registerBankReceiver:(context, args) => const RegisterAccountBankReceiverPage(),
     AppRoutes.accountBank.newCardAccountBank:(context,args) => const NewCardPage(),

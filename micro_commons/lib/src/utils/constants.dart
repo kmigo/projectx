@@ -35,9 +35,9 @@ class _UserHttp {
 
 class _TransactionHttp {
   const _TransactionHttp();
-  static const _root = '/transactions';
+  static const _root = '/transaction';
   final String qrCode = '/transaction/qrcode';
-   final String currency = '$_root/quotation/currency';
+   final String currency = '$_root/quotation';
   final String createTransactionBetweenAcc = '/transaction/between-accounts';
   final String userAlreadyExists = '/admin/user/verify';
   final String validateKey = '/transaction/validate-key';

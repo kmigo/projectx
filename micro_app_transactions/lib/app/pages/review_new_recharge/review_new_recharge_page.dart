@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:micro_app_transactions/src/models/currency.dart';
 
 import 'package:micro_core/micro_core.dart';
 
@@ -68,7 +69,7 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
       final value =
           realController.text.replaceAll('R\$ ', '').replaceAll(',', '.');
       double realValue = double.parse(value);
-      double dolarValue = realValue / conversionRate;
+      double dolarValue = realValue / blocGetCurrency.state.currency!.value.toDouble();
       dolarController.text = "\$ ${dolarValue.toStringAsFixed(2)}";
     });
 
@@ -76,10 +77,12 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
       final value =
           dolarController.text.replaceAll('\$', '').replaceAll(' ', '');
       double dolarValue = double.parse(value);
-      double realValue = dolarValue * conversionRate;
+      double realValue = dolarValue * blocGetCurrency.state.currency!.value.toDouble();
       realController.text =
           "R\$ ${realValue.toStringAsFixed(2).replaceAll('.', ',')}";
     });
+
+    blocGetCurrency.getCurrency(const CurrencyModel(currencyIn: 'USD', currencyOut: "BRL"));
   }
 
   @override

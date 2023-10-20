@@ -28,7 +28,7 @@ class _RegisterAccountBankReceiverPageState
   final blocUser = CoreBinding.get<AuthenticationBloc>();
   final TextEditingController _cardNameController = TextEditingController();
   final blocAccount = CoreBinding.get<GetAccountBloc>();
-  String _typeBeneficiarySelected = '';
+  String? _typeBeneficiarySelected ;
   final TextEditingController _nameBeneficiaryController =
       TextEditingController();
   String typeKeySelected = '';
@@ -231,7 +231,7 @@ class _RegisterAccountBankReceiverPageState
                                   type: 'RECEIVER_ACCOUNT',
                                   data: AccountBankReceiverModel(
                                     tagName: _cardNameController.text,
-                                    typeBeneficiary: _typeBeneficiarySelected,
+                                    typeBeneficiary: _typeBeneficiarySelected ??'',
                                     beneficiaryName:
                                         _nameBeneficiaryController.text,
                                     typeKeyAccountPix: method!,
@@ -246,7 +246,7 @@ class _RegisterAccountBankReceiverPageState
                                   type: 'RECEIVER_ACCOUNT',
                                   data: AccountBankReceiverModel(
                                     tagName: _cardNameController.text,
-                                    typeBeneficiary: _typeBeneficiarySelected,
+                                    typeBeneficiary: _typeBeneficiarySelected ?? '',
                                     beneficiaryName:
                                         _nameBeneficiaryController.text,
                                     typeKeyAccountPix: method!,

@@ -199,9 +199,8 @@ class _NewCardPageState extends State<NewCardPage> {
                                       AppRoutes
                                           .accountBank.registerBankReceiver);
                                   if (created != null && created == true) {
-                                    if (id != null) {
-                                      blocGetCard.getCardById(id!);
-                                    }
+
+                                      bloc.getAllAccountsBank();
                                   }
                                 },
                                 child: const Row(

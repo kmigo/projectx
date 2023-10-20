@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:micro_app_account_bank/app/blocs/register_account_bank_origin/bloc.dart';
+import 'package:micro_app_account_bank/src/domain/entities/account_bank_origin.dart';
 import 'package:micro_app_account_bank/src/models/account_create_model.dart';
 import 'package:micro_app_account_bank/src/models/account_create_origin_model.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 import 'package:micro_core/micro_core.dart';
 
-
+import '../../blocs/get_account/bloc.dart';
 
 class RegisterAccountBankOriginPage extends StatefulWidget {
   const RegisterAccountBankOriginPage({super.key});
@@ -21,6 +22,7 @@ class _RegisterAccountBankOriginPageState
   String? id;
   final bloc = CoreBinding.get<RegisterAccountBankOriginBloc>();
   final blocUser = CoreBinding.get<AuthenticationBloc>();
+  final blocBank = CoreBinding.get<GetAccountBloc>();
   final TextEditingController _nameBankController = TextEditingController();
   final TextEditingController _accountNumberController =
       TextEditingController();
@@ -34,6 +36,9 @@ class _RegisterAccountBankOriginPageState
   void initState() {
     super.initState();
     id = CorePageModal.queryParams[StringUtils.id];
+    if(id != null){
+      blocBank.getById(id!);
+    }
   }
 
   @override
@@ -61,7 +66,7 @@ class _RegisterAccountBankOriginPageState
                 ),
                 const Duration(seconds: 3));
           }
-          if(state.status == RegisterAccountBankStatus.success){
+          if (state.status == RegisterAccountBankStatus.success) {
             CoreNavigator.pop(true);
           }
         },
@@ -73,125 +78,174 @@ class _RegisterAccountBankOriginPageState
             );
           }
 
-          return Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          child: Icon(
-                            Icons.account_balance_outlined,
-                            color: colorsDS.iconsPure,
-                            size: 30,
+          return BlocConsumer<GetAccountBloc, GetAccountState>(
+            bloc: blocBank,
+            listener: (context, state) {
+              if(state.status == GetAccountStatus.success){
+
+                final account = AccountBankOriginDTO.fromMap(state.account?.data..['id']=state.account?.id);
+                _nameBankController.text = account.bankName ;
+                _accountNumberController.text = account.accountNumber;
+                _routeNumberController.text = account.routingNumber;
+                _accountHolderNameController.text = account.accountHolder;
+                _labelController.text = account.label;
+                checking = account.account;
+              }
+
+              if(state.status == GetAccountStatus.updated){
+                CoreNavigator.pop(true);
+              }
+              if(state.status == GetAccountStatus.error){
+                showUolletiSnackbar(context, UolletiSnackbar.bottomError(message: state.failure?.message ?? '') , const Duration(seconds: 3));
+              }
+
+            },
+            builder: (context, state){
+              if(state.status == GetAccountStatus.loading){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 30,
+                            child: Icon(
+                              Icons.account_balance_outlined,
+                              color: colorsDS.iconsPure,
+                              size: 30,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        UolletiText.labelXLarge(
-                          'Informe os dados da sua conta bancária',
-                          color: colorsDS.primary900,
-                          bold: true,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Nome do banco',
-                      hintText: 'Nome do banco',
-                      validator: HelperInputValidator.required,
-                      controller: _nameBankController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const UolletiText.labelLarge(
-                      'Conta',
-                      bold: true,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    UolletiDropDown(
-                      items: const [
-                        "Checkings" , "Savings"
-                      ],
-                      validator: HelperInputValidator.required,
-                      onChanged: (value) {
-                        checking = value;
-                      },
-                      value: checking,
-                      
-                      onChild: (value) => UolletiText.labelLarge(value),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Numero da conta',
-                      validator: HelperInputValidator.required,
-                      controller: _accountNumberController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Numero de rota',
-                      validator: HelperInputValidator.required,
-                      controller: _routeNumberController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      validator: HelperInputValidator.required,
-                      label: 'Nome do titular da conta',
-                      controller: _accountHolderNameController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Label',
-                      validator: HelperInputValidator.required,
-                      controller: _labelController,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiButton.primary(
-                      label: id != null ? 'Atualizar' : 'Salvar',
-                      onPressed: id != null
-                          ? null
-                          : () {
-                            if(formKey.currentState?.validate() == true){
-                              bloc.create(AccountCreateModel(
-                            type: 'ORIGIN_ACCOUNT',
-                            data: AccountBankOriginModel(
-                                bankName: _nameBankController.text,
-                                account: checking!,
-                                accountNumber: _accountNumberController.text,
-                                routingNumber: _routeNumberController.text,
-                                accountHolder:
-                                    _accountHolderNameController.text,
-                                label: _labelController.text),
-                            name: _labelController.text,
-                            userId: blocUser.state.status.user?.id ?? ''));
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          UolletiText.labelXLarge(
+                            'Informe os dados da sua conta bancária',
+                            color: colorsDS.primary900,
+                            bold: true,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiTextInput(
+                        label: 'Nome do banco',
+                        hintText: 'Nome do banco',
+                        validator: HelperInputValidator.required,
+                        controller: _nameBankController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const UolletiText.labelLarge(
+                        'Conta',
+                        bold: true,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      UolletiDropDown(
+                        items: const ["Checkings", "Savings"],
+                        validator: HelperInputValidator.required,
+                        onChanged: (value) {
+                          checking = value;
+                        },
+                        value: checking,
+                        onChild: (value) => UolletiText.labelLarge(value),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiTextInput(
+                        label: 'Numero da conta',
+                        validator: HelperInputValidator.required,
+                        controller: _accountNumberController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiTextInput(
+                        label: 'Numero de rota',
+                        validator: HelperInputValidator.required,
+                        controller: _routeNumberController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiTextInput(
+                        validator: HelperInputValidator.required,
+                        label: 'Nome do titular da conta',
+                        controller: _accountHolderNameController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiTextInput(
+                        label: 'Label',
+                        validator: HelperInputValidator.required,
+                        controller: _labelController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UolletiButton.primary(
+                        label: id != null ? 'Atualizar' : 'Salvar',
+                        onPressed: id != null
+                            ? (){
+                              if(formKey.currentState?.validate() ==true){
+                                blocBank.update(AccountCreateModel(
+                                      type: 'ORIGIN_ACCOUNT',
+                                      data: AccountBankOriginModel(
+                                          bankName: _nameBankController.text,
+                                          account: checking!,
+                                          accountNumber:
+                                              _accountNumberController.text,
+                                          routingNumber:
+                                              _routeNumberController.text,
+                                          accountHolder:
+                                              _accountHolderNameController.text,
+                                          label: _labelController.text),
+                                      name: _labelController.text,
+                                      userId: blocUser.state.status.user?.id ??
+                                          ''),id!);
+                              }
                             }
-                          },
-                    )
-                  ],
+                            : () {
+                                if (formKey.currentState?.validate() == true) {
+                                  bloc.create(AccountCreateModel(
+                                      type: 'ORIGIN_ACCOUNT',
+                                      data: AccountBankOriginModel(
+                                          bankName: _nameBankController.text,
+                                          account: checking!,
+                                          accountNumber:
+                                              _accountNumberController.text,
+                                          routingNumber:
+                                              _routeNumberController.text,
+                                          accountHolder:
+                                              _accountHolderNameController.text,
+                                          label: _labelController.text),
+                                      name: _labelController.text,
+                                      userId: blocUser.state.status.user?.id ??
+                                          ''));
+                                }
+                              },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
+            );
+            },
+
           );
         },
       ),

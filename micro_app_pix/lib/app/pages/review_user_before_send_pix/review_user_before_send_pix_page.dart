@@ -26,9 +26,7 @@ class _ReviewUserBeforeSendPixPageState
     key = query[StringUtils.keyPayment];
     id = query[StringUtils.id];
     method = query[StringUtils.method];
-
     if (method != null && key != null) {
-      
       bloc.fetchKey(
           method?.toLowerCase() == PaymentsType.qrcode.toLowerCase()
               ? method!

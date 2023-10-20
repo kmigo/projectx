@@ -17,6 +17,7 @@ import '../src/usecases/create_card.dart';
 import '../src/usecases/get_account_bank.dart';
 import '../src/usecases/get_card.dart';
 import '../src/usecases/update_card.dart';
+import 'blocs/get_account/bloc.dart';
 import 'blocs/list_accounts_bank/bloc.dart';
 
 import 'blocs/new_card/bloc.dart';
@@ -50,6 +51,7 @@ class MicroAppAccountBankResolver extends MicroApp {
     CoreBinding.registerFactory((i) => RegisterAccountBankReceiverBloc(i()));
     CoreBinding.registerFactory((i) => NewCardBloc(i(),i(),i()));
     CoreBinding.registerFactory<GetCardBloc>((i) => GetCardBloc(i(),i()));
+    CoreBinding.registerLazySingleton<GetAccountBloc>((i) => GetAccountBloc(i(),i()));
 
 
   };

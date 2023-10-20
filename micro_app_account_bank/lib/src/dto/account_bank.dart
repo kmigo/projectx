@@ -19,7 +19,7 @@ Map<String, dynamic> toMap() {
       data: map['data'] as dynamic,
       userId: map['userId'] != null ? map['userId'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as int : null,
-      updatedAt: map['updatedAt'] != null ? map['updatedAt'] as int : null,
+      updatedAt: map['updatedAt'],
     );
   }
 }

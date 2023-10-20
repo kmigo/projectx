@@ -13,14 +13,9 @@ class UpdateAccountUsecaseImpl extends UpdateAccountUsecase {
   UpdateAccountUsecaseImpl(this._repositoryAccount);
   @override
   Future<Either<Failure, void>> call(AccountCreateModel account, String id) async{
-    try{
-      await _repositoryAccount.updateBankAccount(account, id);
-      return const Right(null);
-    }on Failure catch(e){
-      return Left(Failure(message: e.message,e: e));
-    }catch(e){
-      return Left(Failure(message: genericError.message,e: e));
-    }
+  
+    return  await _repositoryAccount.updateBankAccount(account, id);
+     
   }
 
 }

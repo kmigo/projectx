@@ -13,6 +13,11 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
   }
 
   static fromMap(Map<String, dynamic> map) {
+    String keyAccount = map['keyAccountPix'] ?? '';
+    final typeKey = map['typeKeyAccountPix'] ?? '';
+    if(['cpf','cnpj','telefone'].contains(typeKey.toLowerCase())){
+      keyAccount = keyAccount.replaceAll(RegExp(r'\D'), '');
+    }
     
     return AccountBankReceiverEntity(
       tagName: map['tagName']??'' ,
@@ -20,7 +25,7 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
       beneficiaryName: map['beneficiaryName'] ?? '',
       id: map['id'],
       typeKeyAccountPix: map['typeKeyAccountPix']??'',
-      keyAccountPix: map['keyAccountPix'] ?? '',
+      keyAccountPix: keyAccount,
     );
   }
 }

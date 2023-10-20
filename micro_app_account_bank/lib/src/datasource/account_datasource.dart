@@ -39,7 +39,11 @@ class AccountDatasourceImpl implements AccountDatasource {
   
   @override
   Future<void> updateBankAccount(AccountCreateModel bankAccount, String id) async {
-    await _clientHttp.put("${HttpRoutes.accountBank.account}/$id", json: bankAccount.toMap());
+    final result = await _clientHttp.put("${HttpRoutes.accountBank.account}/$id", json: bankAccount.toMap());
+    if(result.isSuccessfull){
+      return;
+    }
+    throw genericError;
   }
 
 }

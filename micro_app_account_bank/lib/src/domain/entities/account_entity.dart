@@ -12,7 +12,7 @@ class AccountBankEntity extends Equatable {
   final dynamic data;
   final String? userId;
   final int? createdAt;
-  final int? updatedAt;
+  final dynamic updatedAt;
   const AccountBankEntity({
     required this.id,
     this.type,

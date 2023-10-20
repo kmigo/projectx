@@ -28,7 +28,7 @@ class GetCardBloc extends Cubit<GetCardState> {
     emit(state.copyWith(status: GetCardStatus.loading));
     _updateCardUsecase(cardModel,id).then((result) {
       result.fold((l) {
-        emit(state.copyWith(status: GetCardStatus.error));
+        emit(state.copyWith(status: GetCardStatus.error, failure: l));
       }, (r) {
         emit(state.copyWith(status: GetCardStatus.updated));
       });

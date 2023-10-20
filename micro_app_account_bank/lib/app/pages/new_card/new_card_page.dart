@@ -36,7 +36,8 @@ class _NewCardPageState extends State<NewCardPage> {
   final bloc = CoreBinding.get<ListAccountsBankBloc>();
   final blocUser = CoreBinding.get<AuthenticationBloc>();
   final blocGetCard = CoreBinding.get<GetCardBloc>();
-  final _formKey = GlobalKey<FormState>();
+
+  final _formKeySelected = GlobalKey<FormFieldState<SelectedsAccounts>>();
   String? id;
   @override
   void initState() {
@@ -76,7 +77,7 @@ class _NewCardPageState extends State<NewCardPage> {
             final origins = state.origins;
             return FormField<SelectedsAccounts>(
                 initialValue: const SelectedsAccounts(),
-                key: _formKey,
+                key: _formKeySelected,
                 builder: (stateFormField) {
                   return BlocConsumer<GetCardBloc, GetCardState>(
                     bloc: blocGetCard,
@@ -149,7 +150,7 @@ class _NewCardPageState extends State<NewCardPage> {
                             itemBuilder: (_, index) => _TileCard.origin(
                               onEdit: ()async{
                                 final created = await CoreNavigator.pushNamed(
-                                      "${AppRoutes.accountBank.registerBankOrigin}?${StringUtils.id}=$id");
+                                      "${AppRoutes.accountBank.registerBankOrigin}?${StringUtils.id}=${origins[index].id}");
                                   if (created != null && created == true) {
                                     bloc.getAllAccountsBank();
                                   }
@@ -207,7 +208,7 @@ class _NewCardPageState extends State<NewCardPage> {
                             itemBuilder: (_, index) => _TileCard.origin(
                               onEdit: () async{
                                 final created = await CoreNavigator.pushNamed(
-                                      "${AppRoutes.accountBank.registerBankReceiver}?${StringUtils.id}=$id");
+                                      "${AppRoutes.accountBank.registerBankReceiver}?${StringUtils.id}=${receivers[index].id}");
                                   if (created != null && created == true) {
                                     bloc.getAllAccountsBank();
                                   }

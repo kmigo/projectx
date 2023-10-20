@@ -68,10 +68,15 @@ class _NameCardDialogState extends State<NameCardDialog> {
                 if(state.status == NewCardStatus.success){
                   CoreNavigator.pop(true);
                 }
+
               },
               builder: (context, state) {
                 return Column(
                   children: [
+                    if(state.status == NewCardStatus.error)...[
+                      Text(
+                        state.message ?? "",
+                        style: const TextStyle(color: Colors.red))],
                     UolletiButton.primary(
                       label: widget.updated? "Atualizar" : 'Criar',
                       isLoading: state.status == NewCardStatus.loading,

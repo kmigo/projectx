@@ -22,10 +22,13 @@ class _ReviewUserBeforeSendPixPageState
   @override
   void initState() {
     super.initState();
-    key = CorePageModal.queryParams[StringUtils.keyPayment];
-    id = CorePageModal.queryParams[StringUtils.id];
-    method = CorePageModal.queryParams[StringUtils.method];
+    final query = Map.from(CorePageModal.queryParams);
+    key = query[StringUtils.keyPayment];
+    id = query[StringUtils.id];
+    method = query[StringUtils.method];
+
     if (method != null && key != null) {
+      
       bloc.fetchKey(
           method?.toLowerCase() == PaymentsType.qrcode.toLowerCase()
               ? method!

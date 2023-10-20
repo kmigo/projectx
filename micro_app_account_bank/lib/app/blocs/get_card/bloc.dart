@@ -12,9 +12,9 @@ class GetCardBloc extends Cubit<GetCardState> {
   final UpdateCardUsecase _updateCardUsecase;
   GetCardBloc(this._getCardUsecase,this._updateCardUsecase):super( const GetCardState(status: GetCardStatus.idle));
 
-  getCardById(String id){
+  Future<void> getCardById(String id)async{
     emit(state.copyWith(status: GetCardStatus.loading));
-    _getCardUsecase(id).then((result) {
+    await _getCardUsecase(id).then((result) {
       result.fold((l) {
         emit(state.copyWith(status: GetCardStatus.error));
       }, (r) {

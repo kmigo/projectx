@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:micro_app_account_bank/src/domain/entities/account_bank_receiver.dart';
 import 'package:micro_app_account_bank/src/models/account_create_model.dart';
 import 'package:micro_app_account_bank/src/models/account_create_receiver_model.dart';
 import 'package:micro_commons_user/micro_commons_user.dart';
 
 import 'package:micro_core/micro_core.dart';
 
+import '../../blocs/get_account/bloc.dart';
 import '../../blocs/register_account_bank_receiver/bloc.dart';
 
 class RegisterAccountBankReceiverPage extends StatefulWidget {
@@ -25,6 +27,7 @@ class _RegisterAccountBankReceiverPageState
   final bloc = CoreBinding.get<RegisterAccountBankReceiverBloc>();
   final blocUser = CoreBinding.get<AuthenticationBloc>();
   final TextEditingController _cardNameController = TextEditingController();
+  final blocAccount = CoreBinding.get<GetAccountBloc>();
   String _typeBeneficiarySelected = '';
   final TextEditingController _nameBeneficiaryController =
       TextEditingController();
@@ -37,6 +40,9 @@ class _RegisterAccountBankReceiverPageState
     method = CorePageModal.queryParams[StringUtils.method];
     keyPayment = CorePageModal.queryParams[StringUtils.keyPayment];
     update = id?.isNotEmpty == true;
+    if(update){
+      blocAccount.getById(id!);
+    }
   }
 
   @override
@@ -71,142 +77,191 @@ class _RegisterAccountBankReceiverPageState
           }
         },
         builder: (context, state) {
-            if (state.status == RegisterAccountBankReceiverStatus.loading) {
+          if (state.status == RegisterAccountBankReceiverStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          return BlocConsumer<GetAccountBloc, GetAccountState>(
+            bloc: blocAccount,
+            listener: (context, state) {
+              if(state.status == GetAccountStatus.success){
+
+                final account = AccountBankReceiverDTO.fromMap(state.account?.data..['id']=state.account?.id);
+                _cardNameController.text = account.tagName;
+                _nameBeneficiaryController.text = account.beneficiaryName;
+                _typeBeneficiarySelected = account.typeBeneficiary;
+                _keyController.text = account.keyAccountPix;
+                method = account.typeKeyAccountPix;
+                keyPayment = account.keyAccountPix;
+
+              }
+
+              if(state.status == GetAccountStatus.updated){
+                CoreNavigator.pop(true);
+              }
+              if(state.status == GetAccountStatus.error){
+                showUolletiSnackbar(context, UolletiSnackbar.bottomError(message: state.failure?.message ?? '') , const Duration(seconds: 3));
+              }
+            },
+            builder: (context, state) {
+              if(state.status == GetAccountStatus.loading){
+                return const Center(child: CircularProgressIndicator(),);
+              }
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.pix,
-                          size: 30,
-                          color: colorsDS.backgroundMedium,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.pix,
+                              size: 30,
+                              color: colorsDS.backgroundMedium,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            UolletiText.labelXLarge(
+                              'Informações de contato',
+                              bold: true,
+                              color: colorsDS.backgroundMedium,
+                            )
+                          ],
                         ),
                         const SizedBox(
-                          width: 10,
+                          height: 20,
                         ),
-                        UolletiText.labelXLarge(
-                          'Informações de contato',
+                        UolletiTextInput(
+                          label: 'Nome do cartão',
+                          hintText: 'Aluguel Barra',
+                          controller: _cardNameController,
+                          validator: HelperInputValidator.required,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const UolletiText.labelLarge(
+                          'Tipo de beneficiario',
                           bold: true,
-                          color: colorsDS.backgroundMedium,
-                        )
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        UolletiDropDown(
+                          value: _typeBeneficiarySelected,
+                          items: const ['Pessoa Júridica', 'Pessoa Fisica'],
+                          validator: HelperInputValidator.required,
+                          onChanged: (choice) {
+                            _typeBeneficiarySelected = choice!;
+                          },
+                          onChild: (value) => UolletiText.labelMedium(value),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        UolletiTextInput(
+                          label: 'Nome do beneficiario',
+                          hintText: 'Thomas Edison',
+                          controller: _nameBeneficiaryController,
+                          validator: HelperInputValidator.required,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const UolletiText.labelLarge(
+                          'Tipo de chave PIX',
+                          bold: true,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: _setKey,
+                          child: IgnorePointer(
+                              ignoring: true,
+                              child: UolletiDropDown<String>(
+                                items: const [
+                                  'CPF',
+                                  'CHAVE ALEATORIA',
+                                  'CNPJ',
+                                  "TELEFONE",
+                                  "EMAIL"
+                                ],
+                                validator: HelperInputValidator.required,
+                                onChanged: (choice) {
+                                  typeKeySelected = choice!;
+                                },
+                                onChild: (value) =>
+                                    UolletiText.labelMedium(value),
+                                value: _typeKey(),
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: _setKey,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: UolletiTextInput(
+                              label: 'Chave PIX',
+                              hintText: '123.456.789-10',
+                              validator: HelperInputValidator.required,
+                              controller: _keyController,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        UolletiButton.primary(
+                            label: update ? 'Atualizar': 'CRIAR',
+                            onPressed: () async {
+                              if (formKey.currentState?.validate() == false) {
+                                return;
+                              }
+                              if(update){
+                                blocAccount.update(AccountCreateModel(
+                                  type: 'RECEIVER_ACCOUNT',
+                                  data: AccountBankReceiverModel(
+                                    tagName: _cardNameController.text,
+                                    typeBeneficiary: _typeBeneficiarySelected,
+                                    beneficiaryName:
+                                        _nameBeneficiaryController.text,
+                                    typeKeyAccountPix: method!,
+                                    keyAccountPix: keyPayment!,
+                                  ),
+                                  name: _cardNameController.text,
+                                  userId:
+                                      blocUser.state.status.user?.id ?? ''),id!);
+                                return;
+                              }
+                              bloc.create(AccountCreateModel(
+                                  type: 'RECEIVER_ACCOUNT',
+                                  data: AccountBankReceiverModel(
+                                    tagName: _cardNameController.text,
+                                    typeBeneficiary: _typeBeneficiarySelected,
+                                    beneficiaryName:
+                                        _nameBeneficiaryController.text,
+                                    typeKeyAccountPix: method!,
+                                    keyAccountPix: keyPayment!,
+                                  ),
+                                  name: _cardNameController.text,
+                                  userId:
+                                      blocUser.state.status.user?.id ?? '1'));
+                            }),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Nome do cartão',
-                      hintText: 'Aluguel Barra',
-                      controller: _cardNameController,
-                      validator: HelperInputValidator.required,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const UolletiText.labelLarge(
-                      'Tipo de beneficiario',
-                      bold: true,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    UolletiDropDown(
-                      items: const ['Pessoa Júridica', 'Pessoa Fisica'],
-                      validator: HelperInputValidator.required,
-                      onChanged: (choice) {
-                        _typeBeneficiarySelected = choice!;
-                      },
-                      onChild: (value) => UolletiText.labelMedium(value),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UolletiTextInput(
-                      label: 'Nome do beneficiario',
-                      hintText: 'Thomas Edison',
-                      controller: _nameBeneficiaryController,
-                      validator: HelperInputValidator.required,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const UolletiText.labelLarge(
-                      'Tipo de chave PIX',
-                      bold: true,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: _setKey,
-                      child: IgnorePointer(
-                          ignoring: true,
-                          child: UolletiDropDown<String>(
-                            items: const [
-                              'CPF',
-                              'CHAVE ALEATORIA',
-                              'CNPJ',
-                              "TELEFONE",
-                              "EMAIL"
-                            ],
-                            validator: HelperInputValidator.required,
-                            onChanged: (choice) {
-                              typeKeySelected = choice!;
-                            },
-                            onChild: (value) => UolletiText.labelMedium(value),
-                            value: _typeKey(),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: _setKey,
-                      child: IgnorePointer(
-                        ignoring: true,
-                        child: UolletiTextInput(
-                          label: 'Chave PIX',
-                          hintText: '123.456.789-10',
-                          validator: HelperInputValidator.required,
-                          controller: _keyController,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    UolletiButton.primary(
-                        label: 'CRIAR',
-                        onPressed: () async {
-                          if (formKey.currentState?.validate() == false) return;
-                          bloc.create(AccountCreateModel(
-                              type: 'RECEIVER_ACCOUNT',
-                              data: AccountBankReceiverModel(
-                                tagName: _cardNameController.text,
-                                typeBeneficiary: _typeBeneficiarySelected,
-                                beneficiaryName:
-                                    _nameBeneficiaryController.text,
-                                typeKeyAccountPix: method!,
-                                keyAccountPix: keyPayment!,
-                              ),
-                              name: _cardNameController.text,
-                              userId: blocUser.state.status.user?.id ?? '1'));
-                        }),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),

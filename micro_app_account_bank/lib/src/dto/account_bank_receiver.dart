@@ -2,22 +2,23 @@ part of '../domain/entities/account_bank_receiver.dart';
 
 extension AccountBankReceiverDTO on AccountBankReceiverEntity {
     Map<String, dynamic> toMap() {
+      String keyAccount ='';
+
+    if(['cpf','cnpj','telefone'].contains(typeKeyAccountPix.toLowerCase())){
+      keyAccount = keyAccount.replaceAll(RegExp(r'\D'), '');
+    }
     return <String, dynamic>{
       'tagName': tagName,
       'typeBeneficiary': typeBeneficiary,
       'beneficiaryName': beneficiaryName,
       'typeKeyAccountPix': typeKeyAccountPix,
-      'keyAccountPix': keyAccountPix,
+      'keyAccountPix': keyAccount,
       'id': id,
     };
   }
 
-  static fromMap(Map<String, dynamic> map) {
-    String keyAccount = map['keyAccountPix'] ?? '';
-    final typeKey = map['typeKeyAccountPix'] ?? '';
-    if(['cpf','cnpj','telefone'].contains(typeKey.toLowerCase())){
-      keyAccount = keyAccount.replaceAll(RegExp(r'\D'), '');
-    }
+  static AccountBankReceiverEntity fromMap(Map<String, dynamic> map) {
+    
     
     return AccountBankReceiverEntity(
       tagName: map['tagName']??'' ,
@@ -25,7 +26,7 @@ extension AccountBankReceiverDTO on AccountBankReceiverEntity {
       beneficiaryName: map['beneficiaryName'] ?? '',
       id: map['id'],
       typeKeyAccountPix: map['typeKeyAccountPix']??'',
-      keyAccountPix: keyAccount,
+      keyAccountPix: map['keyAccountPix']??'',
     );
   }
 }

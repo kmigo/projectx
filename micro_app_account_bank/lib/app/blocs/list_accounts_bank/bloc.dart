@@ -14,7 +14,7 @@ class ListAccountsBankBloc extends Cubit<ListAccountBankState> {
   Future<void> getAllAccountsBank() async {
     emit(state.copyWith(status: ListAccountsBankStatus.loading));
     final result = await _getAllAccountsBankUsecase();
-    result.fold((l) => emit(state.copyWith(
+     result.fold((l) => emit(state.copyWith(
       status: ListAccountsBankStatus.error,
       failure: l
     )),

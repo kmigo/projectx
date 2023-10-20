@@ -42,14 +42,13 @@ class _NewCardPageState extends State<NewCardPage> {
   @override
   void initState() {
     super.initState();
-   
+
     id = CorePageModal.queryParams[StringUtils.id];
-     bloc.getAllAccountsBank().then((value) {
-       if (id != null) {
-      blocGetCard.getCardById(id!);
-    }
-     });
-   
+    bloc.getAllAccountsBank().then((value) {
+      if (id != null) {
+        blocGetCard.getCardById(id!);
+      }
+    });
   }
 
   @override
@@ -57,7 +56,7 @@ class _NewCardPageState extends State<NewCardPage> {
     return Scaffold(
       appBar: UolletiAppBar(
         title: UolletiText.labelXLarge(
-          id != null ? "Atualizar Card" :'Novo Card',
+          id != null ? "Atualizar Card" : 'Novo Card',
           color: colorsDS.textPure,
         ),
         centerTitle: true,
@@ -76,7 +75,7 @@ class _NewCardPageState extends State<NewCardPage> {
             final receivers = state.receivers;
             final origins = state.origins;
             return FormField<SelectedsAccounts>(
-                initialValue: const SelectedsAccounts(),
+                initialValue:  SelectedsAccounts(originId: blocGetCard.state.card?.originAccountEntity.id,receiverId: blocGetCard.state.card?.receiverAccount.id ),
                 key: _formKeySelected,
                 builder: (stateFormField) {
                   return BlocConsumer<GetCardBloc, GetCardState>(
@@ -84,27 +83,38 @@ class _NewCardPageState extends State<NewCardPage> {
                     listener: (context, stateGetCard) {
                       if (stateGetCard.status == GetCardStatus.updated) {
                         CoreNavigator.pop(true);
-                        showUolletiSnackbar(context, UolletiSnackbar.bottomSuccess(message: 'Card atualizado!!!'), const Duration(seconds: 4));
+                        showUolletiSnackbar(
+                            context,
+                            UolletiSnackbar.bottomSuccess(
+                                message: 'Card atualizado!!!'),
+                            const Duration(seconds: 4));
                       }
-                      if(stateGetCard.status == GetCardStatus.error){
-                        showUolletiSnackbar(context, UolletiSnackbar.bottomError(message: 'Erro ao atualizar card!!!'), const Duration(seconds: 4));
+                      if (stateGetCard.status == GetCardStatus.error) {
+                        showUolletiSnackbar(
+                            context,
+                            UolletiSnackbar.bottomError(
+                                message: 'Erro ao atualizar card!!!'),
+                            const Duration(seconds: 4));
                       }
-                      if(stateGetCard.status == GetCardStatus.success){
-                        stateFormField.didChange(SelectedsAccounts(originId: stateGetCard.card?.originAccountEntity.id,receiverId: stateGetCard.card?.receiverAccount.id));
+                      if (stateGetCard.status == GetCardStatus.success) {
+                        _formKeySelected.currentState?.didChange(SelectedsAccounts(
+                            originId: stateGetCard.card?.originAccountEntity.id,
+                            receiverId: stateGetCard.card?.receiverAccount.id));
                       }
                     },
                     builder: (context, stateGetCard) {
-                      if(stateGetCard.status == GetCardStatus.loading){
+                      if (stateGetCard.status == GetCardStatus.loading) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
                       return Column(
                         children: [
-                         if(id == null)  UolletiText.labelXLarge(
-                            'Crie um novo card para realizar pagamentos',
-                            bold: true,
-                          ),
+                          if (id == null)
+                            UolletiText.labelXLarge(
+                              'Crie um novo card para realizar pagamentos',
+                              bold: true,
+                            ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -148,12 +158,16 @@ class _NewCardPageState extends State<NewCardPage> {
                           Expanded(
                               child: ListView.separated(
                             itemBuilder: (_, index) => _TileCard.origin(
-                              onEdit: ()async{
+                              onEdit: () async {
                                 final created = await CoreNavigator.pushNamed(
-                                      "${AppRoutes.accountBank.registerBankOrigin}?${StringUtils.id}=${origins[index].id}");
-                                  if (created != null && created == true) {
-                                    bloc.getAllAccountsBank();
-                                  }
+                                    "${AppRoutes.accountBank.registerBankOrigin}?${StringUtils.id}=${origins[index].id}");
+                                if (created != null && created == true) {
+                                  bloc.getAllAccountsBank().then((value) {
+                                    if (id != null) {
+                                      blocGetCard.getCardById(id!).then((value) => setState((){}));
+                                    }
+                                  });
+                                }
                               },
                               onTap: () {
                                 stateFormField.didChange(stateFormField.value!
@@ -161,7 +175,7 @@ class _NewCardPageState extends State<NewCardPage> {
                               },
                               title: origins[index].bankName,
                               subtitle: origins[index].label,
-                              isSelected: stateFormField.value?.originId ==
+                              isSelected: _formKeySelected.currentState?.value?.originId ==
                                   origins[index].id,
                             ),
                             itemCount: origins.length,
@@ -185,7 +199,9 @@ class _NewCardPageState extends State<NewCardPage> {
                                       AppRoutes
                                           .accountBank.registerBankReceiver);
                                   if (created != null && created == true) {
-                                    bloc.getAllAccountsBank();
+                                    if (id != null) {
+                                      blocGetCard.getCardById(id!);
+                                    }
                                   }
                                 },
                                 child: const Row(
@@ -206,12 +222,15 @@ class _NewCardPageState extends State<NewCardPage> {
                           Expanded(
                               child: ListView.separated(
                             itemBuilder: (_, index) => _TileCard.origin(
-                              onEdit: () async{
+                              onEdit: () async {
                                 final created = await CoreNavigator.pushNamed(
-                                      "${AppRoutes.accountBank.registerBankReceiver}?${StringUtils.id}=${receivers[index].id}");
-                                  if (created != null && created == true) {
-                                    bloc.getAllAccountsBank();
-                                  }
+                                    "${AppRoutes.accountBank.registerBankReceiver}?${StringUtils.id}=${receivers[index].id}");
+                                if (created != null && created == true) {
+                                  bloc.getAllAccountsBank().then((value) {
+                                    _formKeySelected.currentState
+                                        ?.didChange(stateFormField.value!);
+                                  });
+                                }
                               },
                               onTap: () {
                                 stateFormField.didChange(stateFormField.value!
@@ -234,25 +253,40 @@ class _NewCardPageState extends State<NewCardPage> {
                               label: id != null ? "Atualizar" : 'Criar card',
                               onPressed: () async {
                                 if (stateFormField.value?.originId != null &&
-                                    stateFormField.value?.receiverId != null ) {
+                                    stateFormField.value?.receiverId != null) {
                                   final result =
                                       await UolletiDialogs.dialogShowGeneric(
                                           NameCardDialog(
-                                            updated: id != null,
-                                            nameCard: stateGetCard.card?.name ,
-                                            onUpdated: (name) {
-                                              CoreNavigator.pop();
-                                              final selected = stateFormField.value!;
-                                              if(selected.originId == null || selected.receiverId == null){
-                                                return;
-                                              }
-                                              blocGetCard.updateCard(CardModel(originAccountId: selected.originId!, receiverAccountId: selected.receiverId!, name: name, userId: blocUser.state.status.user?.id ?? ''), id!);
-
-                                            },
-                                              originAcountId:
-                                                  stateFormField
-                                                          .value?.originId ??
-                                                      '',
+                                              updated: id != null,
+                                              nameCard: stateGetCard.card?.name,
+                                              onUpdated: (name) {
+                                                CoreNavigator.pop();
+                                                final selected =
+                                                    stateFormField.value!;
+                                                if (selected.originId == null ||
+                                                    selected.receiverId ==
+                                                        null) {
+                                                  return;
+                                                }
+                                                blocGetCard.updateCard(
+                                                    CardModel(
+                                                        originAccountId:
+                                                            selected.originId!,
+                                                        receiverAccountId:
+                                                            selected
+                                                                .receiverId!,
+                                                        name: name,
+                                                        userId: blocUser
+                                                                .state
+                                                                .status
+                                                                .user
+                                                                ?.id ??
+                                                            ''),
+                                                    id!);
+                                              },
+                                              originAcountId: stateFormField
+                                                      .value?.originId ??
+                                                  '',
                                               receiverAcountId: stateFormField
                                                       .value?.receiverId ??
                                                   '',

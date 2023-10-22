@@ -169,32 +169,22 @@ class _ButtonTileKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
+    return ElevatedButton(
+          onPressed: () {
             onTap?.call(value);
           },
-          child: Container(
+  style: ButtonStyle(
+            elevation: MaterialStateProperty.all<double>(1),
+            backgroundColor:
+               MaterialStatePropertyAll<Color>(colorBackground),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ))),
+          child: SizedBox(
             height: height,
             width: width,
-            decoration: BoxDecoration(
-              color: colorBackground,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  offset: Offset(0, 2),
-                  blurRadius: 4,
-                )
-              ],
-            ),
-            child: child,
-          ),
-        ),
-      ],
-    );
+            child: child),
+        );
   }
 }

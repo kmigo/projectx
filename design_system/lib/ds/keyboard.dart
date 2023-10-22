@@ -173,7 +173,7 @@ class _ButtonTileKeyboard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             onTap?.call(value);
           },

@@ -16,7 +16,8 @@ class VerifyPhonePage extends StatefulWidget {
   final bool verifyToCreate;
   final bool verifyToLogin;
   final Widget? child;
-  const VerifyPhonePage({super.key,required this.onContinue,required this.verifyToCreate, required this.verifyToLogin, this.child});
+  final bool updatePhone;
+  const VerifyPhonePage({super.key,required this.updatePhone,required this.onContinue,required this.verifyToCreate, required this.verifyToLogin, this.child});
 
   @override
   State<VerifyPhonePage> createState() => _VerifyPhonePageState();
@@ -64,7 +65,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 bloc.changeSmsCode(value);
               },
               smsCode: state.smsCode,
-              onContinue: () => bloc.confirmPhone(),
+              onContinue: () => bloc.confirmPhone(widget.updatePhone),
             );
           }
           

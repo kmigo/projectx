@@ -39,7 +39,7 @@ abstract class AuthenticationRepository {
 
   Future<Either<Failure,void>> setPincode(SetPinCodeModel setPincode);
   Future<Either<Failure,void>> signOut();
-  Future<Either<Failure,void>> confirmPhone(SmsCodeModel code);
+  Future<Either<Failure,void>> confirmPhone(SmsCodeModel code,[bool update =false]);
   Future<Either<Failure,UserVerifyPin>> validPincode(String code);
   Future<Either<Failure,UserEntity>> currentUser();
    Future<Either<Failure,void>> changePincode(String code);

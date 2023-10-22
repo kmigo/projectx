@@ -8,7 +8,7 @@ import '../models/models.dart';
 
 abstract class AuthenticationDatasource {
 
-  Future<void> confirmPhoneNumber(SmsCodeModel sms);
+  Future<void> confirmPhoneNumber(SmsCodeModel sms,[bool update =false]);
   Future<UserVerifyPin> validPincode(String pincode);
 
   Future<void> signOut();

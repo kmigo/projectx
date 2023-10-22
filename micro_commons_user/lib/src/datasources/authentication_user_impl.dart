@@ -111,10 +111,15 @@ class AuthenticationDatasourceImpl extends AuthenticationDatasource {
 
 
   @override
-  Future<void> confirmPhoneNumber(SmsCodeModel sms) async {
+  Future<void> confirmPhoneNumber(SmsCodeModel sms , [bool update =false]) async {
     try{
-          final cred =  PhoneAuthProvider.credential(verificationId: sms.verificattionId, smsCode: sms.smsCode);
+      if(update){
+        updatePhone(sms);
+      }else{
+        final cred =  PhoneAuthProvider.credential(verificationId: sms.verificattionId, smsCode: sms.smsCode);
             await _auth.signInWithCredential(cred);
+      }
+          
 
     }on FirebaseAuthException{
       rethrow;

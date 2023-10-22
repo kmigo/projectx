@@ -12,7 +12,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return VerifyPhonePage(onContinue: (phone){
+    return VerifyPhonePage(
+      updatePhone: false,
+      onContinue: (phone){
       CoreNavigator.pushReplacementNamed(AppRoutes.onboarding.validatePin);
     },
      verifyToCreate: false, verifyToLogin: true);

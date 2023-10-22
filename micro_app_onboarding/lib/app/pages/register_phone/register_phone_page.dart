@@ -34,6 +34,7 @@ class _RegisterPhone
   @override
   Widget build(BuildContext context) {
     return VerifyPhonePage(
+      updatePhone: false,
       onContinue: (phone){
        CoreNavigator.pushReplacementNamed("${AppRoutes.onboarding.createPin}?phone=$phone");
     }, verifyToCreate: true, verifyToLogin: false);

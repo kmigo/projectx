@@ -29,9 +29,9 @@ class AutheticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> confirmPhone(SmsCodeModel code) async {
+  Future<Either<Failure, void>> confirmPhone(SmsCodeModel code,[bool update =false]) async {
     try {
-      final user = await _datasource.confirmPhoneNumber(code);
+      final user = await _datasource.confirmPhoneNumber(code,update);
       return Right(user);
     } on Failure catch (e) {
       dev.log(e.toString(),

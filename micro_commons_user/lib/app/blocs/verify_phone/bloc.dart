@@ -41,9 +41,9 @@ void verifyPhoneSend(String phoneNumber,{bool veryToCreateAccount = false, bool 
             )));
   }
 
-  Future<void> confirmPhone()async{
+  Future<void> confirmPhone(bool update)async{
     emit(state.copyWith(status: LoginPhoneStatus.loading));
-    final result = await _confirmPhoneUsecase(SmsCodeModel(verificattionId: state.verificationId!, smsCode: state.smsCode!));
+    final result = await _confirmPhoneUsecase(SmsCodeModel(verificattionId: state.verificationId!, smsCode: state.smsCode!),update);
     result.fold((l) => emit(state.copyWith(error: l.message,status:LoginPhoneStatus.error)), (r) => emit(state.copyWith(
       status: LoginPhoneStatus.confirmed,
     )));

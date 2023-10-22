@@ -182,11 +182,11 @@ class _ProfilePageState extends State<ProfilePage> {
             activate: bloc.statusResponse(2) != KYCSTATUSRESPONSE.completed,
             onTap: () => _changeRoute(AppRoutes.profile.selfie),
             iconRight: Icons.chevron_right_outlined),
-        _TileProfile(
-            title: 'Biometria',
-            icon: Icons.fingerprint_outlined,
-            onTap: () => _changeRoute(AppRoutes.profile.fingerprint),
-            iconRight: Icons.chevron_right_outlined),
+        // _TileProfile(
+        //     title: 'Biometria',
+        //     icon: Icons.fingerprint_outlined,
+        //     onTap: () => _changeRoute(AppRoutes.profile.fingerprint),
+        //     iconRight: Icons.chevron_right_outlined),
         _TileProfile(
             title: 'Limites',
             icon: Icons.tune_outlined,

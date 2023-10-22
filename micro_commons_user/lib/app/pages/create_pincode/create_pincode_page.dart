@@ -113,11 +113,7 @@ class _CreatePincodePageState extends State<CreatePincodePage> {
                     ),
                   ),
                 ),
-                UolletiButton.primary(
-                  disabled: state.pinCode.length != 6 || state.confirmPinCode.length != 6,
-                  label: 'Continuar', onPressed: () {
-                    bloc.createAccount(phone!);
-                  })
+              
               ],
             );
           },

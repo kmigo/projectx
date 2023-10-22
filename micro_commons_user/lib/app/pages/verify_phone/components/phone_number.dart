@@ -119,11 +119,7 @@ class SendPhoneNumberComponent extends StatelessWidget {
               );
             }),
           ),
-          UolletiButton.primary(
-              disabled: phoneChoice == null,
-              isLoading: isLoading,
-              label: 'Continuar',
-              onPressed: () => onContinue.call())
+         
         ],
       ),
     );

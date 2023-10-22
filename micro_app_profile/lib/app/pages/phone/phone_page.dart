@@ -20,7 +20,7 @@ class _PersonalPhonePageState extends State<PersonalPhonePage> {
   @override
   Widget build(BuildContext context) {
     return VerifyPhonePage(updatePhone: true, onContinue: (phone){
-      print('phone atualizado $phone');
+      CoreNavigator.pop();
     }, verifyToCreate: true, verifyToLogin: false);
   }
 }

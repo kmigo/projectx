@@ -68,11 +68,6 @@ class ConfirmPhoneSmsCodeComponent extends StatelessWidget {
             ),
           ),
 
-          UolletiButton.primary(
-                  disabled: (smsCode?.length ?? 0) <  6,
-                  isLoading: isLoading,
-                  label: 'Continuar',
-                  onPressed: ()=>onContinue.call())
         ],
       ),
     );

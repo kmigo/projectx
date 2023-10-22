@@ -55,6 +55,8 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
   final realController = TextEditingController();
   final dolarController = TextEditingController();
   final descriptionController = TextEditingController();
+  final focusDolar = FocusNode();
+  final focusReal = FocusNode();
   double conversionRate =
       5.0; // Taxa de conversão fictícia, atualize conforme necessário
   final formKey = GlobalKey<FormFieldState<NewRechargeSelect>>();
@@ -69,6 +71,9 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
       blocGetCard.getCardById(id!);
     }
     realController.addListener(() {
+      if(focusDolar.hasFocus){
+        return;
+      }
       final value =
           realController.text.replaceAll('R\$ ', '').replaceAll(',', '.');
       double realValue = double.parse(value);
@@ -78,6 +83,9 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
     });
 
     dolarController.addListener(() {
+      if(focusReal.hasFocus){
+        return;
+      }
       final value =
           dolarController.text.replaceAll('\$', '').replaceAll(' ', '');
       double dolarValue = double.parse(value);
@@ -216,6 +224,7 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
                                             UolletiTextInput.currency(
                                               currency: "US",
                                               label: "Envia US",
+                                              focusNode: focusDolar,
                                               validator:
                                                   HelperInputValidator.required,
                                               controller: dolarController,
@@ -225,6 +234,7 @@ class _ReviewNewRechargePageState extends State<ReviewNewRechargePage> {
                                               height: 20,
                                             ),
                                             UolletiTextInput.currency(
+                                              focusNode: focusReal,
                                               currency: "R\$",
                                               label: "RECEBE BRL",
                                               controller: realController,

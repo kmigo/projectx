@@ -21,8 +21,8 @@ part '../../dto/kyc.dart';
 class UserWithKycEntity extends Equatable {
   final num createAt;
   final String phone;
-  final String document;
-  final String birthDay;
+  final String? document;
+  final String? birthDay;
   final String consumer;
   final String? username;
   final String? email;

@@ -24,13 +24,13 @@ extension UserWithKycDTO on UserWithKycEntity {
     return UserWithKycEntity(
       createAt: map['created_at'] as num,
       phone: map['phone'] as String,
-      document: map['document'] as String,
-      birthDay: map['birth_day'] as String,
+      document: map['document'] ,
+      birthDay: map['birth_day'] ,
       consumer: map['consumer'] as String,
       username: map['username'],
       email: map['email'],
       userId: map['user_id'] as String,
-      pixData: List.from((map['pix_data'] as List)),
+      pixData: [],
       id: map['id'] as String,
       kyc: map['kyc'] != null ? KycUserDTO.fromMap(map['kyc']) : null,
     );

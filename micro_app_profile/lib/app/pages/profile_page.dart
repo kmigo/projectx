@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('files/logo.png'),
+
         centerTitle: true,
         elevation: 0,
         backgroundColor: colorsDS.primary900,

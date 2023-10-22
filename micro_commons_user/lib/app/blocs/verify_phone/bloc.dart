@@ -23,8 +23,10 @@ class VerifyPhoneBloc
 void verifyPhoneSend(String phoneNumber,{bool veryToCreateAccount = false, bool verifyToLogin= false}) async {
 
 
-    emit(state.copyWith(status: LoginPhoneStatus.loading,phone: phoneNumber));
-
+   
+   final onlyNumber = phoneNumber.replaceAll(RegExp(r'\D'), '');
+      final codeCountry = state.phoneItemConfigModel!.code;
+       emit(state.copyWith(status: LoginPhoneStatus.loading,phone:'$codeCountry$onlyNumber'));
     final result = await _verifyPhoneUsecase(VerifyPhoneModel(
       phoneItemConfigModel: state.phoneItemConfigModel!,
         verifycodeId: (codeId) => emit(state.copyWith(
@@ -37,13 +39,12 @@ void verifyPhoneSend(String phoneNumber,{bool veryToCreateAccount = false, bool 
             )),
         (r) => emit(state.copyWith(
             status: LoginPhoneStatus.confirmCode,
-            phone: phoneNumber
             )));
   }
 
   Future<void> confirmPhone(bool update)async{
     emit(state.copyWith(status: LoginPhoneStatus.loading));
-    final result = await _confirmPhoneUsecase(SmsCodeModel(verificattionId: state.verificationId!, smsCode: state.smsCode!),update);
+    final result = await _confirmPhoneUsecase(SmsCodeModel(verificattionId: state.verificationId!, smsCode: state.smsCode!,phoneNumber: state.phone),update);
     result.fold((l) => emit(state.copyWith(error: l.message,status:LoginPhoneStatus.error)), (r) => emit(state.copyWith(
       status: LoginPhoneStatus.confirmed,
     )));

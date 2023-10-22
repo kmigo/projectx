@@ -293,7 +293,7 @@ await _clientHttp.put("${HttpRoutes.user.root}/",json: address.toMap());
             PhoneAuthProvider.credential(verificationId: sms.verificattionId, smsCode: sms.smsCode);
           await (FirebaseAuth.instance.currentUser)?.updatePhoneNumber(credential);
       final currentUser = FirebaseAuth.instance.currentUser;
-      await _db.ref().child(constantsUser).child(currentUser!.uid).update({'phone':"+55${sms.phoneNumber}"});
+      await _db.ref().child(constantsUser).child(currentUser!.uid).update({'phone':"${sms.phoneNumber}"});
     }on FirebaseAuthException{
       rethrow;
     } catch(e){

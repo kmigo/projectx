@@ -17,11 +17,11 @@ class ExtractHeaderWidget extends StatelessWidget {
           const UolletiText.labelLarge('Extrato', bold: true),
           Row(
             children: [
-              InkWell(child: const Icon(Icons.filter_list),
-              onTap: (){
-                CoreNavigator.pushNamed(AppRoutes.extract.filter);
-              },
-              ),
+              // InkWell(child: const Icon(Icons.filter_list),
+              // onTap: (){
+              //   CoreNavigator.pushNamed(AppRoutes.extract.filter);
+              // },
+              // ),
               const SizedBox(width: 15,),
               InkWell(
                 onTap: () {

@@ -21,14 +21,14 @@ class BottomNavigationBarCustom extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(width: 20,),
-          _TileButton(icon: Icons.add_card, backgroundColor: colorsDS.bordersMedium, onTap: (){
+          // const SizedBox(width: 20,),
+          // _TileButton(icon: Icons.add_card, backgroundColor: colorsDS.bordersMedium, onTap: (){
         
 
-          }),
-          const SizedBox(width: 20,),
+          // }),
+          // const SizedBox(width: 20,),
           _TileButton(icon: Icons.history, backgroundColor: colorsDS.bordersMedium, onTap: (){
-           
+           CoreNavigator.pushNamed(AppRoutes.extract.root);
           }),
         ],
       ),
